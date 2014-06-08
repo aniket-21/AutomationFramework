@@ -72,7 +72,6 @@
 	    <groupId>org.apache.poi</groupId>
 	    <version>3.9</version>
 	    <artifactId>poi</artifactId>
-	    <scope>test</scope>
 	</dependency>
     
 	<!--

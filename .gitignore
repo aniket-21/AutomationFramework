@@ -1,0 +1,6 @@
+Execution
+trunk/Workspace/.metadata
+trunk/Workspace/*/.settings
+trunk/Workspace/*/target
+trunk/Workspace/*/test-output
+

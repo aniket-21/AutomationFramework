@@ -51,18 +51,19 @@ public class TestsForMercuryTours {
 	  Global.Environment.put("CLASSNAME", className);		
 	  	 
 	   //Initiate asapDriver
-	   asapDriver = new Driver();
-	   
+	   asapDriver = new Driver();	   
 	   
 		//Get environment
 		env = asapDriver.fGetEnv();
 		
-		//Create folder structure
-		asapDriver.createExecutionFolders();
-				 
-		//Add env and classname to global environments
+		//Add env global environments
 		Global.Environment.put("ENV_CODE", env);
-		 		  
+		
+		
+		System.out.println("env: " + env);
+		
+		//Create folder structure
+		asapDriver.createExecutionFolders();	 		  
 		
 	   //Get Environment Variables
 	   asapDriver.fetchEnvironmentDetails();

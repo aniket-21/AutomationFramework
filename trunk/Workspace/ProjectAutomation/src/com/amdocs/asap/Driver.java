@@ -60,27 +60,31 @@ public class Driver {
 		storagePath = rootPath + "trunk\\Workspace\\ProjectAutomation";
 		dataSheetsPath = storagePath + "\\datasheets";
 		enviromentsPath = storagePath + "\\environments\\Environments.xls";	
-		curExecutionFolder = executionPath + "\\" + Global.Environment.get("ENV_CODE") + "\\" + Global.Environment.get("CLASSNAME");
-		htmlReportsPath = curExecutionFolder + "\\HTML_Reports";
-		snapShotsPath = htmlReportsPath + "\\Snapshots";	
+		
 		dataSheet = dataSheetsPath + "\\" + Global.Environment.get("CLASSNAME") + ".xls";
 		configXML = storagePath + "\\config\\config.xml";
-		//configXML = "/Amdocs/Automation_Frameworks/Appium/Framework/trunk/Workspace/ProjectAutomation/config/config.xml";
-		
-		
+				
 		//Add to Env Variables
 		Global.Environment.put("ROOTPATH", rootPath);
 		Global.Environment.put("EXECUTIONFOLDERPATH", executionPath);
 		Global.Environment.put("STORAGEFOLDERPATH", storagePath);
 		Global.Environment.put("ENVIRONMENTXLSPATH", enviromentsPath);
-		Global.Environment.put("CURRENTEXECUTIONFOLDER", curExecutionFolder);
-		Global.Environment.put("HTMLREPORTSPATH", htmlReportsPath);
-		Global.Environment.put("SNAPSHOTSFOLDER", snapShotsPath);
+		
 	}
 	
 	//Function to Create Execution Folders
 	public boolean createExecutionFolders() throws IOException
 	{		
+		//Set execution paths
+		curExecutionFolder = executionPath + "\\" + Global.Environment.get("ENV_CODE") + "\\" + Global.Environment.get("CLASSNAME");
+		htmlReportsPath = curExecutionFolder + "\\HTML_Reports";
+		snapShotsPath = htmlReportsPath + "\\Snapshots";	
+		
+		//Put in Environments
+		Global.Environment.put("CURRENTEXECUTIONFOLDER", curExecutionFolder);
+		Global.Environment.put("HTMLREPORTSPATH", htmlReportsPath);
+		Global.Environment.put("SNAPSHOTSFOLDER", snapShotsPath);		
+		
 		//Delete if folder already exists
 		if (new File(htmlReportsPath).exists())
 			delete(new File(htmlReportsPath));		

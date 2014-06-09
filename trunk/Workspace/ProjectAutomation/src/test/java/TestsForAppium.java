@@ -68,15 +68,17 @@ public class TestsForAppium {
 	   //Initiate asapDriver
 	   asapDriver = new Driver();
 	   
-	   try {
+	  
+	   //Get environment
+	   env = asapDriver.fGetEnv();
+		
+	 try {
 		   asapDriver.createExecutionFolders();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		//Get environment
-		env = asapDriver.fGetEnv();
+			
 				 
 		//Add env and classname to global environments
 		Global.Environment.put("ENV_CODE", env);		 		  

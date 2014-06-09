@@ -38,7 +38,7 @@ public class TestsForMercuryTours {
 
 	
   @BeforeClass
-  public void beforeClass() throws MalformedURLException
+  public void beforeClass() throws IOException
   {
 	  System.out.println("Before Class TestsForMercuryTours");
 	  
@@ -53,15 +53,12 @@ public class TestsForMercuryTours {
 	   //Initiate asapDriver
 	   asapDriver = new Driver();
 	   
-	   try {
-		   asapDriver.createExecutionFolders();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+	   
 		//Get environment
 		env = asapDriver.fGetEnv();
+		
+		//Create folder structure
+		asapDriver.createExecutionFolders();
 				 
 		//Add env and classname to global environments
 		Global.Environment.put("ENV_CODE", env);

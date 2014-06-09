@@ -41,10 +41,7 @@ public class TestsForMercuryTours {
   public void beforeClass() throws IOException
   {
 	  System.out.println("Before Class TestsForMercuryTours");
-	  
-	  buildNumber = System.getProperty("buildNumber");
-	  jobName = System.getProperty("jobName");	 	 
-	
+	  	
 	  //Set the DataSheet name by getting the class name
 	  String[] strClassNameArray = this.getClass().getName().split("\\.");
 	  className = strClassNameArray[strClassNameArray.length-1];
@@ -53,15 +50,13 @@ public class TestsForMercuryTours {
 	   //Initiate asapDriver
 	   asapDriver = new Driver();	   
 	   
-		//Get environment
-		env = asapDriver.fGetEnv();
+		//Check if POM has env, if null, get it from config file
+	   if(System.getProperty("envName")==null) env = asapDriver.fGetEnv();
+	   else env = System.getProperty("envName");		
 		
 		//Add env global environments
 		Global.Environment.put("ENV_CODE", env);
-		
-		
-		System.out.println("env: " + env);
-		
+				
 		//Create folder structure
 		asapDriver.createExecutionFolders();	 		  
 		

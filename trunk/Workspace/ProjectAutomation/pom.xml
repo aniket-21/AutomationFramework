@@ -21,6 +21,7 @@
         <version>2.17</version>
         <configuration>
           <systemPropertyVariables>
+            <envName>${env.name}</envName>
             <jobName>${job.name}</jobName>
             <buildNumber>${build.number}</buildNumber>           
          </systemPropertyVariables>

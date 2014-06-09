@@ -66,11 +66,11 @@ public class TestsForAppium {
 	  Global.Environment.put("CLASSNAME", className);		
 	  	 
 	   //Initiate asapDriver
-	   asapDriver = new Driver();
-	   
+	   asapDriver = new Driver();	   
 	  
-	   //Get environment
-	   env = asapDriver.fGetEnv();
+	   //Check if POM has env, if null, get it from config file
+	   if(System.getProperty("envName")==null) env = asapDriver.fGetEnv();
+	   else env = System.getProperty("envName");
 	   
 	   //Add env to global environments
 	   Global.Environment.put("ENV_CODE", env);

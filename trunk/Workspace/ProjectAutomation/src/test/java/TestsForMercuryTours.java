@@ -28,6 +28,8 @@ public class TestsForMercuryTours {
 	String className;
 	String dataSheetName;
 	String env;
+	String buildNumber;
+	String jobName;
 	
 	//Instances
 	Driver asapDriver;
@@ -39,6 +41,9 @@ public class TestsForMercuryTours {
   public void beforeClass() throws MalformedURLException
   {
 	  System.out.println("Before Class TestsForMercuryTours");
+	  
+	  buildNumber = System.getProperty("buildNumber");
+	  jobName = System.getProperty("jobName");	 	 
 	
 	  //Set the DataSheet name by getting the class name
 	  String[] strClassNameArray = this.getClass().getName().split("\\.");
@@ -166,7 +171,9 @@ public class TestsForMercuryTours {
 	   //Close HTML Summary report
 	   Global.Reporter.fnCloseTestSummary();
 	   
-	 //QUit webdriver
+	   //Copy reports under build path
+	   
+	   //QUit webdriver
 	   if(Global.webDriver != null) Global.webDriver.quit();
    }
 	 

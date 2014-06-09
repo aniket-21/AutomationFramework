@@ -72,6 +72,8 @@ public class TestsForAppium {
 	   if(System.getProperty("envName")==null) env = asapDriver.fGetEnv();
 	   else env = System.getProperty("envName");
 	   
+	   
+	   
 	   //Add env to global environments
 	   Global.Environment.put("ENV_CODE", env);
 		

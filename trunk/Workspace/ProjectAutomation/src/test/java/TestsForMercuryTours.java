@@ -48,13 +48,18 @@ public class TestsForMercuryTours {
 	  Global.Environment.put("CLASSNAME", className);		
 	  	 
 	   //Initiate asapDriver
-	   asapDriver = new Driver();
-	   
-	   System.out.println("Env: " + System.getProperty("envName"));
+	   asapDriver = new Driver();	   	  
 	   
 		//Check if POM has env, if null, get it from config file
-	   if(System.getProperty("envName")==null) env = asapDriver.fGetEnv();
-	   else env = System.getProperty("envName");		
+	   if(System.getProperty("envName")== null) {
+		   System.out.println("Getting env from config file");
+		   env = asapDriver.fGetEnv();
+	   }
+		   
+	   else {
+		   System.out.println("Setting env from maven parameters");
+		   env = System.getProperty("envName");		
+	   }
 		
 		//Add env global environments
 		Global.Environment.put("ENV_CODE", env);

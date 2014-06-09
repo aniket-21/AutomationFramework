@@ -62,7 +62,9 @@ public class TestsForMercuryTours {
 	   }
 		
 		//Add env global environments
+	   System.out.println("env :" + env);
 		Global.Environment.put("ENV_CODE", env);
+		 System.out.println("ENV_CODE :" + Global.Environment.get("ENV_CODE"));
 				
 		//Create folder structure
 		asapDriver.createExecutionFolders();	 		  

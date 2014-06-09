@@ -213,7 +213,7 @@ public class Driver {
 		    //If bFlag is true
 		    if (bFlag == false)
 		    {
-		    	System.out.println("Environment Code " + Global.Environment.get("ENV_CDODE") + " not found in the Environment xls");
+		    	System.out.println("Environment Code " + Global.Environment.get("ENV_CODE") + " not found in the Environment xls");
 		    	return false;
 		    }
 

@@ -70,9 +70,7 @@ public class TestsForAppium {
 	  
 	   //Check if POM has env, if null, get it from config file
 	   if(System.getProperty("envName")==null) env = asapDriver.fGetEnv();
-	   else env = System.getProperty("envName");
-	   
-	   
+	   else env = System.getProperty("envName");	   	   
 	   
 	   //Add env to global environments
 	   Global.Environment.put("ENV_CODE", env);
@@ -89,6 +87,9 @@ public class TestsForAppium {
      
 	   //Create HTML Summary Report
 	   Global.Reporter.fnCreateSummaryReport();
+	   
+	   //Update Jenkins report
+	   Global.Reporter.fnJenkinsReport();
 	   
 	   //Initiate WebDriver
 	   Global.webDriver = asapDriver.fGetWebDriver();

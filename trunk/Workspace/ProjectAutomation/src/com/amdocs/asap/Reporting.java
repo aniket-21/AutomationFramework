@@ -29,6 +29,7 @@ public class Reporting {
     private int g_iFailCount;
     private int g_iTCPassed;
     private int g_iTestCaseNo;
+    private int g_iTestSuiteNo;
 	//public static int g_iFailCount;
 
     private Date g_StartTime;
@@ -493,5 +494,84 @@ public class Reporting {
 		}
 
     }
+	
+	
+	
+	//*****************************************************************************************
+    //*    Name        : fnJenkinsReport
+    //*    Description    : The function creates the summary HTML file
+    //*    Author        :  Anil Agarwal
+    //*    Input Params    :     None
+    //*    Return Values    :     None
+    //*****************************************************************************************
+    public void fnJenkinsReport() 
+    {        
+        //Variables
+    	String jenkinsFilePath = Global.Environment.get("EXECUTIONFOLDERPATH") + "\\" + Global.Environment.get("ENV_CODE");
+    	String jenkinsHTMLRep = jenkinsFilePath + "\\Jenkins_html_report.html";
+    	String relativeClassSummary = Global.Environment.get("CLASSNAME") + "\\HTML_Reports\\SummaryReport.html";
+    	String sRowColor = "";
+    	
+		
+    	
+    	try 
+		{ 
+    		File htmlReport = new File(jenkinsHTMLRep);
+    		
+    		//If jenkins flag is false 
+    		if(Global.flgJenkinsHtml == false) {    			    			
+    			
+    			//Delete File
+    			if(htmlReport.exists()) htmlReport.delete();
+    			
+    			//Create File
+    			//Open the test case report for writing                   
+    	        foutStrm = new FileOutputStream(jenkinsHTMLRep, true);
+    	           
+    			//Close the html file
+    	        new PrintStream(foutStrm).println("<HTML><BODY><TABLE BORDER=0 CELLPADDING=3 CELLSPACING=1 WIDTH=100% BGCOLOR=BLACK>");
+    			new PrintStream(foutStrm).println("<TR><TD WIDTH=90% ALIGN=CENTER BGCOLOR=WHITE><FONT FACE=VERDANA COLOR=ORANGE SIZE=3><B>AMDOCS</B></FONT></TD></TR><TR><TD ALIGN=CENTER BGCOLOR=ORANGE><FONT FACE=VERDANA COLOR=WHITE SIZE=3><B>Selenium Framework Reporting</B></FONT></TD></TR></TABLE><TABLE CELLPADDING=3 WIDTH=100%><TR height=30><TD WIDTH=100% ALIGN=CENTER BGCOLOR=WHITE><FONT FACE=VERDANA COLOR=//0073C5 SIZE=2><B>&nbsp; Automation Result : " + new Date() + " on Machine " + InetAddress.getLocalHost().getHostName() + " by user " + System.getProperty("user.name") + "</B></FONT></TD></TR><TR HEIGHT=5></TR></TABLE>");  
+    	        new PrintStream(foutStrm).println("<TABLE  BORDER=1 CELLPADDING=3 CELLSPACING=1 WIDTH=100%>");           
+    	        new PrintStream(foutStrm).println("<TR COLS=6 BGCOLOR=ORANGE><TD WIDTH=10%><FONT FACE=VERDANA COLOR=BLACK SIZE=2><B>Suite No.</B></FONT></TD><TD  WIDTH=90%><FONT FACE=VERDANA COLOR=BLACK SIZE=2><B>Suite Name</B></FONT></TD></TR>");
+    	        
+    	      //Close the object
+    	        foutStrm.close();
+    	        
+    	      //Set flag to true
+    	        Global.flgJenkinsHtml = true;
+    		}    	           		
+    			
+    		
+    		//Write class name to report
+    		//Open the test case report for writing                   
+	        foutStrm = new FileOutputStream(jenkinsHTMLRep, true);
+	        
+	        //Increment counter
+	        g_iTestSuiteNo++;
+	
+	        if (g_iTestSuiteNo % 2 == 0)
+	        {
+	            //sRowColor = "//BEBEBE";
+	            sRowColor = "#EEEEEE";
+	        }
+	        else
+	        {
+	            sRowColor = "#D3D3D3";
+	        }
+	        
+	       //Write the result of Individual Test Case
+	        new PrintStream(foutStrm).println ("<TR COLS=3 BGCOLOR=" + sRowColor + "><TD  WIDTH=10%><FONT FACE=VERDANA SIZE=2>" + g_iTestSuiteNo + "</FONT></TD><TD  WIDTH=90%><A HREF='" + relativeClassSummary + "'><FONT FACE=VERDANA SIZE=2 COLOR=BLUE><FONT FACE=VERDANA SIZE=2><B>" + Global.Environment.get("CLASSNAME") + "</B></FONT></A></TD></TR>");
+			
+	        //Close the object
+	        foutStrm.close();
+	        
+	        
+		} catch (IOException io) 
+		{
+			io.printStackTrace();
+		} 
+		
+		foutStrm = null;
+    }	
 
 }

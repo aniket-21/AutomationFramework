@@ -13,5 +13,6 @@ public class Global {
 	public static HashMap <String, String> Dictionary = new HashMap<String, String>();
 	public static final Reporting Reporter = new Reporting();
 	public static WebDriver webDriver;
+	public static boolean flgJenkinsHtml = false;
 
 }

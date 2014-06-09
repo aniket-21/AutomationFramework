@@ -51,20 +51,14 @@ public class TestsForMercuryTours {
 	   asapDriver = new Driver();	   	  
 	   
 		//Check if POM has env, if null, get it from config file
-	   if(System.getProperty("envName")== null) {
-		   System.out.println("Getting env from config file");
-		   env = asapDriver.fGetEnv();
-	   }
-		   
-	   else {
-		   System.out.println("Setting env from maven parameters");
+	   if(System.getProperty("envName")== null) 		   
+		   env = asapDriver.fGetEnv();	  		   
+	   else 
 		   env = System.getProperty("envName");		
-	   }
+	  
 		
 		//Add env global environments
-	   System.out.println("env :" + env);
 		Global.Environment.put("ENV_CODE", env);
-		 System.out.println("ENV_CODE :" + Global.Environment.get("ENV_CODE"));
 				
 		//Create folder structure
 		asapDriver.createExecutionFolders();	 		  
@@ -74,6 +68,9 @@ public class TestsForMercuryTours {
      
 	   //Create HTML Summary Report
 	   Global.Reporter.fnCreateSummaryReport();
+	   
+	   //Update Jenkins report
+	   Global.Reporter.fnJenkinsReport();
 	   
 	   //Initiate WebDriver
 	   Global.webDriver = asapDriver.fGetWebDriver();

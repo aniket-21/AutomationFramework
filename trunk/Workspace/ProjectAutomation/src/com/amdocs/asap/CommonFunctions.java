@@ -1,6 +1,7 @@
 package com.amdocs.asap;
 
 import io.appium.java_client.MobileBy;
+import io.appium.java_client.AppiumDriver;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -8,11 +9,13 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.Rotatable;
 
 public class CommonFunctions {
 	
@@ -268,6 +271,7 @@ public class CommonFunctions {
         	{
         		lst =  objParent.findElements(By.tagName(val));
         	}
+        	
         	else
         	{
         		Reporter.fnWriteToHtmlOutput("Check object Non Existence for child object " + strDesc, "Object should not exist", "Property "  + FindBy + " specified for object is invalid", "Fail");
@@ -1131,6 +1135,10 @@ public class CommonFunctions {
         	{
         		return ((io.appium.java_client.AppiumDriver)driver).findElement(By.className(val));
         	}
+        	else if (strElement.equalsIgnoreCase("uiautomator"))
+        	{
+        		return ((AppiumDriver)driver).findElement(MobileBy.AndroidUIAutomator(val));
+        	}
         	else
         	{
         		Reporter.fnWriteToHtmlOutput("Get object matching description " + objDesc, "Object should be found and returned", "Property "  + FindBy + " specified for object is invalid", "Fail");
@@ -1694,6 +1702,89 @@ public class CommonFunctions {
         
         
         return Random;
+    }
+    
+    
+    //*****************************************************************************************
+    //*	Name		    : fGetCurrentActivity
+    //*	Description	    : returns current time stamp
+    //*	Author		    : Aniket Gadre
+    //*	Input Params	: strDesc - The description of the object to click
+    //*	Return Values	: Boolean - Depending on the success
+    //*****************************************************************************************
+    public String fGetCurrentActivity()
+    {
+    	return ((AppiumDriver)driver).currentActivity();
+    }
+    
+    
+  //*****************************************************************************************
+    //*	Name		    : fValidateCurrentActivity
+    //*	Description	    : returns current time stamp
+    //*	Author		    : Aniket Gadre
+    //*	Input Params	: strDesc - The description of the object to click
+    //*	Return Values	: Boolean - Depending on the success
+    //*****************************************************************************************
+    public boolean fValidateCurrentActivity(String expectedActivity)
+    {
+    	int i = 0;
+    	String actualActivity="";
+    	
+    	//Loop for activity
+    	while(i<30)
+    	{
+    		
+    		actualActivity = ((AppiumDriver)driver).currentActivity();
+    		if(actualActivity.equals(expectedActivity)) break;
+    		
+    		try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+			}
+    		
+    		i++;
+    	}
+    	
+    	//Check Counter value
+    	if(i==30) {
+    		
+    		Reporter.fnWriteToHtmlOutput("Check if Activity " + expectedActivity + " is opened", "Activity should be invoked successfully" , "Activity " + actualActivity +  " opened", "Fail");
+    		return false;
+    	}
+    	else {
+    		
+    		Reporter.fnWriteToHtmlOutput("Check if Activity " + expectedActivity + " is opened", "Activity should be invoked successfully" , "Activity opened successfully", "Pass");
+    		return true;
+    	}
+    }
+    
+    
+    //*****************************************************************************************
+    //*	Name		    : fAndroidRotateScreen
+    //*	Description	    : returns current time stamp
+    //*	Author		    : Aniket Gadre
+    //*	Input Params	: strDesc - The description of the object to click
+    //*	Return Values	: Boolean - Depending on the success
+    //*****************************************************************************************
+    public boolean fAndroidRotateScreen(String Orientation)
+    {
+    	
+    	try{
+    		if (Orientation.equalsIgnoreCase("L")){
+        		((AppiumDriver)driver).rotate(ScreenOrientation.LANDSCAPE);
+        	}
+        	else ((AppiumDriver)driver).rotate(ScreenOrientation.PORTRAIT);
+    	}
+    	catch(Exception e){
+    		e.printStackTrace();
+    		return false;
+    	}
+    	
+    	
+    	return true;
     }
     
     

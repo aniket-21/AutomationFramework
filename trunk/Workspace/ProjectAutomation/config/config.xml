@@ -28,7 +28,30 @@
 				</capabilities>
 			</driver>		
 		</class>
-		
+		<class id="TestsForConsorsAndroid">		
+			<driver>
+				<type>appium</type>
+				<url>http://0.0.0.0:4723/wd/hub</url>
+				<capabilities>
+					<capability>
+						<name>automationName</name>
+						<value>Appium</value>
+					</capability>
+					<capability>
+						<name>platformName</name>
+						<value>Android</value>
+					</capability>
+					<capability>
+						<name>appPackage</name>
+						<value>com.consors.android.fr</value>
+					</capability>
+					<capability>
+						<name>appActivity</name>
+						<value>com.consors.android.ui.LauncherActivity</value>
+					</capability>					
+				</capabilities>
+			</driver>		
+		</class>		
 		<class id="TestsForMercuryTours">
 		    <driver>
 				<type>chrome</type>				

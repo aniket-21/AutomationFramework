@@ -64,7 +64,7 @@ public class BookFlight {
         if (objCommon.fGuiEnterText(edtCreditNumber, Dictionary.get("CREDITCARDNO"))==false)
         {
         	return null;
-        }    
+        }                  
         
       
         //function all to click Reserve Flight button

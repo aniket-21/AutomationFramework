@@ -118,9 +118,9 @@ public class TestsForConsorsAndroid {
 	   
 	   
 	   @Test
-	   public void testConsorsPOC() throws InterruptedException
+	   public void testConsorsAndroidPOC() throws InterruptedException
 	   {
-		   System.out.println("testConsorPOC");	
+		   System.out.println("testConsorsAndroidPOC");	
 		   
 		   //Wait for 5 secs
 		   Thread.sleep(5000);
@@ -158,7 +158,8 @@ public class TestsForConsorsAndroid {
 		   //Rotate screen
 		   Assert.assertTrue(objCommon.fAndroidRotateScreen("L"));
 		   
-		   
+		   //Wait
+		   Thread.sleep(3000);
 		   		   		 		   
 	   }
 	   	   	   

@@ -57,5 +57,10 @@
 				<type>chrome</type>				
 			</driver>
 		</class>
+		<class id="TestsForConsorsWeb">
+		    <driver>
+				<type>chrome</type>				
+			</driver>
+		</class>
 	</classes>
 </config>

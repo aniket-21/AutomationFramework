@@ -23,11 +23,20 @@
       </classes>
   </test>
   -->
-  <test name="ConsorPOCTest">
+  <test name="ConsorPOCAndroid">
       <classes>
           <class name="test.java.TestsForConsorsAndroid">
               <method>
-                  <include name="testConsorsPOC"/>
+                  <include name="testConsorsAndroidPOC"/>
+              </method>			             
+          </class>
+      </classes>
+  </test>
+  <test name="ConsorPOCWeb">
+      <classes>
+          <class name="test.java.TestsForConsorsWeb">
+              <method>
+                  <include name="testConsorsWebPOC"/>
               </method>			             
           </class>
       </classes>

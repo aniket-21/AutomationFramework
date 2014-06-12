@@ -1773,11 +1773,42 @@ public class CommonFunctions {
     public boolean fAndroidRotateScreen(String Orientation)
     {
     	
+    	String strOrientation = "";
+    	
     	try{
     		if (Orientation.equalsIgnoreCase("L")){
         		((AppiumDriver)driver).rotate(ScreenOrientation.LANDSCAPE);
+        		strOrientation = "Landscape";
         	}
-        	else ((AppiumDriver)driver).rotate(ScreenOrientation.PORTRAIT);
+        	else {
+        		((AppiumDriver)driver).rotate(ScreenOrientation.PORTRAIT);
+        		strOrientation = "Portrait";
+        	}
+    	}
+    	catch(Exception e){
+    		e.printStackTrace();
+    		Reporter.fnWriteToHtmlOutput("Rotate Screen", "Set screen orientation to " + strOrientation, "Orientation Setting Failed", "Fail");
+    		return false;
+    	}    	    	    
+    	
+    	
+    	Reporter.fnWriteToHtmlOutput("Rotate Screen", "Set screen orientation to " + strOrientation, "Orientation Set Successfully", "Pass");
+    	return true;
+   }     
+    
+    
+  //*****************************************************************************************
+    //*	Name		    : fMaximizeWindow
+    //*	Description	    : returns current time stamp
+    //*	Author		    : Aniket Gadre
+    //*	Input Params	: strDesc - The description of the object to click
+    //*	Return Values	: Boolean - Depending on the success
+    //*****************************************************************************************
+    public boolean fMaximizeWindow()
+    {
+    	
+    	try{
+    		driver.manage().window().maximize();
     	}
     	catch(Exception e){
     		e.printStackTrace();
@@ -1785,7 +1816,7 @@ public class CommonFunctions {
     	}    	    	    
     	
     	return true;
-   }          
+   }      
     
     
     

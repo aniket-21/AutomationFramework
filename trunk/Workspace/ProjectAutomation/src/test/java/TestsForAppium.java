@@ -4,8 +4,11 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeClass;
 import org.testng.AssertJUnit;
+
 import io.selendroid.SelendroidCapabilities;
 import io.selendroid.SelendroidDriver;
+
+
 
 
 import java.io.File;
@@ -23,7 +26,6 @@ import java.util.concurrent.TimeUnit;
 
 import org.testng.*;
 import org.testng.annotations.*;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

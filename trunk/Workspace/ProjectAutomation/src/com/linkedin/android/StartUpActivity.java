@@ -8,7 +8,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import io.appium.java_client.*;
-import io.appium.java_client.AppiumDriver;
 
 import com.amdocs.asap.*;
 

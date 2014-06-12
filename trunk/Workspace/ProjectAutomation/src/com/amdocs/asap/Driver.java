@@ -694,7 +694,7 @@ public class Driver {
 		
    }
 	
-	//*****************************************************************************************
+   //*****************************************************************************************
    //*	Name		    : fGetEnv
    //*	Description	    : Returns the current environment
    //*	Author		    : Aniket Gadre
@@ -725,130 +725,130 @@ public class Driver {
 	}
 	
 	
-	//*****************************************************************************************
-	   //*	Name		    : fGetWebDriver
-	   //*	Description	    : Returns the required webdriver
-	   //*	Author		    : Aniket Gadre
-	   //*	Input Params	: None
-	   //*	Return Values	: WebDriver 
-	   //*****************************************************************************************
-		public WebDriver fGetWebDriver() throws MalformedURLException
+   //*****************************************************************************************
+   //*	Name		    : fGetWebDriver
+   //*	Description	    : Returns the required webdriver
+   //*	Author		    : Aniket Gadre
+   //*	Input Params	: None
+   //*	Return Values	: WebDriver 
+   //*****************************************************************************************
+	public WebDriver fGetWebDriver() throws MalformedURLException
+	{
+		String webDriverType;
+		String URL = "";
+		String strDCName, strDCValue;
+		DesiredCapabilities DC = new DesiredCapabilities();
+		String className = Global.Environment.get("CLASSNAME");		
+		
+		try
 		{
-			String webDriverType;
-			String URL = "";
-			String strDCName, strDCValue;
-			DesiredCapabilities DC = new DesiredCapabilities();
-			String className = Global.Environment.get("CLASSNAME");		
+			File fXmlFile = new File(configXML);
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+			Document doc = dBuilder.parse(fXmlFile);
 			
-			try
+			//optional, but recommended
+			//read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
+			//doc.getDocumentElement().normalize();
+			
+			//Get Test Class Node
+			NodeList nTestClasses = doc.getElementsByTagName("class");
+			int iClass = nTestClasses.getLength();
+			
+			//loop
+			int z=0;
+			Element nTestClass = null;
+			for(z=0;z<iClass;z++)
 			{
-				File fXmlFile = new File(configXML);
-				DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-				DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-				Document doc = dBuilder.parse(fXmlFile);
-				
-				//optional, but recommended
-				//read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
-				//doc.getDocumentElement().normalize();
-				
-				//Get Test Class Node
-				NodeList nTestClasses = doc.getElementsByTagName("class");
-				int iClass = nTestClasses.getLength();
-				
-				//loop
-				int z=0;
-				Element nTestClass = null;
-				for(z=0;z<iClass;z++)
+				if(((Element)nTestClasses.item(z)).getAttribute("id").equalsIgnoreCase(className)) 
 				{
-					if(((Element)nTestClasses.item(z)).getAttribute("id").equalsIgnoreCase(className)) 
-					{
-						nTestClass = (Element)nTestClasses.item(z);
-						break;
-					}
-				}			
-				
-				//check
-				if(nTestClass == null) 
-				{
-					System.out.println("Node with ID " + className + " not found");
-					return null;
+					nTestClass = (Element)nTestClasses.item(z);
+					break;
 				}
-				
-				//convert node to element
-				Element eTestClass = nTestClass;
-				
-				//Check if driver node exist
-				if(eTestClass.getElementsByTagName("driver").getLength() == 0)
-				{
-					System.out.println("No <driver> node found");
-					return null;
-				}
-				
-				//get node with tagname type
-				NodeList nType = eTestClass.getElementsByTagName("type");
-				
-				if(nType.getLength() == 0)
-				{
-					System.out.println("No node with tag name <type> found");
-					return null;
-				}
-				
-				webDriverType = ((Element)nType.item(0)).getTextContent();
-				
-				//get node with tagname type
-				NodeList nURL = eTestClass.getElementsByTagName("url");
-				
-				if(nURL.getLength() == 0)
-				{
-					System.out.println("No node with tag name <url> found");
-					//return null;
-				}
-				else
-				{
-					URL = ((Element)nURL.item(0)).getTextContent();
-				}
+			}			
 			
-				//get nodes with tagname capabilities
-				NodeList nCapabilities = eTestClass.getElementsByTagName("capability");
-				int iCapabilities = nCapabilities.getLength();
-				
-				//loop through capabilities
-				for(int i=0;i<iCapabilities;i++)
-				{
-					strDCName = ((Element)nCapabilities.item(i)).getElementsByTagName("name").item(0).getTextContent();
-					strDCValue = ((Element)nCapabilities.item(i)).getElementsByTagName("value").item(0).getTextContent();
-					DC.setCapability(strDCName, strDCValue);
-				}
-								
-			}
-			catch(Exception e){
-				e.printStackTrace();
+			//check
+			if(nTestClass == null) 
+			{
+				System.out.println("Node with ID " + className + " not found");
 				return null;
 			}
 			
-			//Define webdriver
-			WebDriver wbDriver;
-			if (webDriverType.equalsIgnoreCase("appium"))
+			//convert node to element
+			Element eTestClass = nTestClass;
+			
+			//Check if driver node exist
+			if(eTestClass.getElementsByTagName("driver").getLength() == 0)
 			{
-				//return new AppiumDriver(new URL(URL), DC);
-				return new AppiumDriver(new URL(URL), DC);
-			}
-			else if (webDriverType.equalsIgnoreCase("chrome"))
-			{
-				System.setProperty("webdriver.chrome.driver", storagePath + "\\drivers\\chromedriver.exe");
-				return new ChromeDriver(DC);
-			}
-			else if (webDriverType.equalsIgnoreCase("firefox")){
-				return new FirefoxDriver(DC);
-			}
-			else if (webDriverType.equalsIgnoreCase("ie")){
-				System.setProperty("webdriver.ie.driver", storagePath + "\\drivers\\IEDriver.exe");
-				return new InternetExplorerDriver(DC);
-			}
-			else{
-				System.out.println("Driver type " + webDriverType + " is invalid");
+				System.out.println("No <driver> node found");
 				return null;
 			}
+			
+			//get node with tagname type
+			NodeList nType = eTestClass.getElementsByTagName("type");
+			
+			if(nType.getLength() == 0)
+			{
+				System.out.println("No node with tag name <type> found");
+				return null;
+			}
+			
+			webDriverType = ((Element)nType.item(0)).getTextContent();
+			
+			//get node with tagname type
+			NodeList nURL = eTestClass.getElementsByTagName("url");
+			
+			if(nURL.getLength() == 0)
+			{
+				System.out.println("No node with tag name <url> found");
+				//return null;
+			}
+			else
+			{
+				URL = ((Element)nURL.item(0)).getTextContent();
+			}
+		
+			//get nodes with tagname capabilities
+			NodeList nCapabilities = eTestClass.getElementsByTagName("capability");
+			int iCapabilities = nCapabilities.getLength();
+			
+			//loop through capabilities
+			for(int i=0;i<iCapabilities;i++)
+			{
+				strDCName = ((Element)nCapabilities.item(i)).getElementsByTagName("name").item(0).getTextContent();
+				strDCValue = ((Element)nCapabilities.item(i)).getElementsByTagName("value").item(0).getTextContent();
+				DC.setCapability(strDCName, strDCValue);
+			}
+							
 		}
+		catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
+		
+		//Define webdriver
+		WebDriver wbDriver;
+		if (webDriverType.equalsIgnoreCase("appium"))
+		{
+			//return new AppiumDriver(new URL(URL), DC);
+			return new AppiumDriver(new URL(URL), DC);
+		}
+		else if (webDriverType.equalsIgnoreCase("chrome"))
+		{
+			System.setProperty("webdriver.chrome.driver", storagePath + "\\drivers\\chromedriver.exe");
+			return new ChromeDriver(DC);
+		}
+		else if (webDriverType.equalsIgnoreCase("firefox")){
+			return new FirefoxDriver(DC);
+		}
+		else if (webDriverType.equalsIgnoreCase("ie")){
+			System.setProperty("webdriver.ie.driver", storagePath + "\\drivers\\IEDriver.exe");
+			return new InternetExplorerDriver(DC);
+		}
+		else{
+			System.out.println("Driver type " + webDriverType + " is invalid");
+			return null;
+		}
+	}
 
 }

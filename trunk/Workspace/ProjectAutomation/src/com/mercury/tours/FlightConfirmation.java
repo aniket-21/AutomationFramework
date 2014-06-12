@@ -2,7 +2,9 @@ package com.mercury.tours;
 
 import java.util.Dictionary;
 import java.util.HashMap;
+
 import org.openqa.selenium.WebDriver;
+
 import com.amdocs.asap.*;
 
 public class FlightConfirmation {

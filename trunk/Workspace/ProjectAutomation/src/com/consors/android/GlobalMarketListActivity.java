@@ -18,7 +18,7 @@ public class GlobalMarketListActivity {
 	private CommonFunctions objCommon = new CommonFunctions();
 	
 	//Objects
-	String txtDevises = "uiautomator:=new UiSelector().text(\"Devises\")";	
+	String txtDevises = "uiautomator:=new UiSelector().text(\"Währungen\")";	
 	
 	//COnstructor
 	public GlobalMarketListActivity()

@@ -16,7 +16,7 @@ public class SnapShotActivity {
 	private CommonFunctions objCommon = new CommonFunctions();
 	
 	//Objects
-	String tabDetails = "uiautomator:=new UiSelector().text(\"Détails\")";	
+	String tabDetails = "uiautomator:=new UiSelector().text(\"Profil\")";	
 	
 	//COnstructor
 	public SnapShotActivity()

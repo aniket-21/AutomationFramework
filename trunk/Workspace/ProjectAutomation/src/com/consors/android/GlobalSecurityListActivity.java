@@ -20,7 +20,7 @@ public class GlobalSecurityListActivity {
 	private CommonFunctions objCommon = new CommonFunctions();
 	
 	//Objects
-	String mnuMarkets = "uiautomator:=new UiSelector().text(\"Marchés\")";	
+	String mnuMarkets = "uiautomator:=new UiSelector().text(\"Kurse/Märkte\")";	
 	
 	//COnstructor
 	public GlobalSecurityListActivity()

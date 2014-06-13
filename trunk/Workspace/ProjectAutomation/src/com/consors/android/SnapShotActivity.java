@@ -1,6 +1,10 @@
 package com.consors.android;
 
+import io.appium.java_client.AppiumDriver;
+
 import java.util.HashMap;
+
+import org.openqa.selenium.WebDriver;
 
 import com.amdocs.asap.CommonFunctions;
 import com.amdocs.asap.Global;
@@ -13,19 +17,21 @@ public class SnapShotActivity {
 	private io.appium.java_client.AppiumDriver driver;
 	private HashMap<String, String> Dictionary;
 	private HashMap<String, String> Environment;
-	private CommonFunctions objCommon = new CommonFunctions();
+	private CommonFunctions objCommon;
 	
 	//Objects
 	String tabDetails = "uiautomator:=new UiSelector().text(\"Profil\")";	
 	
 	//COnstructor
-	public SnapShotActivity()
+	//COnstructor
+	public SnapShotActivity(WebDriver GDriver,HashMap<String, String> GDictionary, HashMap<String, String> GEnvironment,Reporting GReporter)
 	{
-		Reporter = Global.Reporter;
-		driver = (io.appium.java_client.AppiumDriver)Global.webDriver;
-		Dictionary = Global.Dictionary;
-		Environment = Global.Environment;
-	}
+		Reporter = GReporter;
+		driver = (AppiumDriver) GDriver;
+		Dictionary = GDictionary;
+		Environment = GEnvironment;
+		objCommon = new CommonFunctions(driver, Reporter);
+	}	
 	
 	
 	//*****************************************************************************************

@@ -22,6 +22,7 @@ import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
@@ -44,6 +45,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import com.amdocs.asap.CommonFunctions;
 import com.amdocs.asap.Driver;
 import com.amdocs.asap.Global;
+import com.amdocs.asap.Reporting;
 //import com.amdocs.asap.AppiumDriver;
 
 import com.linkedin.android.*;
@@ -60,6 +62,9 @@ public class TestsForAppium {
 	WebDriver driver;
 	CommonFunctions objCommon;
 
+	HashMap <String, String> Environment = new HashMap<String, String>();
+	HashMap <String, String> Dictionary = new HashMap<String, String>();
+	Reporting Reporter;
 	
   @BeforeClass
   public void beforeClass() throws IOException
@@ -69,31 +74,25 @@ public class TestsForAppium {
 	  //Set the DataSheet name by getting the class name
 	  String[] strClassNameArray = this.getClass().getName().split("\\.");
 	  className = strClassNameArray[strClassNameArray.length-1];
-	  Global.Environment.put("CLASSNAME", className);		
+	  Environment.put("CLASSNAME", className);		
 	  	 
 	   //Initiate asapDriver
-	   asapDriver = new Driver();	   
+	  asapDriver = new Driver(Dictionary, Environment);   
 	  
 	   //Check if POM has env, if null, get it from config file
 	   	env = System.getProperty("envName");	
 	   	Assert.assertNotNull(env);
 	  		
 		//Add env global environments
-		Global.Environment.put("ENV_CODE", env);
+		Environment.put("ENV_CODE", env);
 				
 		//Create folder structure
 		Assert.assertTrue(asapDriver.createExecutionFolders());	 		  
 		
 	   //Get Environment Variables
 		Assert.assertTrue(asapDriver.fetchEnvironmentDetails());
-    
-	   //Create HTML Summary Report
-	   Global.Reporter.fnCreateSummaryReport();
-	   
-	   //Update Jenkins report
-	   Global.Reporter.fnJenkinsReport();
-	   
-	   //Desired Caps
+		
+		//Desired Caps
 	   DesiredCapabilities DC = new DesiredCapabilities();
 	   DC.setCapability("automationName", "Appium");
 	   DC.setCapability("platformName", "Android");
@@ -101,19 +100,23 @@ public class TestsForAppium {
 	   DC.setCapability("appActivity", ".authenticator.LaunchActivity");
 	   
 	   //Initiate WebDriver
-	   Global.webDriver = new AppiumDriver(new URL("http://0.0.0.0:4723/wd/hub"), DC);
-	   driver = Global.webDriver;
-	   
-	   //Initiate WebDriver
-	   Global.webDriver = asapDriver.fGetWebDriver();
-	   driver = Global.webDriver;
+	   driver = new AppiumDriver(new URL("http://0.0.0.0:4723/wd/hub"), DC);
 	   
 	   //Set implicit time
 	   if(driver != null) driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 	   
-	 //Initialize Common functions
-	   objCommon = new CommonFunctions();
+	   //Instantiate reporter
+	   Reporter = new Reporting(driver, Dictionary, Environment);
+    
+	   //Create HTML Summary Report
+	   Reporter.fnCreateSummaryReport();
 	   
+	   //Update Jenkins report
+	   Reporter.fnJenkinsReport();
+	   
+	   //Initialize Common functions
+	   objCommon = new CommonFunctions(driver, Reporter);
+
    }
 	   
    @BeforeMethod
@@ -130,7 +133,7 @@ public class TestsForAppium {
 	   asapDriver.fGetDataForTest(testName);
 	   
 	   //Create Individual HTML Report	
-	   Global.Reporter.fnCreateHtmlReport(testName);	  
+	   Reporter.fnCreateHtmlReport(testName);	  
    }
 	   
 	   
@@ -140,14 +143,14 @@ public class TestsForAppium {
 	   System.out.println("testLinkedInSignIn");		   
 	   
 	   //Initialize startup object
-	   StartUpActivity objStartUp = new StartUpActivity();
+	   StartUpActivity objStartUp = new StartUpActivity(driver, Dictionary, Environment, Reporter);
 	   
 	   //Click on Log in
 	   LoginActivity objLoginIn = objStartUp.fClickLogin();
 	   Assert.assertNotNull(objLoginIn,"Click on Login");	   	   
 	   
 	   //Enter Credentials
-	   Assert.assertTrue(objLoginIn.fEnterLoginCredentials(Global.Dictionary.get("USERNAME"), Global.Dictionary.get("PASSWORD")), "Enter Login Credentials");
+	   Assert.assertTrue(objLoginIn.fEnterLoginCredentials(Dictionary.get("USERNAME"), Dictionary.get("PASSWORD")), "Enter Login Credentials");
 	   
 	   //Click on sign in
 	   HomeActivity objHome = objLoginIn.fClickSignIn();
@@ -175,7 +178,7 @@ public class TestsForAppium {
 	   asapDriver.fSetReferenceData();
 	   
 	   //Close Individual Summary Report & Update Summary Report
-	   Global.Reporter.fnCloseHtmlReport(testName);
+	   Reporter.fnCloseHtmlReport(testName);
 	   	   		  
    }
    	   	   
@@ -185,10 +188,10 @@ public class TestsForAppium {
 	   System.out.println("After Class TestsForAppium");
 	   
 	   //Close HTML Summary report
-	   Global.Reporter.fnCloseTestSummary();
+	   Reporter.fnCloseTestSummary();
 	   
 	   //QUit webdriver
-	   if(Global.webDriver != null) Global.webDriver.quit();
+	   if(driver != null) driver.quit();
    }
 	
 

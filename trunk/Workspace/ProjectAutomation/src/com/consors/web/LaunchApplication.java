@@ -14,20 +14,20 @@ public class LaunchApplication {
 	private HashMap<String, String> Dictionary;
 	private HashMap<String, String> Environment;
 	
-	public LaunchApplication()
+	public LaunchApplication(WebDriver GDriver,HashMap<String, String> GDictionary, HashMap<String, String> GEnvironment,Reporting GReporter)
 	{
-		Reporter = Global.Reporter;
-		driver = Global.webDriver;
-		Dictionary = Global.Dictionary;
-		Environment = Global.Environment;
-	}
+		Reporter = GReporter;
+		driver = GDriver;
+		Dictionary = GDictionary;
+		Environment = GEnvironment;
+	}	
 	
 	public HomePage openApplication()
 	{
 		//driver.get("https://www.cortalconsors.de/home");
 		driver.get(Environment.get("CORTOL_URL"));
 		Reporter.fnWriteToHtmlOutput("Navigate to specified URL", "URL: https://www.cortalconsors.de/", "Navigated to URL:https://www.cortalconsors.de/" , "Done");
-		return new HomePage();
+		return new HomePage(driver, Dictionary,Environment,Reporter);
 	}
 	
 	public String getTitle()

@@ -14,19 +14,19 @@ public class LaunchApplication {
 	private HashMap<String, String> Dictionary;
 	private HashMap<String, String> Environment;
 	
-	public LaunchApplication()
+	public LaunchApplication(WebDriver GDriver,HashMap<String, String> GDictionary, HashMap<String, String> GEnvironment,Reporting GReporter)
 	{
-		Reporter = Global.Reporter;
-		driver = Global.webDriver;
-		Dictionary = Global.Dictionary;
-		Environment = Global.Environment;
+		Reporter = GReporter;
+		driver = GDriver;
+		Dictionary = GDictionary;
+		Environment = GEnvironment;
 	}
 	
 	public MercuryHomePage openApplication()
 	{
 		driver.get("http://newtours.demoaut.com/");
 		Reporter.fnWriteToHtmlOutput("Navigate to specified URL", "URL: http://newtours.demoaut.com", "Navigated to URL: http://newtours.demoaut.com" , "Done");
-		return new MercuryHomePage();
+		return new MercuryHomePage(driver,Dictionary,Environment,Reporter);
 	}
 	
 	public String getTitle()

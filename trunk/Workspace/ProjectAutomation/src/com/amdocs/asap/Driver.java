@@ -46,11 +46,20 @@ public class Driver {
 	String dataSheet;
 	String configXML;
 	String User;	
+	
 	HashMap <String, String> orgDictionary = new HashMap<String, String>();
+	HashMap <String, String> Dictionary = new HashMap<String, String>();
+	HashMap <String, String> Environment = new HashMap<String, String>();
+	
+	
 	
 	//Constructor
-	public Driver()
+	public Driver(HashMap <String, String> GDictionary, 	HashMap <String, String> GEnvironment)
 	{
+		
+		Dictionary = GDictionary;
+		Environment = GEnvironment;
+		
 		//Get Root Path
 		User = System.getProperty("user.name");
 		String workingPath = System.getProperty("user.dir");
@@ -62,14 +71,14 @@ public class Driver {
 		dataSheetsPath = storagePath + "\\datasheets";
 		enviromentsPath = storagePath + "\\environments\\Environments.xls";	
 		
-		dataSheet = dataSheetsPath + "\\" + Global.Environment.get("CLASSNAME") + ".xls";
+		dataSheet = dataSheetsPath + "\\" + Environment.get("CLASSNAME") + ".xls";
 		configXML = storagePath + "\\config\\config.xml";
 				
 		//Add to Env Variables
-		Global.Environment.put("ROOTPATH", rootPath);
-		Global.Environment.put("EXECUTIONFOLDERPATH", executionPath);
-		Global.Environment.put("STORAGEFOLDERPATH", storagePath);
-		Global.Environment.put("ENVIRONMENTXLSPATH", enviromentsPath);
+		Environment.put("ROOTPATH", rootPath);
+		Environment.put("EXECUTIONFOLDERPATH", executionPath);
+		Environment.put("STORAGEFOLDERPATH", storagePath);
+		Environment.put("ENVIRONMENTXLSPATH", enviromentsPath);
 		
 	}
 	
@@ -77,14 +86,14 @@ public class Driver {
 	public boolean createExecutionFolders() throws IOException
 	{		
 		//Set execution paths
-		curExecutionFolder = executionPath + "\\" + Global.Environment.get("ENV_CODE") + "\\" + Global.Environment.get("CLASSNAME");
+		curExecutionFolder = executionPath + "\\" + Environment.get("ENV_CODE") + "\\" + Environment.get("CLASSNAME");
 		htmlReportsPath = curExecutionFolder + "\\HTML_Reports";
 		snapShotsPath = htmlReportsPath + "\\Snapshots";	
 		
 		//Put in Environments
-		Global.Environment.put("CURRENTEXECUTIONFOLDER", curExecutionFolder);
-		Global.Environment.put("HTMLREPORTSPATH", htmlReportsPath);
-		Global.Environment.put("SNAPSHOTSFOLDER", snapShotsPath);		
+		Environment.put("CURRENTEXECUTIONFOLDER", curExecutionFolder);
+		Environment.put("HTMLREPORTSPATH", htmlReportsPath);
+		Environment.put("SNAPSHOTSFOLDER", snapShotsPath);		
 		
 		//Delete if folder already exists
 		if (new File(htmlReportsPath).exists())
@@ -144,11 +153,11 @@ public class Driver {
 		    boolean bFlag = false;
 			
 		    /*//Get the Column Index for the VERSION Column
-		    iVersion = fGetColumnIndex(Global.Environment.get("ENVIRONMENTXLSPATH"), "ENVIRONMENTS", "VERSION");
+		    iVersion = fGetColumnIndex(Environment.get("ENVIRONMENTXLSPATH"), "ENVIRONMENTS", "VERSION");
 		    
 		    //Check if the index value is proper
 		    if (iVersion == -1 ){
-		    	System.out.println("Failed to find the Version Column in the file " + Global.Environment.get("ENVIRONMENTXLSPATH"));
+		    	System.out.println("Failed to find the Version Column in the file " + Environment.get("ENVIRONMENTXLSPATH"));
 		    	return false;
 		    }*/
 
@@ -181,7 +190,7 @@ public class Driver {
 	            //String strVersion = sheet.getRow(iRow).getCell(iVersion).getStringCellValue().trim().toUpperCase();
 	            String strEnvironment = sheet.getRow(iRow).getCell(iEnvironment).getStringCellValue().trim().toUpperCase();
 	            //Currently checking only on the basis of envrionment
-	            if (!strEnvironment.equals(Global.Environment.get("ENV_CODE")))			            	
+	            if (!strEnvironment.equals(Environment.get("ENV_CODE")))			            	
 	            {
 	            	continue;
 	            }
@@ -204,7 +213,7 @@ public class Driver {
 	        			strValue = sheet.getRow(iRow).getCell(iCell).getStringCellValue();
 	        		}
 
-	        		Global.Environment.put(strKey.trim(), strValue.trim());
+	        		Environment.put(strKey.trim(), strValue.trim());
 		        }
 		        break;
 		    }
@@ -214,7 +223,7 @@ public class Driver {
 		    //If bFlag is true
 		    if (bFlag == false)
 		    {
-		    	System.out.println("Environment Code " + Global.Environment.get("ENV_CODE") + " not found in the Environment xls");
+		    	System.out.println("Environment Code " + Environment.get("ENV_CODE") + " not found in the Environment xls");
 		    	return false;
 		    }
 
@@ -315,12 +324,12 @@ public class Driver {
 	public boolean fGetDataForTest(String testName)
 	{
 		//DataSheet
-		final String dataSheet = dataSheetsPath + "\\" + Global.Environment.get("CLASSNAME") + ".xls";
+		final String dataSheet = dataSheetsPath + "\\" + Environment.get("CLASSNAME") + ".xls";
 		final String mainSheet = "MAIN"; 
 		final String testNameColumn = "TEST_NAME";
 		
 		//Clear Dictionary
-		Global.Dictionary.clear();
+		Dictionary.clear();
 		orgDictionary.clear();
 		
 		//Get column index of test name column
@@ -387,7 +396,7 @@ public class Driver {
         		//Check key value
         		if(key.isEmpty()) break;
         		else {
-        			Global.Dictionary.put(key,value);
+        			Dictionary.put(key,value);
         			orgDictionary.put(key,value);
         		}
 		    	
@@ -422,7 +431,7 @@ public class Driver {
 			final String krSheet = "KEEP_REFER"; 
 			
 			//Get a set of the entries 
-			Set set = Global.Dictionary.entrySet(); 
+			Set set = Dictionary.entrySet(); 
 	   	
 		   	//Get an iterator 
 		   	Iterator i = set.iterator(); 
@@ -515,7 +524,7 @@ public class Driver {
 		    		    }else{
 		    		    	//Fetch the value from the Environment Hashmap
 		    		    	System.out.println("Key " + value + " not found in KEEP_REFER sheet. Checking in the Enviornment Hashmap");
-		    		    	strKeyValue = Global.Environment.get(value);
+		    		    	strKeyValue = Environment.get(value);
 		    		    	System.out.println("Key " + value + " found in Environment hashmap and value is " + strKeyValue);
 		    		    }
 	    			
@@ -618,9 +627,9 @@ public class Driver {
 	    			tempKey = value.substring(1);
 	    			
 	    			//if Dictionary item has been changed from the objGlobalDictOriginal item
-	    			if (!(Global.Dictionary.get(key)).equalsIgnoreCase(orgDictionary.get(key).substring(1)))
+	    			if (!(Dictionary.get(key)).equalsIgnoreCase(orgDictionary.get(key).substring(1)))
 	    			{
-	    				tempValue = Global.Dictionary.get(key);
+	    				tempValue = Dictionary.get(key);
 	    			}
 	    			else
 	    			{
@@ -739,7 +748,7 @@ public class Driver {
 		/*String URL = "";
 		String strDCName, strDCValue;
 		DesiredCapabilities DC = new DesiredCapabilities();
-		String className = Global.Environment.get("CLASSNAME");		
+		String className = Environment.get("CLASSNAME");		
 		
 		try
 		{

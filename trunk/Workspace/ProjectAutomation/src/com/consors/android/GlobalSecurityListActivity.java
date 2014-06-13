@@ -1,10 +1,12 @@
 package com.consors.android;
 
 import io.appium.java_client.AndroidKeyCode;
+import io.appium.java_client.AppiumDriver;
 
 import java.util.HashMap;
 import java.util.List;
 
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.amdocs.asap.CommonFunctions;
@@ -17,18 +19,19 @@ public class GlobalSecurityListActivity {
 	private io.appium.java_client.AppiumDriver driver;
 	private HashMap<String, String> Dictionary;
 	private HashMap<String, String> Environment;
-	private CommonFunctions objCommon = new CommonFunctions();
+	private CommonFunctions objCommon;
 	
 	//Objects
 	String mnuMarkets = "uiautomator:=new UiSelector().text(\"Kurse/Märkte\")";	
 	
 	//COnstructor
-	public GlobalSecurityListActivity()
+	public GlobalSecurityListActivity(WebDriver GDriver,HashMap<String, String> GDictionary, HashMap<String, String> GEnvironment,Reporting GReporter)
 	{
-		Reporter = Global.Reporter;
-		driver = (io.appium.java_client.AppiumDriver)Global.webDriver;
-		Dictionary = Global.Dictionary;
-		Environment = Global.Environment;
+		Reporter = GReporter;
+		driver = (AppiumDriver) GDriver;
+		Dictionary = GDictionary;
+		Environment = GEnvironment;
+		objCommon = new CommonFunctions(driver, Reporter);
 	}
 	
 	
@@ -49,7 +52,7 @@ public class GlobalSecurityListActivity {
 		if(objCommon.fGuiClick(mnuMarkets)==false) return null;
 		
 		//return
-		return new GlobalMarketListActivity();
+		return new GlobalMarketListActivity(driver, Dictionary, Environment, Reporter);
 	}
 	
 	
@@ -66,7 +69,7 @@ public class GlobalSecurityListActivity {
 		if(objCommon.fGuiClick("uiautomator:=new UiSelector().text(\"" + currency + "\")")==false) return null;
 		
 		//return
-		return new SnapShotActivity();
+		return new SnapShotActivity(driver, Dictionary, Environment, Reporter);
 	}
 
 }

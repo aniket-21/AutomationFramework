@@ -1,8 +1,11 @@
 package com.consors.android;
 
 import io.appium.java_client.AndroidKeyCode;
+import io.appium.java_client.AppiumDriver;
 
 import java.util.HashMap;
+
+import org.openqa.selenium.WebDriver;
 
 import com.amdocs.asap.CommonFunctions;
 import com.amdocs.asap.Global;
@@ -15,18 +18,20 @@ public class GlobalMarketListActivity {
 	private io.appium.java_client.AppiumDriver driver;
 	private HashMap<String, String> Dictionary;
 	private HashMap<String, String> Environment;
-	private CommonFunctions objCommon = new CommonFunctions();
+	private CommonFunctions objCommon;
 	
 	//Objects
 	String txtDevises = "uiautomator:=new UiSelector().text(\"Währungen\")";	
 	
+	
 	//COnstructor
-	public GlobalMarketListActivity()
+	public GlobalMarketListActivity(WebDriver GDriver,HashMap<String, String> GDictionary, HashMap<String, String> GEnvironment,Reporting GReporter)
 	{
-		Reporter = Global.Reporter;
-		driver = (io.appium.java_client.AppiumDriver)Global.webDriver;
-		Dictionary = Global.Dictionary;
-		Environment = Global.Environment;
+		Reporter = GReporter;
+		driver = (AppiumDriver) GDriver;
+		Dictionary = GDictionary;
+		Environment = GEnvironment;
+		objCommon = new CommonFunctions(driver, Reporter);
 	}
 	
 	//*****************************************************************************************
@@ -42,7 +47,7 @@ public class GlobalMarketListActivity {
 		if(objCommon.fGuiClick(txtDevises)==false) return null;
 		
 		//return
-		return new GlobalSecurityListActivity();
+		return new GlobalSecurityListActivity(driver, Dictionary, Environment, Reporter);
 	}
 
 }

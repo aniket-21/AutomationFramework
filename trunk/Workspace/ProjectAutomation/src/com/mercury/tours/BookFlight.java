@@ -14,18 +14,18 @@ public class BookFlight {
 	private WebDriver driver;
 	private HashMap<String, String> Dictionary;
 	private HashMap<String, String> Environment;
-	private CommonFunctions objCommon = new CommonFunctions();
+	private CommonFunctions objCommon;
 	
 	public String edtCreditNumber = "Xpath:=//input[@name=\"creditnumber\"]";
     public String webbtnBuyFlights = "Name:=buyFlights";
     
-	//Define the constructor
-	public BookFlight()
+	public BookFlight(WebDriver GDriver,HashMap<String, String> GDictionary, HashMap<String, String> GEnvironment,Reporting GReporter)
 	{
-		Reporter = Global.Reporter;
-		driver = Global.webDriver;
-		Dictionary = Global.Dictionary;
-		Environment = Global.Environment;
+		Reporter = GReporter;
+		driver = GDriver;
+		Dictionary = GDictionary;
+		Environment = GEnvironment;
+		objCommon = new CommonFunctions(driver, Reporter);
 	}
 	
 	//CommonFunctions objCommon = new CommonFunctions(driver, Reporter);
@@ -72,7 +72,7 @@ public class BookFlight {
         {
         	return null;
        	}
-		return new FlightConfirmation();
+		return new FlightConfirmation(driver,Dictionary,Environment,Reporter);
 	}
 	
 	

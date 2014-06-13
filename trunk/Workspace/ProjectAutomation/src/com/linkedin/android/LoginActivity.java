@@ -19,19 +19,20 @@ public class LoginActivity {
 	private io.appium.java_client.AppiumDriver driver;
 	private HashMap<String, String> Dictionary;
 	private HashMap<String, String> Environment;
-	private CommonFunctions objCommon = new CommonFunctions();
+	private CommonFunctions objCommon;
 	
 	//Objects
 	String edtCredentials = "AppClassName:=android.widget.EditText";
 	String btnSignIn = "Accessibility_id:=Sign In";
-	
+		
 	//COnstructor
-	public LoginActivity()
+	public LoginActivity(WebDriver GDriver,HashMap<String, String> GDictionary, HashMap<String, String> GEnvironment,Reporting GReporter)
 	{
-		Reporter = Global.Reporter;
-		driver = (io.appium.java_client.AppiumDriver)Global.webDriver;
-		Dictionary = Global.Dictionary;
-		Environment = Global.Environment;
+		Reporter = GReporter;
+		driver = (AppiumDriver) GDriver;
+		Dictionary = GDictionary;
+		Environment = GEnvironment;
+		objCommon = new CommonFunctions(driver, Reporter);
 	}
 	
 	//*****************************************************************************************
@@ -69,7 +70,7 @@ public class LoginActivity {
 		if(objCommon.fGuiClick(btnSignIn)==false) return null;
 		
 		//return
-		return new HomeActivity();
+		return new HomeActivity(driver, Dictionary, Environment, Reporter);
 	}
 
 }

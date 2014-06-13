@@ -18,14 +18,17 @@ public class SelectFlight {
 	private CommonFunctions objCommon;
 	
 	public String webbtnReserveFlights = "Xpath:=//input[@name=\"reserveFlights\"]";
+	
 	//Define the constructor
-	public SelectFlight()
+	public SelectFlight(WebDriver GDriver,HashMap<String, String> GDictionary, HashMap<String, String> GEnvironment,Reporting GReporter)
 	{
-		Reporter = Global.Reporter;
-		driver = Global.webDriver;
-		Dictionary = Global.Dictionary;
-		Environment = Global.Environment;
+		Reporter = GReporter;
+		driver = GDriver;
+		Dictionary = GDictionary;
+		Environment = GEnvironment;
+		objCommon = new CommonFunctions(driver, Reporter);
 	}
+	
 	//CommonFunctions objCommon = new CommonFunctions(driver, Reporter);
 	
 	public String getTitle()
@@ -56,7 +59,7 @@ public class SelectFlight {
         	return null;
        	}
 
-		return new BookFlight();
+		return new BookFlight(driver,Dictionary,Environment,Reporter);
 	}
 	
 	

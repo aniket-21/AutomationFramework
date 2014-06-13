@@ -10,18 +10,15 @@ import com.amdocs.asap.Reporting;
 
 public class CheckingAccountDetails {
 
-	
-
 		private Reporting Reporter;
 		private WebDriver driver;
 		private HashMap<String, String> Dictionary;
 		private HashMap<String, String> Environment;
-		private CommonFunctions objCommon = new CommonFunctions();
+		private CommonFunctions objCommon;
 		
-		public String edtCreditNumber = "Xpath:=//input[@name=\"creditnumber\"]";
-	
+		//Objects
+		public String edtCreditNumber = "Xpath:=//input[@name=\"creditnumber\"]";	
 	    public String rdbtnGenderMale = "Xpath:=//span[@class=\"ev-formfieldradiobutton-label-text\" and text()=\"Herr\"]";   
-	
 	    public String rdbtnGenderFemale = "Xpath:=//span[@class=\"ev-formfieldradiobutton-label-text\" and text()=\"Freu\"]";		
 	    public String edtFirstName = "name:=personData.firstname";
 	    public String edtLastName = "id:=personData_lastname";
@@ -59,13 +56,13 @@ public class CheckingAccountDetails {
 	    public String edtTANProcedure2= "name:=tanProcedure.phoneNumber2";
 		
 	    
-	    //Define the constructor
-		public CheckingAccountDetails()
+	    public CheckingAccountDetails(WebDriver GDriver,HashMap<String, String> GDictionary, HashMap<String, String> GEnvironment,Reporting GReporter)
 		{
-			Reporter = Global.Reporter;
-			driver = Global.webDriver;
-			Dictionary = Global.Dictionary;
-			Environment = Global.Environment;
+			Reporter = GReporter;
+			driver = GDriver;
+			Dictionary = GDictionary;
+			Environment = GEnvironment;
+			objCommon = new CommonFunctions(driver, Reporter);
 		}
 		
 		//CommonFunctions objCommon = new CommonFunctions(driver, Reporter);
@@ -320,14 +317,7 @@ public class CheckingAccountDetails {
 			
 			}
 			return true;
-		}
-		
-		//Enter Desired TAN Message
-		public CheckingAccountDetails OpenCheckingAccountType()
-		{			
-	        
-			return new CheckingAccountDetails();
-		}
+		}				
 	}
 
 

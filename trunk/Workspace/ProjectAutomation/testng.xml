@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Suite" parallel="none">
-  <!--  
+<suite name="Suite" parallel="tests" thread-count="2">
   <test name="MercuryTest">
     <classes>
       <class name="test.java.TestsForMercuryTours">
@@ -12,6 +11,8 @@
        </class>   
     </classes>
   </test> 
+  
+  <!-- 
   <test name="AppiumTest">
       <classes>
           <class name="test.java.TestsForAppium">
@@ -22,7 +23,7 @@
           </class>
       </classes>
   </test>
-  -->
+  
   <test name="ConsorPOCAndroid">
       <classes>
           <class name="test.java.TestsForConsorsAndroid">
@@ -32,6 +33,8 @@
           </class>
       </classes>
   </test>
+  -->
+  
   <test name="ConsorPOCWeb">
       <classes>
           <class name="test.java.TestsForConsorsWeb">

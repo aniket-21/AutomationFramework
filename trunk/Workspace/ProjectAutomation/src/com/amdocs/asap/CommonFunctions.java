@@ -51,10 +51,10 @@ public class CommonFunctions {
 	private WebDriver driver;
 	
 	//Constructor
-	public  CommonFunctions()
+	public  CommonFunctions(WebDriver GDriver, Reporting GReporter)
 	{
-		Reporter = Global.Reporter;
-		driver = Global.webDriver;
+		Reporter = GReporter;
+		driver = GDriver;
 		
 	}
 	

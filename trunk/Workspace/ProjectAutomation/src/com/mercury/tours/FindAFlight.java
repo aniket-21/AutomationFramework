@@ -15,15 +15,16 @@ public class FindAFlight {
 	private WebDriver driver;
 	private HashMap<String, String> Dictionary;
 	private HashMap<String, String> Environment;
-	private CommonFunctions objCommon = new CommonFunctions();
+	private CommonFunctions objCommon;
 	
-	//Define the constructor
-	public FindAFlight()
+	
+	public FindAFlight(WebDriver GDriver,HashMap<String, String> GDictionary, HashMap<String, String> GEnvironment,Reporting GReporter)
 	{
-		Reporter = Global.Reporter;
-		driver = Global.webDriver;
-		Dictionary = Global.Dictionary;
-		Environment = Global.Environment;
+		Reporter = GReporter;
+		driver = GDriver;
+		Dictionary = GDictionary;
+		Environment = GEnvironment;
+		objCommon = new CommonFunctions(driver, Reporter);
 	}
 
 	
@@ -110,6 +111,6 @@ public class FindAFlight {
 			return null;
 		}
 	
-		return new SelectFlight();
+		return new SelectFlight(driver,Dictionary,Environment,Reporter);
 	}
 }

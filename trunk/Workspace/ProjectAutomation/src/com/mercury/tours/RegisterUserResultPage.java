@@ -15,16 +15,17 @@ public class RegisterUserResultPage {
 	private WebDriver driver;
 	private HashMap<String, String> Dictionary;
 	private HashMap<String, String> Environment;
-	private CommonFunctions objCommon = new CommonFunctions();
+	private CommonFunctions objCommon;
 	public String lnkFlights = "LinkText:=Flights";
 	
 	//Define the constructor
-	public RegisterUserResultPage()
+	public RegisterUserResultPage(WebDriver GDriver,HashMap<String, String> GDictionary, HashMap<String, String> GEnvironment,Reporting GReporter)
 	{
-		Reporter = Global.Reporter;
-		driver = Global.webDriver;
-		Dictionary = Global.Dictionary;
-		Environment = Global.Environment;
+		Reporter = GReporter;
+		driver = GDriver;
+		Dictionary = GDictionary;
+		Environment = GEnvironment;
+		objCommon = new CommonFunctions(driver, Reporter);
 	}
 	
     
@@ -45,7 +46,7 @@ public class RegisterUserResultPage {
 
     	Reporter.fnWriteToHtmlOutput("Click Link", "Link: Flights", "Cliked on Link: Flights", "Done");    	
             	
-    	return new FindAFlight();
+    	return new FindAFlight(driver,Dictionary,Environment,Reporter);
     }
     
     

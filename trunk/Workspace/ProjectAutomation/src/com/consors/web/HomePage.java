@@ -14,18 +14,20 @@ public class HomePage {
 	private WebDriver driver;
 	private HashMap<String, String> Dictionary;
 	private HashMap<String, String> Environment;
-	private CommonFunctions objCommon = new CommonFunctions();
+	private CommonFunctions objCommon;
 	
 	public String lnkCurrentAccount = "partiallinktext:=Girokonto";
 	public String webbtnOpenCheckingAccount = "partiallinktext:=Girokonto eröffnen";
     
 	//Define the constructor
-	public HomePage()
+	//Define the constructor
+    public HomePage(WebDriver GDriver,HashMap<String, String> GDictionary, HashMap<String, String> GEnvironment,Reporting GReporter)
 	{
-		Reporter = Global.Reporter;
-		driver = Global.webDriver;
-		Dictionary = Global.Dictionary;
-		Environment = Global.Environment;
+		Reporter = GReporter;
+		driver = GDriver;
+		Dictionary = GDictionary;
+		Environment = GEnvironment;
+		objCommon = new CommonFunctions(driver, Reporter);
 	}	
 	
 	
@@ -71,7 +73,7 @@ public class HomePage {
 	        	return null;
 	       	}
 		 
-		return  new CheckingAccountEntry();
+		return  new CheckingAccountEntry(driver, Dictionary,Environment,Reporter);
 	}
 	
 	

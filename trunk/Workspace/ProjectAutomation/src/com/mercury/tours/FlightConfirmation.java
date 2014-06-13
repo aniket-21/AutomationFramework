@@ -14,16 +14,18 @@ public class FlightConfirmation {
 	private WebDriver driver;
 	private HashMap<String, String> Dictionary;
 	private HashMap<String, String> Environment;
-	private CommonFunctions objCommon = new CommonFunctions();
+	private CommonFunctions objCommon;
 	
 	public String webbtnReserveFlights = "Xpath:=//input[@name=\"reserveFlights\"]";
+	
 	//Define the constructor
-	public FlightConfirmation()
+	public FlightConfirmation(WebDriver GDriver,HashMap<String, String> GDictionary, HashMap<String, String> GEnvironment,Reporting GReporter)
 	{
-		Reporter = Global.Reporter;
-		driver = Global.webDriver;
-		Dictionary = Global.Dictionary;
-		Environment = Global.Environment;
+		Reporter = GReporter;
+		driver = GDriver;
+		Dictionary = GDictionary;
+		Environment = GEnvironment;
+		objCommon = new CommonFunctions(driver, Reporter);
 	}
 	//CommonFunctions objCommon = new CommonFunctions(driver, Reporter);
 	
@@ -55,6 +57,6 @@ public class FlightConfirmation {
         	return null;
        	}
 
-		return new BookFlight();
+		return new BookFlight(driver,Dictionary,Environment,Reporter);
 	}	
 }

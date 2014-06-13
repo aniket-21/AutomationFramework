@@ -29,18 +29,17 @@ public class RegisterUser {
 	private WebDriver driver;
 	private HashMap<String, String> Dictionary;
 	private HashMap<String, String> Environment;
-	private CommonFunctions objCommon = new CommonFunctions()
-	;
-	//Define the constructor
-	public RegisterUser()
-	{
-		Reporter = Global.Reporter;
-		driver = Global.webDriver;
-		Dictionary = Global.Dictionary;
-		Environment = Global.Environment;
-	}
-
+	private CommonFunctions objCommon;
 	
+	//Define the constructor
+	public RegisterUser(WebDriver GDriver,HashMap<String, String> GDictionary, HashMap<String, String> GEnvironment,Reporting GReporter)
+	{
+		Reporter = GReporter;
+		driver = GDriver;
+		Dictionary = GDictionary;
+		Environment = GEnvironment;
+		objCommon = new CommonFunctions(driver, Reporter);
+	}
 	
 	 //*****************************************************************************************
     //*	Name		    : fGuiRegisterUser
@@ -136,7 +135,7 @@ public class RegisterUser {
 			
            
  			//return True in case the test case passes
-			return new RegisterUserResultPage();
+			return new RegisterUserResultPage(driver,Dictionary,Environment,Reporter);
 		} catch (Exception e)
 		{
 			System.out.print("Exception is " + e);

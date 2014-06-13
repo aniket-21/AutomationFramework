@@ -4,7 +4,6 @@ import io.appium.java_client.AppiumDriver;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
@@ -20,14 +19,11 @@ import org.testng.annotations.Test;
 
 import com.amdocs.asap.CommonFunctions;
 import com.amdocs.asap.Driver;
-import com.amdocs.asap.Global;
 import com.amdocs.asap.Reporting;
 import com.consors.android.GlobalMarketListActivity;
 import com.consors.android.GlobalSecurityListActivity;
 import com.consors.android.SnapShotActivity;
-import com.linkedin.android.HomeActivity;
-import com.linkedin.android.LoginActivity;
-import com.linkedin.android.StartUpActivity;
+
 
 public class TestsForConsorsAndroid {
 	

@@ -1,13 +1,7 @@
 package test.java;
 
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.Test;
-import org.testng.annotations.BeforeClass;
-import org.testng.AssertJUnit;
-
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
@@ -21,7 +15,6 @@ import org.testng.annotations.Test;
 
 import com.amdocs.asap.CommonFunctions;
 import com.amdocs.asap.Driver;
-import com.amdocs.asap.Global;
 import com.amdocs.asap.Reporting;
 import com.consors.web.CheckingAccountDetails;
 import com.consors.web.CheckingAccountEntry;

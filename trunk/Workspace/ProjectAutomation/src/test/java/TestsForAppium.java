@@ -4,50 +4,22 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeClass;
 import org.testng.Assert;
-import org.testng.AssertJUnit;
 
 import io.appium.java_client.AppiumDriver;
-import io.selendroid.SelendroidCapabilities;
-import io.selendroid.SelendroidDriver;
 
-
-
-
-
-
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import org.testng.*;
-import org.testng.annotations.*;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.ie.InternetExplorerDriverService;
-import org.openqa.selenium.remote.CapabilityType;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
 
+import org.testng.annotations.*;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import com.amdocs.asap.CommonFunctions;
 import com.amdocs.asap.Driver;
-import com.amdocs.asap.Global;
 import com.amdocs.asap.Reporting;
-//import com.amdocs.asap.AppiumDriver;
-
 import com.linkedin.android.*;
 
 public class TestsForAppium {  

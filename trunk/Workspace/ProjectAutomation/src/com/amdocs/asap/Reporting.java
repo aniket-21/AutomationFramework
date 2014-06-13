@@ -510,8 +510,7 @@ public class Reporting {
     	String jenkinsFilePath = Global.Environment.get("EXECUTIONFOLDERPATH") + "\\" + Global.Environment.get("ENV_CODE");
     	String jenkinsHTMLRep = jenkinsFilePath + "\\Jenkins_html_report.html";
     	String relativeClassSummary = Global.Environment.get("CLASSNAME") + "\\HTML_Reports\\SummaryReport.html";
-    	String sRowColor = "";
-    	
+    	String sRowColor = "";    	
 		
     	
     	try 

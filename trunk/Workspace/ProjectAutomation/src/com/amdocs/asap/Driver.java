@@ -24,6 +24,7 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -734,8 +735,8 @@ public class Driver {
    //*****************************************************************************************
 	public WebDriver fGetWebDriver() throws MalformedURLException
 	{
-		String webDriverType;
-		String URL = "";
+		String webDriverType = System.getProperty("browserName");
+		/*String URL = "";
 		String strDCName, strDCValue;
 		DesiredCapabilities DC = new DesiredCapabilities();
 		String className = Global.Environment.get("CLASSNAME");		
@@ -824,26 +825,21 @@ public class Driver {
 		catch(Exception e){
 			e.printStackTrace();
 			return null;
-		}
+		}*/
 		
 		//Define webdriver
 		WebDriver wbDriver;
-		if (webDriverType.equalsIgnoreCase("appium"))
-		{
-			//return new AppiumDriver(new URL(URL), DC);
-			return new AppiumDriver(new URL(URL), DC);
-		}
-		else if (webDriverType.equalsIgnoreCase("chrome"))
+		if (webDriverType.equalsIgnoreCase("chrome") || webDriverType.isEmpty())
 		{
 			System.setProperty("webdriver.chrome.driver", storagePath + "\\drivers\\chromedriver.exe");
-			return new ChromeDriver(DC);
+			return new ChromeDriver();
 		}
 		else if (webDriverType.equalsIgnoreCase("firefox")){
-			return new FirefoxDriver(DC);
+			return new FirefoxDriver();
 		}
 		else if (webDriverType.equalsIgnoreCase("ie")){
 			System.setProperty("webdriver.ie.driver", storagePath + "\\drivers\\IEDriver.exe");
-			return new InternetExplorerDriver(DC);
+			return new InternetExplorerDriver();
 		}
 		else{
 			System.out.println("Driver type " + webDriverType + " is invalid");

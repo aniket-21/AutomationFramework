@@ -51,22 +51,19 @@ public class TestsForMercuryTours {
 	   //Initiate asapDriver
 	   asapDriver = new Driver();	   	  
 	   
-		//Check if POM has env, if null, get it from config file
-	   if(System.getProperty("envName")== null) 		   
-		   env = asapDriver.fGetEnv();	  		   
-	   else 
-		   env = System.getProperty("envName");		
-	  
-		
+	   //Check if POM has env, if null, get it from config file
+	   	env = System.getProperty("envName");	
+	   	Assert.assertNotNull(env);
+	  		
 		//Add env global environments
 		Global.Environment.put("ENV_CODE", env);
 				
 		//Create folder structure
-		asapDriver.createExecutionFolders();	 		  
+		Assert.assertTrue(asapDriver.createExecutionFolders());	 		  
 		
 	   //Get Environment Variables
-	   asapDriver.fetchEnvironmentDetails();
-     
+		Assert.assertTrue(asapDriver.fetchEnvironmentDetails());
+    
 	   //Create HTML Summary Report
 	   Global.Reporter.fnCreateSummaryReport();
 	   

@@ -3,10 +3,14 @@ package test.java;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeClass;
+import org.testng.Assert;
 import org.testng.AssertJUnit;
 
+import io.appium.java_client.AppiumDriver;
 import io.selendroid.SelendroidCapabilities;
 import io.selendroid.SelendroidDriver;
+
+
 
 
 
@@ -58,7 +62,7 @@ public class TestsForAppium {
 
 	
   @BeforeClass
-  public void beforeClass() throws MalformedURLException
+  public void beforeClass() throws IOException
   {
 	  System.out.println("Before Class TestsForAppium");
 	
@@ -71,27 +75,34 @@ public class TestsForAppium {
 	   asapDriver = new Driver();	   
 	  
 	   //Check if POM has env, if null, get it from config file
-	   if(System.getProperty("envName")==null) env = asapDriver.fGetEnv();
-	   else env = System.getProperty("envName");	   	   
-	   
-	   //Add env to global environments
-	   Global.Environment.put("ENV_CODE", env);
-		
-	 try {
-		   asapDriver.createExecutionFolders();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}			 		  
+	   	env = System.getProperty("envName");	
+	   	Assert.assertNotNull(env);
+	  		
+		//Add env global environments
+		Global.Environment.put("ENV_CODE", env);
+				
+		//Create folder structure
+		Assert.assertTrue(asapDriver.createExecutionFolders());	 		  
 		
 	   //Get Environment Variables
-	   asapDriver.fetchEnvironmentDetails();
-     
+		Assert.assertTrue(asapDriver.fetchEnvironmentDetails());
+    
 	   //Create HTML Summary Report
 	   Global.Reporter.fnCreateSummaryReport();
 	   
 	   //Update Jenkins report
 	   Global.Reporter.fnJenkinsReport();
+	   
+	   //Desired Caps
+	   DesiredCapabilities DC = new DesiredCapabilities();
+	   DC.setCapability("automationName", "Appium");
+	   DC.setCapability("platformName", "Android");
+	   DC.setCapability("appPackage", "com.linkedin.android");
+	   DC.setCapability("appActivity", ".authenticator.LaunchActivity");
+	   
+	   //Initiate WebDriver
+	   Global.webDriver = new AppiumDriver(new URL("http://0.0.0.0:4723/wd/hub"), DC);
+	   driver = Global.webDriver;
 	   
 	   //Initiate WebDriver
 	   Global.webDriver = asapDriver.fGetWebDriver();

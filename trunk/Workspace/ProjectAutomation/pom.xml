@@ -22,6 +22,7 @@
         <configuration>
           <systemPropertyVariables>
             <envName>${env.name}</envName>
+            <browserName>${browser.name}</browserName>
             <jobName>${job.name}</jobName>
             <buildNumber>${build.number}</buildNumber>           
          </systemPropertyVariables>

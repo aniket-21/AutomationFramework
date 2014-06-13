@@ -1791,6 +1791,12 @@ public class CommonFunctions {
     		return false;
     	}    	    	    
     	
+    	try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	
     	Reporter.fnWriteToHtmlOutput("Rotate Screen", "Set screen orientation to " + strOrientation, "Orientation Set Successfully", "Pass");
     	return true;

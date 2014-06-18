@@ -73,6 +73,7 @@ public class TestsForConsorsAndroid {
 		   DC.setCapability("platformName", "Android");
 		   DC.setCapability("appPackage", "com.consors.android.de");
 		   DC.setCapability("appActivity", "com.consors.android.ui.LauncherActivity");
+		   DC.setCapability("deviceName", "Samsung Galaxy Note");
 		   
 		   //Initiate WebDriver
 		   driver = new AppiumDriver(new URL("http://0.0.0.0:4723/wd/hub"), DC);

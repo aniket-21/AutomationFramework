@@ -1,30 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Suite" parallel="tests" thread-count="2">
-  <!--
-  <test name="MercuryTest">
-    <classes>
-      <class name="test.java.TestsForMercuryTours">
-          <methods>
-              <include name="testRegisterUser"/>
-              <include name="testLogin"/>
-          </methods>      
-       </class>   
-    </classes>
-  </test> 
-  
-  
-  <test name="AppiumTest">
-      <classes>
-          <class name="test.java.TestsForAppium">
-              <method>
-                  <include name="testLinkedInSignIn"/>
-				  <include name="testTwo"/> 
-              </method>			             
-          </class>
-      </classes>
-  </test>    
-  -->
   
   <test name="ConsorPOCAndroid">
       <classes>

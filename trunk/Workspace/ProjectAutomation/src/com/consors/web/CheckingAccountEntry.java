@@ -14,19 +14,20 @@ public class CheckingAccountEntry {
 	private WebDriver driver;
 	private HashMap<String, String> Dictionary;
 	private HashMap<String, String> Environment;
-	private CommonFunctions objCommon = new CommonFunctions();
+	private CommonFunctions objCommon;
 	
 	public String rdbtnNonExistingCustomer = "id:=ev-customer-of-cc-no";    
     public String rdbtnNoJointAccount="id:=ev-joint-account-no";
     public String btnMore="id:=expoButtonNext";
     
 	//Define the constructor
-	public CheckingAccountEntry()
+    public CheckingAccountEntry(WebDriver GDriver,HashMap<String, String> GDictionary, HashMap<String, String> GEnvironment,Reporting GReporter)
 	{
-		Reporter = Global.Reporter;
-		driver = Global.webDriver;
-		Dictionary = Global.Dictionary;
-		Environment = Global.Environment;
+		Reporter = GReporter;
+		driver = GDriver;
+		Dictionary = GDictionary;
+		Environment = GEnvironment;
+		objCommon = new CommonFunctions(driver, Reporter);
 	}
 	
 	//CommonFunctions objCommon = new CommonFunctions(driver, Reporter);
@@ -92,7 +93,7 @@ public class CheckingAccountEntry {
 	     }			
 		 
 		 
-		return new CheckingAccountDetails();  
+		return new CheckingAccountDetails(driver, Dictionary,Environment,Reporter);  
 
        
 	}

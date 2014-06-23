@@ -13,10 +13,8 @@ import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.Rotatable;
+
 
 public class CommonFunctions {
 	
@@ -51,10 +49,10 @@ public class CommonFunctions {
 	private WebDriver driver;
 	
 	//Constructor
-	public  CommonFunctions()
+	public  CommonFunctions(WebDriver GDriver, Reporting GReporter)
 	{
-		Reporter = Global.Reporter;
-		driver = Global.webDriver;
+		Reporter = GReporter;
+		driver = GDriver;
 		
 	}
 	

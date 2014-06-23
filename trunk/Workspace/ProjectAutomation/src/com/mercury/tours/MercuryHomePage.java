@@ -14,18 +14,17 @@ public class MercuryHomePage {
 	private WebDriver driver;
 	private HashMap<String, String> Dictionary;
 	private HashMap<String, String> Environment;
-	private CommonFunctions objCommon = new CommonFunctions();
+	private CommonFunctions objCommon;
 	
 	//Define the constructor
-	public MercuryHomePage()
+	public MercuryHomePage(WebDriver GDriver,HashMap<String, String> GDictionary, HashMap<String, String> GEnvironment,Reporting GReporter)
 	{
-		Reporter = Global.Reporter;
-		driver = Global.webDriver;
-		Dictionary = Global.Dictionary;
-		Environment = Global.Environment;
+		Reporter = GReporter;
+		driver = GDriver;
+		Dictionary = GDictionary;
+		Environment = GEnvironment;
+		objCommon = new CommonFunctions(driver, Reporter);
 	}
-	
-	
 
 	public String lnkRegister = "LinkText:=REGISTER";
     public String edtLogin = "Name:=userName";
@@ -53,7 +52,7 @@ public class MercuryHomePage {
     	{
     		return null;
     	}
-    	return new FindAFlight();
+    	return new FindAFlight(driver,Dictionary,Environment,Reporter);
     }
     
     //Method to Return object of Register User class
@@ -65,7 +64,7 @@ public class MercuryHomePage {
     	}
     	Reporter.fnWriteToHtmlOutput("Click Link", "Link: REGISTER", "Cliked on Link: REGISTER", "Done");    	
             	
-    	return new RegisterUser();
+    	return new RegisterUser(driver,Dictionary,Environment,Reporter);
     }
     
     

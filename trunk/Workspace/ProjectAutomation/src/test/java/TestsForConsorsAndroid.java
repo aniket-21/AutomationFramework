@@ -4,8 +4,8 @@ import io.appium.java_client.AppiumDriver;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
@@ -19,13 +19,11 @@ import org.testng.annotations.Test;
 
 import com.amdocs.asap.CommonFunctions;
 import com.amdocs.asap.Driver;
-import com.amdocs.asap.Global;
+import com.amdocs.asap.Reporting;
 import com.consors.android.GlobalMarketListActivity;
 import com.consors.android.GlobalSecurityListActivity;
 import com.consors.android.SnapShotActivity;
-import com.linkedin.android.HomeActivity;
-import com.linkedin.android.LoginActivity;
-import com.linkedin.android.StartUpActivity;
+
 
 public class TestsForConsorsAndroid {
 	
@@ -38,6 +36,10 @@ public class TestsForConsorsAndroid {
 	Driver asapDriver;
 	WebDriver driver;
 	CommonFunctions objCommon;
+	
+	HashMap <String, String> Environment = new HashMap<String, String>();
+	HashMap <String, String> Dictionary = new HashMap<String, String>();
+	Reporting Reporter;
 		
 	@BeforeClass
 	  public void beforeClass() throws IOException
@@ -47,46 +49,49 @@ public class TestsForConsorsAndroid {
 		  //Set the DataSheet name by getting the class name
 		  String[] strClassNameArray = this.getClass().getName().split("\\.");
 		  className = strClassNameArray[strClassNameArray.length-1];
-		  Global.Environment.put("CLASSNAME", className);		
+		  Environment.put("CLASSNAME", className);		
 		  	 
-		   //Initiate asapDriver
-		   asapDriver = new Driver();	   
+		//Initiate asapDriver
+		  asapDriver = new Driver(Dictionary, Environment);   	   
 		  
 		   //Check if POM has env, if null, get it from config file
 		   	env = System.getProperty("envName");	
 		   	Assert.assertNotNull(env);
 		  		
 			//Add env global environments
-			Global.Environment.put("ENV_CODE", env);
+			Environment.put("ENV_CODE", env);
 					
 			//Create folder structure
 			Assert.assertTrue(asapDriver.createExecutionFolders());	 		  
 			
 		   //Get Environment Variables
-			Assert.assertTrue(asapDriver.fetchEnvironmentDetails());
-	     
-		   //Create HTML Summary Report
-		   Global.Reporter.fnCreateSummaryReport();
-		   
-		   //Update Jenkins report
-		   Global.Reporter.fnJenkinsReport();
-		   
-		   //Desired Caps
+		   Assert.assertTrue(asapDriver.fetchEnvironmentDetails());
+			
+			//Desired Caps
 		   DesiredCapabilities DC = new DesiredCapabilities();
 		   DC.setCapability("automationName", "Appium");
 		   DC.setCapability("platformName", "Android");
 		   DC.setCapability("appPackage", "com.consors.android.de");
 		   DC.setCapability("appActivity", "com.consors.android.ui.LauncherActivity");
+		   DC.setCapability("deviceName", "Samsung Galaxy Note");
 		   
 		   //Initiate WebDriver
-		   Global.webDriver = new AppiumDriver(new URL("http://0.0.0.0:4723/wd/hub"), DC);
-		   driver = Global.webDriver;
+		   driver = new AppiumDriver(new URL("http://0.0.0.0:4723/wd/hub"), DC);
 		   
 		   //Set implicit time
 		   if(driver != null) driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		   
-		 //Initialize Common functions
-		   objCommon = new CommonFunctions();
+		   //Instantiate reporter
+		   Reporter = new Reporting(driver, Dictionary, Environment);
+	     
+		   //Create HTML Summary Report
+		   Reporter.fnCreateSummaryReport();
+		   
+		   //Update Jenkins report
+		   Reporter.fnJenkinsReport();
+		   		   		   
+		   //Initialize Common functions
+		   objCommon = new CommonFunctions(driver, Reporter);
 		   
 	   }
 		   
@@ -102,7 +107,7 @@ public class TestsForConsorsAndroid {
 		   asapDriver.fGetDataForTest(testName);
 		   
 		   //Create Individual HTML Report	
-		   Global.Reporter.fnCreateHtmlReport(testName);	  
+		   Reporter.fnCreateHtmlReport(testName);	  
 	   }
 	   
 	   
@@ -119,7 +124,7 @@ public class TestsForConsorsAndroid {
 		   asapDriver.fSetReferenceData();
 		   
 		   //Close Individual Summary Report & Update Summary Report
-		   Global.Reporter.fnCloseHtmlReport(testName);
+		   Reporter.fnCloseHtmlReport(testName);
 		   	   		  
 	   }
 	   
@@ -136,7 +141,7 @@ public class TestsForConsorsAndroid {
 		   Assert.assertTrue(objCommon.fValidateCurrentActivity(".ui.GlobalSecurityListActivity"), "Validate if Global Security List Activity Opened");
 		   
 		   //Create Object
-		   GlobalSecurityListActivity objGSL = new GlobalSecurityListActivity();
+		   GlobalSecurityListActivity objGSL = new GlobalSecurityListActivity(driver,Dictionary,Environment,Reporter);
 		   
 		   //Navigate to Marches
 		   GlobalMarketListActivity objGML = objGSL.fNavigateToMarches();
@@ -176,10 +181,10 @@ public class TestsForConsorsAndroid {
 		   System.out.println("After Class TestsForAppium");
 		   
 		   //Close HTML Summary report
-		   Global.Reporter.fnCloseTestSummary();
+		   Reporter.fnCloseTestSummary();
 		   
 		   //QUit webdriver
-		   if(Global.webDriver != null) Global.webDriver.quit();
+		   if(driver != null) driver.quit();
 	   }
 
 }

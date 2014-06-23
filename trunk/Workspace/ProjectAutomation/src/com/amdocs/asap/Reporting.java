@@ -29,20 +29,25 @@ public class Reporting {
     private int g_iFailCount;
     private int g_iTCPassed;
     private int g_iTestCaseNo;
-    private int g_iTestSuiteNo;
+    
 	//public static int g_iFailCount;
 
     private Date g_StartTime;
     private Date g_EndTime;
     private Date g_SummaryStartTime;
     private Date g_SummaryEndTime;
-	//private WebDriver driver;
+    
+	WebDriver driver;
+	HashMap <String, String> Dictionary = new HashMap<String, String>();
+	HashMap <String, String> Environment = new HashMap<String, String>();
 	
 	private FileOutputStream foutStrm = null;
 	
-	public Reporting()
+	public Reporting(WebDriver GDriver, HashMap <String, String> GDictionary, 	HashMap <String, String> GEnvironment)
 	{
-		//driver = Global.webDriver;
+		driver = GDriver;
+		Dictionary = GDictionary;
+		Environment = GEnvironment;
 	}
 	
 	
@@ -63,7 +68,7 @@ public class Reporting {
 		try 
 		{ 
 	        //Open the test case report for writing                   
-	        foutStrm = new FileOutputStream(Global.Environment.get("HTMLREPORTSPATH")+ "\\SummaryReport.html", true);
+	        foutStrm = new FileOutputStream(Environment.get("HTMLREPORTSPATH")+ "\\SummaryReport.html", true);
 	           
 			//Close the html file
 	        new PrintStream(foutStrm).println("<HTML><BODY><TABLE BORDER=0 CELLPADDING=3 CELLSPACING=1 WIDTH=100% BGCOLOR=BLACK>");
@@ -106,11 +111,11 @@ public class Reporting {
         g_strScriptName = strTestName;		
 
         //Set the name for the Test Case Report File
-        g_strTestCaseReport = Global.Environment.get("HTMLREPORTSPATH") + "\\Report_" + g_strScriptName + ".html";
+        g_strTestCaseReport = Environment.get("HTMLREPORTSPATH") + "\\Report_" + g_strScriptName + ".html";
         //System.out.print(" Detailed Report path is " + g_strTestCaseReport);
              
         //Snap Shot folder
-        g_strSnapshotFolderName = Global.Environment.get("SNAPSHOTSFOLDER") + "\\" +  g_strScriptName;
+        g_strSnapshotFolderName = Environment.get("SNAPSHOTSFOLDER") + "\\" +  g_strScriptName;
         
         //Snapshot relative path
         g_strSnapshotRelativePath = "Snapshots\\" + g_strScriptName;
@@ -279,7 +284,7 @@ public class Reporting {
         try
         {        
 	        //Open the test case report for writing                   
-	        foutStrm = new FileOutputStream(Global.Environment.get("HTMLREPORTSPATH")+ "\\SummaryReport.html", true);
+	        foutStrm = new FileOutputStream(Environment.get("HTMLREPORTSPATH")+ "\\SummaryReport.html", true);
 	        
 	        //Check color result
 	        if (strResult.toUpperCase().equals("PASSED") || strResult.toUpperCase().equals("PASS"))
@@ -335,7 +340,7 @@ public class Reporting {
         
         //Open the Test Summary Report File
 		try {         
-			foutStrm = new FileOutputStream(Global.Environment.get("HTMLREPORTSPATH")+ "\\SummaryReport.html", true);
+			foutStrm = new FileOutputStream(Environment.get("HTMLREPORTSPATH")+ "\\SummaryReport.html", true);
        
             new PrintStream(foutStrm).println("</TABLE><TABLE WIDTH=100%><TR>");
 	        new PrintStream(foutStrm).println("<TD BGCOLOR=BLACK WIDTH=10%></TD><TD BGCOLOR=BLACK WIDTH=70%><FONT FACE=VERDANA SIZE=2 COLOR=WHITE><B></B></FONT></TD><TD BGCOLOR=BLACK WIDTH=20%><FONT FACE=WINGDINGS SIZE=4>2</FONT><FONT FACE=VERDANA SIZE=2 COLOR=WHITE><B>Total Passed: " + g_iTCPassed + "</B></FONT></TD>");
@@ -483,7 +488,7 @@ public class Reporting {
     {
     	try
     	{
-    	    File scrFile = ((TakesScreenshot)Global.webDriver).getScreenshotAs(OutputType.FILE);
+    	    File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
     	    FileUtils.copyFile(scrFile, new File(SSPath));
 	    	
     	} catch (IOException io) {
@@ -507,9 +512,9 @@ public class Reporting {
     public void fnJenkinsReport() 
     {        
         //Variables
-    	String jenkinsFilePath = Global.Environment.get("EXECUTIONFOLDERPATH") + "\\" + Global.Environment.get("ENV_CODE");
+    	String jenkinsFilePath = Environment.get("EXECUTIONFOLDERPATH") + "\\" + Environment.get("ENV_CODE");
     	String jenkinsHTMLRep = jenkinsFilePath + "\\Jenkins_html_report.html";
-    	String relativeClassSummary = Global.Environment.get("CLASSNAME") + "\\HTML_Reports\\SummaryReport.html";
+    	String relativeClassSummary = Environment.get("CLASSNAME") + "\\HTML_Reports\\SummaryReport.html";
     	String sRowColor = "";    	
 		
     	
@@ -518,7 +523,10 @@ public class Reporting {
     		File htmlReport = new File(jenkinsHTMLRep);
     		
     		//If jenkins flag is false 
-    		if(Global.flgJenkinsHtml == false) {    			    			
+    		if(Global.flgJenkinsHtml == false) { 
+    			
+    			//Set flag to true
+    	        Global.flgJenkinsHtml = true;
     			
     			//Delete File
     			if(htmlReport.exists()) htmlReport.delete();
@@ -534,10 +542,7 @@ public class Reporting {
     	        new PrintStream(foutStrm).println("<TR COLS=6 BGCOLOR=ORANGE><TD WIDTH=10%><FONT FACE=VERDANA COLOR=BLACK SIZE=2><B>Suite No.</B></FONT></TD><TD  WIDTH=90%><FONT FACE=VERDANA COLOR=BLACK SIZE=2><B>Suite Name</B></FONT></TD></TR>");
     	        
     	      //Close the object
-    	        foutStrm.close();
-    	        
-    	      //Set flag to true
-    	        Global.flgJenkinsHtml = true;
+    	        foutStrm.close();  	            	      
     		}    	           		
     			
     		
@@ -546,9 +551,9 @@ public class Reporting {
 	        foutStrm = new FileOutputStream(jenkinsHTMLRep, true);
 	        
 	        //Increment counter
-	        g_iTestSuiteNo++;
+	        Global.g_iTestSuiteNo++;
 	
-	        if (g_iTestSuiteNo % 2 == 0)
+	        if (Global.g_iTestSuiteNo % 2 == 0)
 	        {
 	            //sRowColor = "//BEBEBE";
 	            sRowColor = "#EEEEEE";
@@ -559,7 +564,7 @@ public class Reporting {
 	        }
 	        
 	       //Write the result of Individual Test Case
-	        new PrintStream(foutStrm).println ("<TR COLS=3 BGCOLOR=" + sRowColor + "><TD  WIDTH=10%><FONT FACE=VERDANA SIZE=2>" + g_iTestSuiteNo + "</FONT></TD><TD  WIDTH=90%><A HREF='" + relativeClassSummary + "'><FONT FACE=VERDANA SIZE=2 COLOR=BLUE><FONT FACE=VERDANA SIZE=2><B>" + Global.Environment.get("CLASSNAME") + "</B></FONT></A></TD></TR>");
+	        new PrintStream(foutStrm).println ("<TR COLS=3 BGCOLOR=" + sRowColor + "><TD  WIDTH=10%><FONT FACE=VERDANA SIZE=2>" + Global.g_iTestSuiteNo + "</FONT></TD><TD  WIDTH=90%><A HREF='" + relativeClassSummary + "'><FONT FACE=VERDANA SIZE=2 COLOR=BLUE><FONT FACE=VERDANA SIZE=2><B>" + Environment.get("CLASSNAME") + "</B></FONT></A></TD></TR>");
 			
 	        //Close the object
 	        foutStrm.close();

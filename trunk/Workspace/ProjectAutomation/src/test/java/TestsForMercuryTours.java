@@ -1,13 +1,9 @@
 package test.java;
 
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.Test;
-import org.testng.annotations.BeforeClass;
-import org.testng.AssertJUnit;
-
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.net.MalformedURLException;
+
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
@@ -20,7 +16,7 @@ import org.testng.annotations.Test;
 
 import com.amdocs.asap.CommonFunctions;
 import com.amdocs.asap.Driver;
-import com.amdocs.asap.Global;
+import com.amdocs.asap.Reporting;
 import com.mercury.tours.*;
 
 public class TestsForMercuryTours {
@@ -29,13 +25,15 @@ public class TestsForMercuryTours {
 	String className;
 	String dataSheetName;
 	String env;
-	String buildNumber;
-	String jobName;
 	
 	//Instances
 	Driver asapDriver;
 	WebDriver driver;
 	CommonFunctions objCommon;
+	
+	HashMap <String, String> Environment = new HashMap<String, String>();
+	HashMap <String, String> Dictionary = new HashMap<String, String>();
+	Reporting Reporter;
 
 	
   @BeforeClass
@@ -46,39 +44,41 @@ public class TestsForMercuryTours {
 	  //Set the DataSheet name by getting the class name
 	  String[] strClassNameArray = this.getClass().getName().split("\\.");
 	  className = strClassNameArray[strClassNameArray.length-1];
-	  Global.Environment.put("CLASSNAME", className);		
+	  Environment.put("CLASSNAME", className);		
 	  	 
 	   //Initiate asapDriver
-	   asapDriver = new Driver();	   	  
+	   asapDriver = new Driver(Dictionary, Environment);	   	  
 	   
 	   //Check if POM has env, if null, get it from config file
 	   	env = System.getProperty("envName");	
 	   	Assert.assertNotNull(env);
 	  		
 		//Add env global environments
-		Global.Environment.put("ENV_CODE", env);
+		Environment.put("ENV_CODE", env);
 				
 		//Create folder structure
 		Assert.assertTrue(asapDriver.createExecutionFolders());	 		  
 		
 	   //Get Environment Variables
 		Assert.assertTrue(asapDriver.fetchEnvironmentDetails());
-    
-	   //Create HTML Summary Report
-	   Global.Reporter.fnCreateSummaryReport();
-	   
-	   //Update Jenkins report
-	   Global.Reporter.fnJenkinsReport();
-	   
-	   //Initiate WebDriver
-	   Global.webDriver = asapDriver.fGetWebDriver();
-	   driver = Global.webDriver;
+		
+		//Initiate WebDriver
+		driver = asapDriver.fGetWebDriver();
 	   
 	   //Set implicit time
 	   if(driver != null) driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 	   
+	   //Instantiate reporter
+	   Reporter = new Reporting(driver, Dictionary, Environment);
+ 
+	   //Create HTML Summary Report
+	   Reporter.fnCreateSummaryReport();
+	   
+	   //Update Jenkins report
+	   Reporter.fnJenkinsReport();
+	 	   
 	   //Initialize Common functions
-	   objCommon = new CommonFunctions();
+	   objCommon = new CommonFunctions(driver, Reporter);
 	   
    }
 	   
@@ -96,7 +96,7 @@ public class TestsForMercuryTours {
 	   asapDriver.fGetDataForTest(testName);
 	   
 	   //Create Individual HTML Report	
-	   Global.Reporter.fnCreateHtmlReport(testName);	  
+	   Reporter.fnCreateHtmlReport(testName);	  
    }
 	   
 	   
@@ -106,7 +106,7 @@ public class TestsForMercuryTours {
 	   System.out.println("testRegisterUser");		   
 	   
 	   //Create object of Launch Application class
-		LaunchApplication launchApplication = new LaunchApplication();
+		LaunchApplication launchApplication = new LaunchApplication(driver,Dictionary,Environment,Reporter);
 		
 		//Call  the function to launch the application url that return MercuryHomePage object
 		MercuryHomePage mercuryHomePage = launchApplication.openApplication();
@@ -156,7 +156,7 @@ public class TestsForMercuryTours {
 	   asapDriver.fSetReferenceData();
 	   
 	   //Close Individual Summary Report & Update Summary Report
-	   Global.Reporter.fnCloseHtmlReport(testName);
+	   Reporter.fnCloseHtmlReport(testName);
 	   	   		  
    }
    	   	   
@@ -166,12 +166,12 @@ public class TestsForMercuryTours {
 	   System.out.println("After Class TestsForMercuryTours");
 	   
 	   //Close HTML Summary report
-	   Global.Reporter.fnCloseTestSummary();
+	   Reporter.fnCloseTestSummary();
 	   
 	   //Copy reports under build path
 	   
 	   //QUit webdriver
-	   if(Global.webDriver != null) Global.webDriver.quit();
+	   if(driver != null) driver.quit();
    }
 	 
 }

@@ -847,7 +847,7 @@ public class Driver {
 			return new FirefoxDriver();
 		}
 		else if (webDriverType.equalsIgnoreCase("ie")){
-			System.setProperty("webdriver.ie.driver", storagePath + "\\drivers\\IEDriver.exe");
+			System.setProperty("webdriver.ie.driver", storagePath + "\\drivers\\IEDriverServer.exe");
 			return new InternetExplorerDriver();
 		}
 		else{

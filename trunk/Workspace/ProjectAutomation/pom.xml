@@ -27,7 +27,7 @@
             <buildNumber>${build.number}</buildNumber>           
          </systemPropertyVariables>
           <suiteXmlFiles>
-            <suiteXmlFile>testng.xml</suiteXmlFile>
+            <suiteXmlFile>${suite.name}</suiteXmlFile>
           </suiteXmlFiles>
         </configuration>
       </plugin>

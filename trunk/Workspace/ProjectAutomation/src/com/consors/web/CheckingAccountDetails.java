@@ -3,6 +3,7 @@ package com.consors.web;
 import java.util.HashMap;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 import com.amdocs.asap.CommonFunctions;
 import com.amdocs.asap.Global;
@@ -119,23 +120,21 @@ public class CheckingAccountDetails {
 	        } 
 		
 			//Enter the Day of Birth 
-			if (objCommon.fGuiEnterText(edtDayOfBirth,Dictionary.get("DAY_OF_BIRTH"))==false)
-	        {
-	        	return false;
-	        } 
+			WebElement objDOB = objCommon.getObject(edtDayOfBirth);
+			if (objDOB==null) return false;
+			else objDOB.sendKeys(Dictionary.get("DAY_OF_BIRTH"));
 			
-			//Enter the Month of birth
-			if (objCommon.fGuiEnterText(edtMonthOfBirth,Dictionary.get("MONTH_OF_BIRTH"))==false)
-	        {
-	        	return false;
-	        } 
-						
-			// Enter the Year of birth
-			if (objCommon.fGuiEnterText(edtYearOfBirth,Dictionary.get("YEAR_OF_BIRTH"))==false)
-	        {
-	        	return false;
-	        } 
-						
+			//Enter the Month of Birth 
+			WebElement objMOB = objCommon.getObject(edtMonthOfBirth);
+			if (objMOB==null) return false;
+			else objMOB.sendKeys(Dictionary.get("MONTH_OF_BIRTH"));
+			
+			//Enter the Day of Birth 
+			WebElement objYOB = objCommon.getObject(edtYearOfBirth);
+			if (objYOB==null) return false;
+			else objYOB.sendKeys(Dictionary.get("YEAR_OF_BIRTH"));
+			
+					
 			//Enter the Place of Birth 
 			if (objCommon.fGuiEnterText(edtBirthPlace,Dictionary.get("PLACE_OF_BIRTH"))==false)
 	        {

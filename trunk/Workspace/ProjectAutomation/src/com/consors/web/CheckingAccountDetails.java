@@ -202,9 +202,19 @@ public class CheckingAccountDetails {
 			if (objCommon.fGuiEnterText(edtStreet,Dictionary.get("STREET"))==false)
 	        {
 	        	return false;
-	        } 
+	        } 						
 			
 			//Enter Postal Code
+			WebElement objPO = objCommon.getObject(edtPostalCode);
+			if (objPO==null) return false;
+			else objPO.sendKeys(Dictionary.get("POSTAL_CODE"));
+			
+			//Enter City
+			WebElement objCity = objCommon.getObject(edtCity);
+			if (objCity==null) return false;
+			else objCity.sendKeys(Dictionary.get("CITY"));
+			
+			/*//Enter Postal Code
 			if (objCommon.fGuiEnterText(edtPostalCode,Dictionary.get("POSTAL_CODE"))==false)
 	        {
 	        	return false;
@@ -214,7 +224,7 @@ public class CheckingAccountDetails {
 			if (objCommon.fGuiEnterText(edtCity,Dictionary.get("CITY"))==false)
 	        {
 	        	return false;
-	        } 
+	        } */
 			
 			//Select the Country 
 			if (objCommon.fGuiSelectOptionFromList(LstCountry, Dictionary.get("COUNTRY"))==false)

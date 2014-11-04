@@ -19,8 +19,8 @@ public class CheckingAccountDetails {
 		
 		//Objects
 		public String edtCreditNumber = "Xpath:=//input[@name=\"creditnumber\"]";	
-	    public String rdbtnGenderMale = "Xpath:=//span[@class=\"ev-formfieldradiobutton-label-text\" and text()=\"Herr\"]";   
-	    public String rdbtnGenderFemale = "Xpath:=//span[@class=\"ev-formfieldradiobutton-label-text\" and text()=\"Freu\"]";		
+	    public String rdbtnGenderMale = "Xpath:=//span[@class=\"ev-formfieldradiobutton-label-text\" and contains(text(),\"Herr\")]";
+	    public String rdbtnGenderFemale = "Xpath:=//span[@class=\"ev-formfieldradiobutton-label-text\" and contains(text(),\"Frau\")]";
 	    public String edtFirstName = "name:=personData.firstname";
 	    public String edtLastName = "id:=personData_lastname";
 	    public String edtBirthName = "name:=personData.birthname";

@@ -4,9 +4,9 @@
   <test name="ConsorPOCWeb">
       <classes>
           <class name="test.java.TestsForConsorsWeb">
-              <method>
+              <methods>
                   <include name="testConsorsWebPOC"/>
-              </method>			             
+              </methods>
           </class>
       </classes>
   </test>  

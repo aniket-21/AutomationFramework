@@ -17,7 +17,7 @@ public class HomePage {
 	private CommonFunctions objCommon;
 	
 	public String lnkCurrentAccount = "partiallinktext:=Girokonto";
-	public String webbtnOpenCheckingAccount = "partiallinktext:=Girokonto erÃ¶ffnen";
+	public String webbtnOpenCheckingAccount = "partiallinktext:=Girokonto eröffnen";
     
 	//Define the constructor
 	//Define the constructor

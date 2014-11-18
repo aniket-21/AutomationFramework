@@ -8,6 +8,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
+import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.Assert;
@@ -76,7 +77,7 @@ public class TestsForConsorsAndroid {
 		   DC.setCapability("deviceName", "Samsung Galaxy Note");
 		   
 		   //Initiate WebDriver
-		   driver = new AppiumDriver(new URL("http://0.0.0.0:4723/wd/hub"), DC);
+		   driver = new AndroidDriver(new URL("http://0.0.0.0:4723/wd/hub"), DC);
 		   
 		   //Set implicit time
 		   if(driver != null) driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);

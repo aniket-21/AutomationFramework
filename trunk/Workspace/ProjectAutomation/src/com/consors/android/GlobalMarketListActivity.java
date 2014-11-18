@@ -1,6 +1,6 @@
 package com.consors.android;
 
-import io.appium.java_client.AndroidKeyCode;
+import io.appium.java_client.android.AndroidKeyCode;
 import io.appium.java_client.AppiumDriver;
 
 import java.util.HashMap;
@@ -21,7 +21,7 @@ public class GlobalMarketListActivity {
 	private CommonFunctions objCommon;
 	
 	//Objects
-	String txtDevises = "uiautomator:=new UiSelector().text(\"Währungen\")";	
+	String txtDevises = "uiautomator:=new UiSelector().text(\"Wï¿½hrungen\")";	
 	
 	
 	//COnstructor

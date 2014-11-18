@@ -6,6 +6,7 @@ import io.appium.java_client.AppiumDriver;
 import java.sql.Timestamp;
 import java.util.List;
 
+import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.JavascriptExecutor;
@@ -1713,7 +1714,7 @@ public class CommonFunctions {
     //*****************************************************************************************
     public String fGetCurrentActivity()
     {
-    	return ((AppiumDriver)driver).currentActivity();
+    	return ((AndroidDriver)driver).currentActivity();
     }
     
     
@@ -1733,7 +1734,7 @@ public class CommonFunctions {
     	while(i<30)
     	{
     		
-    		actualActivity = ((AppiumDriver)driver).currentActivity();
+    		actualActivity = ((AndroidDriver)driver).currentActivity();
     		if(actualActivity.equals(expectedActivity)) break;
     		
     		try {

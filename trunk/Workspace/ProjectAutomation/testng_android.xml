@@ -1,15 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Suite" parallel="tests" thread-count="2">
-  
+
+  <!--
   <test name="ConsorPOCAndroid">
       <classes>
           <class name="test.java.TestsForConsorsAndroid">
-              <method>
+              <methods>
                   <include name="testConsorsAndroidPOC"/>
-              </method>			             
+              </methods>
           </class>
       </classes>
   </test>
+  -->
+
+    <test name="BlahPOCAndroid">
+        <classes>
+            <class name="test.java.TestsForBlahAndroid">
+                <methods>
+                    <include name="testAddAContact"/>
+                    <include name="testSearchAndPingAContact"/>
+                    <include name="testSearchAndDeleteContact"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
   
 </suite> <!-- Suite -->

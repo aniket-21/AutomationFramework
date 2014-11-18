@@ -1,6 +1,6 @@
 package com.consors.android;
 
-import io.appium.java_client.AndroidKeyCode;
+import io.appium.java_client.android.AndroidKeyCode;
 import io.appium.java_client.AppiumDriver;
 
 import java.util.HashMap;
@@ -22,7 +22,7 @@ public class GlobalSecurityListActivity {
 	private CommonFunctions objCommon;
 	
 	//Objects
-	String mnuMarkets = "uiautomator:=new UiSelector().text(\"Kurse/Märkte\")";	
+	String mnuMarkets = "uiautomator:=new UiSelector().text(\"Kurse/Mï¿½rkte\")";	
 	
 	//COnstructor
 	public GlobalSecurityListActivity(WebDriver GDriver,HashMap<String, String> GDictionary, HashMap<String, String> GEnvironment,Reporting GReporter)

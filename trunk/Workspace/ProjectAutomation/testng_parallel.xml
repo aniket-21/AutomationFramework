@@ -5,9 +5,9 @@
   <test name="ConsorPOCAndroid">
       <classes>
           <class name="test.java.TestsForConsorsAndroid">
-              <method>
+              <methods>
                   <include name="testConsorsAndroidPOC"/>
-              </method>			             
+              </methods>
           </class>
       </classes>
   </test>
@@ -15,9 +15,9 @@
   <test name="ConsorPOCWeb">
       <classes>
           <class name="test.java.TestsForConsorsWeb">
-              <method>
+              <methods>
                   <include name="testConsorsWebPOC"/>
-              </method>			             
+              </methods>
           </class>
       </classes>
   </test>

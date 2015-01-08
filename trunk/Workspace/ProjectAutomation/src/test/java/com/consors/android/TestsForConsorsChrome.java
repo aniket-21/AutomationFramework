@@ -1,8 +1,8 @@
 package com.consors.android;
 
-import com.amdocs.asap.Driver;
-import com.amdocs.asap.Reporting;
-import com.amdocs.asap.Wrappers;
+import com.automation.framework.Driver;
+import com.automation.framework.Reporting;
+import com.automation.framework.Wrappers;
 import com.consors.web.CheckingAccountDetailsPage;
 import com.consors.web.CheckingAccountPage;
 import com.consors.web.HomePage;

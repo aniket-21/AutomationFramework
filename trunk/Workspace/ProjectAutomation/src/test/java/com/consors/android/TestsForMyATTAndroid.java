@@ -1,28 +1,19 @@
 package com.consors.android;
 
-import com.amdocs.asap.Driver;
-import com.amdocs.asap.Reporting;
-import com.amdocs.asap.Wrappers;
-import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.MobileBy;
-import io.appium.java_client.MobileElement;
+import com.automation.framework.Driver;
+import com.automation.framework.Reporting;
+import com.automation.framework.Wrappers;
 import io.appium.java_client.android.AndroidDriver;
 import io.selendroid.SelendroidCapabilities;
-import io.selendroid.SelendroidDriver;
 import org.openqa.selenium.*;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
-import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.HashMap;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by ANIKETG on 10/14/2014.

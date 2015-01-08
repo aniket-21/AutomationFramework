@@ -2,9 +2,9 @@ package com.consors.android;
 
 import io.appium.java_client.AppiumDriver;
 import java.util.HashMap;
-import com.amdocs.asap.Reporting;
+import com.automation.framework.Reporting;
 import org.openqa.selenium.WebDriver;
-import com.amdocs.asap.Wrappers;
+import com.automation.framework.Wrappers;
 
 public class GlobalMarketListActivity {
 	

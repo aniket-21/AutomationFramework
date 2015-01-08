@@ -1,9 +1,8 @@
 package com.consors.web;
 
-import java.util.Dictionary;
 import java.util.HashMap;
 
-import com.amdocs.asap.Reporting;
+import com.automation.framework.Reporting;
 import org.openqa.selenium.WebDriver;
 
 public class LaunchApplication {

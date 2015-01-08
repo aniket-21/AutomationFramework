@@ -2,12 +2,8 @@ package com.consors.web;
 
 import java.util.HashMap;
 
-import com.amdocs.asap.Wrappers;
-import com.amdocs.asap.Reporting;
-import io.appium.java_client.MobileDriver;
-import io.appium.java_client.MultiTouchAction;
-import io.appium.java_client.PerformsTouchActions;
-import io.appium.java_client.TouchAction;
+import com.automation.framework.Wrappers;
+import com.automation.framework.Reporting;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 

@@ -6,17 +6,14 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
-import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.MobileElement;
+import com.automation.framework.Driver;
+import com.automation.framework.Reporting;
+import com.automation.framework.Wrappers;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
-
-import com.amdocs.asap.*;
-
 
 public class TestsForConsorsAndroid {
 	

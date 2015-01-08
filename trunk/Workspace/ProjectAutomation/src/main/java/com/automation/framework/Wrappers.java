@@ -1,12 +1,9 @@
-package com.amdocs.asap;
+package com.automation.framework;
 
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.AppiumDriver;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.*;
@@ -786,7 +783,7 @@ public class Wrappers {
 
 	//*****************************************************************************************
     //*	Name		    : enterText
-    //*	Author		    : Anil Agarwal
+    //*	Author		    : Aniket Gadre
     //*****************************************************************************************
     public void enterText(String strDesc, String strText)
     {
@@ -1165,7 +1162,7 @@ public class Wrappers {
    /* //*****************************************************************************************
     //*	Name		    : fValidatePageDisplayed
     //*	Description	    : Function to validate the current window title
-    //*	Author		    : Anil Agarwal
+    //*	Author		    : Aniket Gadre
     //*	Input Params	:
     //*	Return Values	: Boolean - Depending on the success
     //*****************************************************************************************

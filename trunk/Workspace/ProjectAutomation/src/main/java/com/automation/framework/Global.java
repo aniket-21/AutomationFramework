@@ -1,4 +1,4 @@
-package com.amdocs.asap;
+package com.automation.framework;
 
 import java.util.HashMap;
 

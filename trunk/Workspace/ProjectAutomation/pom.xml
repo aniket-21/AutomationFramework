@@ -60,13 +60,6 @@
       <artifactId>ota</artifactId>
       <version>9.2</version>
     </dependency>
-    
-	
-	<dependency>
-      <groupId>com.amdocs.asap</groupId>
-      <artifactId>asap</artifactId>
-      <version>1.0</version>
-    </dependency>
     -->
     
 	<dependency>
@@ -81,29 +74,17 @@
 	    <artifactId>selendroid-client</artifactId>
 	</dependency>
 	
-	
-	
 	<dependency>
 	    <groupId>org.testng</groupId>
 	    <version>6.8.7</version>
 	    <artifactId>testng</artifactId>
 	</dependency>
 	
-	
 	<dependency>
 	    <groupId>org.apache.poi</groupId>
 	    <version>3.9</version>
 	    <artifactId>poi</artifactId>
 	</dependency>
-    
-	<!--
-    <dependency>
-		<groupId>junit</groupId>
-		<artifactId>junit</artifactId>
-		<version>4.11</version>
-	</dependency>
-	-->
-            
-    
+ 
   </dependencies>
 </project>

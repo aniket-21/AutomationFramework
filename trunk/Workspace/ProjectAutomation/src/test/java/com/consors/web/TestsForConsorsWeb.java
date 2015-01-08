@@ -2,16 +2,15 @@ package com.consors.web;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import com.automation.framework.Driver;
+import com.automation.framework.Reporting;
+import com.automation.framework.Wrappers;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
-
-import com.amdocs.asap.*;
 
 public class TestsForConsorsWeb {
 	//Variables

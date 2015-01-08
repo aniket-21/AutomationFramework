@@ -4,8 +4,8 @@ import java.util.HashMap;
 
 import org.openqa.selenium.WebDriver;
 
-import com.amdocs.asap.Wrappers;
-import com.amdocs.asap.Reporting;
+import com.automation.framework.Wrappers;
+import com.automation.framework.Reporting;
 
 public class CheckingAccountPage {
 

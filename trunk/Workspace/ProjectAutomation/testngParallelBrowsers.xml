@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Suite" parallel="tests" thread-count="2">
+  <!--
+    <test name="ConsorPOCWeb" parallel="instances">
+        <classes>
+            <class name="com.consors.web.TestsForConsorsWeb">
+                <methods>
+                    <include name="testConsorsWebPOC"/>
+                </methods>
+                </class>
+        </classes>
+    </test>
+-->
+    <test name="ConsorPOCAndroid">
+        <classes>
+            <class name="com.consors.android.TestsForConsorsAndroid">
+                <methods>
+                    <include name="testConsorsAndroidPOC"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+</suite> <!-- Suite -->

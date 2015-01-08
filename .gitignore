@@ -1,6 +1,7 @@
 Execution
 trunk/Workspace/.metadata
 trunk/Workspace/*/.settings
+trunk/Workspace/*/.idea
 trunk/Workspace/*/target
 trunk/Workspace/*/test-output
 

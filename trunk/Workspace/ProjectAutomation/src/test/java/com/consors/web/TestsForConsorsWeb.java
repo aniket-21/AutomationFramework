@@ -118,7 +118,7 @@ public class TestsForConsorsWeb {
 		LaunchApplication launchApplication = new LaunchApplication(driver, Dictionary,Environment,Reporter);
 		
 		//Maximise window
-		objCommon.maximizeWindow();
+		//objCommon.maximizeWindow();
 		
 		//Call  the function to launch the application url that return MercuryHomePage object
 		HomePage objHP = launchApplication.openApplication();

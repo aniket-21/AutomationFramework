@@ -27,8 +27,8 @@
             <buildNumber>${build.number}</buildNumber>           
          </systemPropertyVariables>
           <suiteXmlFiles>
+            <!-- <suiteXmlFile>testngParallelBrowsers.xml</suiteXmlFile> -->
             <suiteXmlFile>testng.xml</suiteXmlFile>
-            <!-- <suiteXmlFile>testng.xml</suiteXmlFile> -->
           </suiteXmlFiles>
         </configuration>
       </plugin>
@@ -64,27 +64,27 @@
     
 	<dependency>
 	    <groupId>io.selendroid</groupId>
-	    <version>0.11.0</version>
+	    <version>0.12.0</version>
 	    <artifactId>selendroid-standalone</artifactId>
 	</dependency>
 	
 	<dependency>
 	    <groupId>io.selendroid</groupId>
-	    <version>0.11.0</version>
+	    <version>0.12.0</version>
 	    <artifactId>selendroid-client</artifactId>
 	</dependency>
 	
 	<dependency>
 	    <groupId>org.testng</groupId>
-	    <version>6.8.7</version>
+	    <version>6.8.13</version>
 	    <artifactId>testng</artifactId>
 	</dependency>
 	
 	<dependency>
 	    <groupId>org.apache.poi</groupId>
-	    <version>3.9</version>
+	    <version>3.11</version>
 	    <artifactId>poi</artifactId>
 	</dependency>
- 
+
   </dependencies>
 </project>

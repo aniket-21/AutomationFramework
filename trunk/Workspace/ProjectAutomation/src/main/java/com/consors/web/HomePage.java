@@ -49,9 +49,6 @@ public class HomePage {
             //Click on link Current Account
             objCommon.click(lnkCurrentAccount);
         }
-
-
-
 	}
 	
 	//*****************************************************************************************

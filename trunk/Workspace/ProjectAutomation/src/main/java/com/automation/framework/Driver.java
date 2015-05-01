@@ -8,12 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
-
+import java.util.*;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
@@ -21,14 +16,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
-
-
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
 import org.w3c.dom.*;
 
 public class Driver {
@@ -39,6 +28,7 @@ public class Driver {
 	String storagePath;
 	String datasheetPath;
 	String enviromentsPath;
+	String envConfigPath;
 	String curExecutionFolder;
 	String htmlReportsPath;
 	String snapShotsPath;
@@ -50,11 +40,9 @@ public class Driver {
 	HashMap <String, String> orgDictionary = new HashMap<String, String>();
 	HashMap <String, String> Dictionary = new HashMap<String, String>();
 	HashMap <String, String> Environment = new HashMap<String, String>();
-	
-	
-	
+
 	//Constructor
-	public Driver(HashMap <String, String> GDictionary, 	HashMap <String, String> GEnvironment)
+	public Driver(HashMap <String, String> GDictionary, HashMap <String, String> GEnvironment)
 	{
 		
 		Dictionary = GDictionary;
@@ -67,12 +55,13 @@ public class Driver {
 		
 		//Set paths
 		executionPath = rootPath + "Execution";
-		storagePath = rootPath + "trunk\\Workspace\\ProjectAutomation";
-		dataSheetsPath = storagePath + "\\datasheets";
-		enviromentsPath = storagePath + "\\environments\\Environments.xls";	
+		storagePath = rootPath + "trunk/Workspace/ProjectAutomation";
+		dataSheetsPath = storagePath + "/datasheets";
+		enviromentsPath = storagePath + "/environments/Environments.xls";
+		envConfigPath = storagePath + "/environments/EnvConfig.xml";
 		
-		dataSheet = dataSheetsPath + "\\" + Environment.get("CLASSNAME") + ".xls";
-		configXML = storagePath + "\\config\\config.xml";
+		dataSheet = dataSheetsPath + "/" + Environment.get("CLASSNAME") + ".xls";
+		configXML = storagePath + "/config/config.xml";
 				
 		//Add to Env Variables
 		Environment.put("ROOTPATH", rootPath);
@@ -86,29 +75,29 @@ public class Driver {
 	public boolean createExecutionFolders() throws IOException
 	{		
 		//Set execution paths
-		curExecutionFolder = executionPath + "\\" + Environment.get("ENV_CODE") + "\\" + Environment.get("CLASSNAME");
-		htmlReportsPath = curExecutionFolder + "\\" + Environment.get("BROWSER").toUpperCase() + "_HTML_Reports";
-		snapShotsPath = htmlReportsPath + "\\Snapshots";	
+		curExecutionFolder = executionPath + "/" + Environment.get("ENV_CODE") + "/" + Environment.get("CLASSNAME");
+		htmlReportsPath = curExecutionFolder + "/" + Environment.get("BROWSER").toUpperCase() + "_HTML_Reports";
+		snapShotsPath = htmlReportsPath + "/Snapshots";
 		
 		//Put in Environments
 		Environment.put("CURRENTEXECUTIONFOLDER", curExecutionFolder);
 		Environment.put("HTMLREPORTSPATH", htmlReportsPath);
-		Environment.put("SNAPSHOTSFOLDER", snapShotsPath);		
-		
+		Environment.put("SNAPSHOTSFOLDER", snapShotsPath);
+
 		//Delete if folder already exists
 		if (new File(htmlReportsPath).exists())
-			delete(new File(htmlReportsPath));		
+			deleteFile(new File(htmlReportsPath));
 		return (new File(snapShotsPath)).mkdirs();
 	}
 	
 	//*****************************************************************************************
-    //*    Name        		: delete
-    //*    Description    : Deletes previous reports
-    //*    Author        	:  Aniket Gadre
-    //*    Input Params    :     None
-    //*    Return Values    :     None
+    //*    Name        		: deleteFile
+    //*    Description    	: Deletes previous reports
+    //*    Author        	: Aniket Gadre
+    //*    Input Params    	: None
+    //*    Return Values    : None
     //*****************************************************************************************
-    public static void delete(File file)
+    public static void deleteFile(File file)
 	throws IOException{
     	  
 		if(file.isDirectory()){
@@ -121,7 +110,7 @@ public class Driver {
 		      File fileDelete = new File(file, temp);
 	
 		      //recursive delete
-		     delete(fileDelete);
+			   deleteFile(fileDelete);
 		   }
 	
 		   //check the directory again, if empty then delete it
@@ -166,11 +155,11 @@ public class Driver {
 		    
 		    //Check if the index value is proper
 		    if (iEnvironment == -1 ){
-		    	System.out.println("Failed to find the Environment Column in the file " + enviromentsPath);
+		    	System.out.println("Failed to find the ENVIRONMENT Column in the file " + enviromentsPath);
 		    	return false;
 		    }
 		    
-			//Create the FileInputStream obhect			
+			//Create the FileInputStream object
 			FileInputStream file = new FileInputStream(new File(enviromentsPath));		     
 		    //Get the workbook instance for XLS file 
 		    HSSFWorkbook workbook = new HSSFWorkbook(file);
@@ -235,6 +224,39 @@ public class Driver {
 		} catch (IOException e) {
 		    e.printStackTrace();
 		    return false;
+		}
+	}
+
+	//*****************************************************************************************
+	//*    Name        	  : fetchEnvironmentDetailsFromConfigXML
+	//*    Description    : Fetches EnvDetails from config XML and loads it into hashmap
+	//*    Author         : Aniket Gadre
+	//*    Input Params   : None
+	//*    Return Values  : None
+	//*****************************************************************************************
+	public boolean fetchEnvironmentDetailsFromConfigXML() {
+
+		try{
+
+			Document doc = XMLHandler.getXMLDocument(envConfigPath);
+			if(doc == null) return false;
+
+			Element elemEnvironment = XMLHandler.getElementByName(doc, Environment.get("ENV_CODE").toLowerCase());
+			if(elemEnvironment == null){
+				System.out.println("Unable to find Env node with ID " + Environment.get("ENV_CODE"));
+				return false;
+			}
+
+			List<Element> Parameters = XMLHandler.getChildElements(elemEnvironment);
+
+			for(Element Parameter : Parameters)
+					Environment.put(Parameter.getTagName().trim().toUpperCase(), Parameter.getTextContent().trim());
+
+			return true;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
 		}
 	}
 	
@@ -324,7 +346,7 @@ public class Driver {
 	public boolean fGetDataForTest(String testName)
 	{
 		//DataSheet
-		final String dataSheet = dataSheetsPath + "\\" + Environment.get("CLASSNAME") + ".xls";
+		final String dataSheet = dataSheetsPath + "/" + Environment.get("CLASSNAME") + ".xls";
 		final String mainSheet = "MAIN"; 
 		final String testNameColumn = "TEST_NAME";
 		
@@ -744,21 +766,27 @@ public class Driver {
    //*****************************************************************************************
 	public WebDriver fGetWebDriver(String browser) throws MalformedURLException
 	{
-		//String webDriverType = System.getProperty("browserName");
+		String osName = System.getProperty("os.name");
         String webDriverType = browser;
 
-        //Define webdriver
-        WebDriver wbDriver;
-        if (webDriverType.equalsIgnoreCase("chrome") || webDriverType.isEmpty())
-        {
-            System.setProperty("webdriver.chrome.driver", storagePath + "\\drivers\\chromedriver.exe");
-            return new ChromeDriver();
+		System.out.println("Executing Tests on OS " + osName);
+
+        if (webDriverType.equalsIgnoreCase("firefox") || webDriverType.isEmpty()){
+
+			return new FirefoxDriver();
         }
-        else if (webDriverType.equalsIgnoreCase("firefox")){
-            return new FirefoxDriver();
+        else if (webDriverType.equalsIgnoreCase("chrome")){
+			if(osName.toLowerCase().contains("linux")) {
+				System.setProperty("webdriver.chrome.driver", storagePath + "/drivers/chromedriver");
+				return new ChromeDriver();
+			}
+			else {
+				System.setProperty("webdriver.chrome.driver", storagePath + "/drivers/chromedriver.exe");
+				return new ChromeDriver();
+			}
         }
         else if (webDriverType.equalsIgnoreCase("ie")){
-            System.setProperty("webdriver.ie.driver", storagePath + "\\drivers\\IEDriverServer32.exe");
+            System.setProperty("webdriver.ie.driver", storagePath + "/drivers/IEDriverServer32.exe");
             return new InternetExplorerDriver();
         }
         else{
@@ -856,8 +884,5 @@ public class Driver {
 			e.printStackTrace();
 			return null;
 		}*/
-		
-
 	}
-
 }

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<environments>
+	<environment name="dev">
+		<consors_url>https://www.cortalconsors.de/home</consors_url>
+		<app1_uid>mook kim</app1_uid>
+		<app1_pwd>mkyong</app1_pwd>
+	</environment>
+	<environment name="stage">
+		<consors_url>https://www.cortalconsors.de/home</consors_url>
+		<app1_uid>mook kim</app1_uid>
+		<app1_pwd>mkyong</app1_pwd>
+	</environment>
+	<environment name="prod">
+		<consors_url>https://www.cortalconsors.de/home</consors_url>
+		<app1_uid>mook kim</app1_uid>
+		<app1_pwd>mkyong</app1_pwd>
+	</environment>
+</environments>

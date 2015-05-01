@@ -1,7 +1,5 @@
 package com.automation.framework;
 
-import java.util.HashMap;
-
 public class Global {
 	
 	//Define all public static variables

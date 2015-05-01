@@ -3,7 +3,7 @@
 <suite name="Suite" parallel="tests" thread-count="2">
 
 <!--      Web Flows Chrome on Desktop + Chrome on Android         -->
-
+<!--
     <test name="ConsorPOCAndroidChrome">
         <classes>
             <class name="com.consors.android.TestsForConsorsChrome">
@@ -14,7 +14,7 @@
         </classes>
     </test>
 
-<!--
+    -->
     <test name="ConsorPOCWeb">
         <classes>
             <class name="com.consors.web.TestsForConsorsWeb">
@@ -24,7 +24,7 @@
             </class>
         </classes>
     </test>
--->
+
 
     <!--      Native Flows for Consors Android         -->
 <!--

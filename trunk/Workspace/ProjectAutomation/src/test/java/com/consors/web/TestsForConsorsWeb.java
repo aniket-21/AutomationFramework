@@ -13,12 +13,10 @@ import org.testng.Assert;
 import org.testng.annotations.*;
 
 public class TestsForConsorsWeb {
+
 	//Variables
 	String className;
-	String dataSheetName;
 	String env;
-	String buildNumber;
-	String jobName;
     String browser;
 	
 	//Instances
@@ -51,29 +49,26 @@ public class TestsForConsorsWeb {
 	
     @BeforeClass
     public void beforeClass() throws IOException {
-        System.out.println("Before Class TestForCortalConsorsWeb");
 
         //Set the DataSheet name by getting the class name
         String[] strClassNameArray = this.getClass().getName().split("\\.");
         className = strClassNameArray[strClassNameArray.length-1];
         Environment.put("CLASSNAME", className);
-        Environment.put("BROWSER",browser);
+        Environment.put("BROWSER", browser);
+
+        System.out.println("Before Class method for " + className);
 
         //Initiate asapDriver
         asapDriver = new Driver(Dictionary, Environment);
 
-        //Check if POM has env, if null, get it from config file
+        //Get Env
         env = System.getProperty("envName");
-        Assert.assertNotNull(env);
+        Assert.assertNotNull(env, "No Environment Parameter value received");
 
         //Add env global environments
         Environment.put("ENV_CODE", env);
-
-        //Create folder structure
-        Assert.assertTrue(asapDriver.createExecutionFolders());
-
-        //Get Environment Variables
-        Assert.assertTrue(asapDriver.fetchEnvironmentDetails());
+        Assert.assertTrue(asapDriver.createExecutionFolders(),"Creating Execution Folders");
+        Assert.assertTrue(asapDriver.fetchEnvironmentDetailsFromConfigXML(),"Fetching Environment Details");
 
         //Initiate WebDriver
         driver = asapDriver.fGetWebDriver(browser);
@@ -83,33 +78,21 @@ public class TestsForConsorsWeb {
 
         //Instantiate reporter
         Reporter = new Reporting(driver, Dictionary, Environment);
-
-        //Create HTML Summary Report
         Reporter.fnCreateSummaryReport();
-
-        //Update Jenkins report
         Reporter.fnJenkinsReport();
 
         //Initialize Common functions
         objCommon = new Wrappers(driver,Reporter);
-
     }
 	   
    @BeforeMethod
    public void beforeMethod(Method method){
-	   //Get the test name
 	   String testName = method.getName();
-	   
-	   System.out.println("Before Method" + testName);
-	   
-	   //Get the data from DataSheet corresponding to Class Name & Test Name
+	   System.out.println("Before Method for test " + testName);
 	   asapDriver.fGetDataForTest(testName);
-	   
-	   //Create Individual HTML Report	
 	   Reporter.fnCreateHtmlReport(testName);	  
    }
-	   
-	   
+
    @Test
    public void testConsorsWebPOC(){
 	   System.out.println("testConsorsWebPOC");		   
@@ -122,64 +105,40 @@ public class TestsForConsorsWeb {
 		
 		//Call  the function to launch the application url that return MercuryHomePage object
 		HomePage objHP = launchApplication.openApplication();
-		
-		//if the returned object is null then return false
 		Assert.assertNotNull(objHP, "Assert Cortol Consors Home Page object is not null");
 				
 		// Click on link 
 		objHP.clickCurrentAccount();
-
-		//Check whether required page is opened
-	     Assert.assertEquals(objCommon.getTitle(), "Girokonto");
+        Assert.assertEquals(objCommon.getTitle(), "Girokonto");
 		 
 	    //Click on Button open Checking Account
 		CheckingAccountPage objCA= objHP.clickOpenCheckingAccount();
-		
-		//if the returned object is null then return false
 		Assert.assertNotNull(objCA, "Assert Checking Account Entry Page object is not null");		
-					
+
+       //Checking Account Details
 		CheckingAccountDetailsPage objCAD= objCA.openCheckingAccountForm();
-		
-		//if the returned object is null then return false
 		Assert.assertNotNull(objCAD, "Assert Checking Account Details  Page object is not null"); 
 	
-		//Enter PErsonal Details
+		//Enter Details
 		objCAD.enterPersonalDetails();
-		
-		//Enter Address Details
 		objCAD.enterAddressDetails();
-		
-		//Enter Contact Details
 		objCAD.enterContactDetails();
-		
-		//Enter Professional Details
 		objCAD.enterProfessionalDetails();
    }
-   
-   
-	   
+
    @AfterMethod
    public void afterMethod(Method method){
 	   //Get the test name
 	   String testName = method.getName();
-	   
-	   System.out.println("After Method" + testName);
-	   	   
-	   //Update the KeepRefer Sheet
+	   System.out.println("After Method for test " + testName);
 	   asapDriver.fSetReferenceData();
-	   
-	   //Close Individual Summary Report & Update Summary Report
 	   Reporter.fnCloseHtmlReport(testName);
    }
    	   	   
    @AfterClass
    public void afterClass(){
-	   System.out.println("After Class TestsForConsorsChrome");
-	   
-	   //Close HTML Summary report
+	   System.out.println("After Class method for " + className);
 	   Reporter.fnCloseTestSummary();
-	   
-	   //QUit webdriver
 	   if(driver != null) driver.quit();
    }
 	 

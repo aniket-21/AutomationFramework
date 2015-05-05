@@ -20,6 +20,7 @@ public class Reporting {
 	private String g_strTestCaseReport;
     private String g_strSnapshotFolderName;
     private String g_strSnapshotRelativePath;
+	private String g_strSummaryReportPath;
     private String g_strScriptName;       
 
     //Counters and Integers
@@ -48,6 +49,8 @@ public class Reporting {
 		driver = GDriver;
 		Dictionary = GDictionary;
 		Environment = GEnvironment;
+
+		g_strSummaryReportPath = Environment.get("HTMLREPORTSPATH")+ "/SummaryReport.html";
 	}
 	
 	
@@ -66,9 +69,9 @@ public class Reporting {
         g_SummaryStartTime = new Date();
         
 		try 
-		{ 
+		{
 	        //Open the test case report for writing                   
-	        foutStrm = new FileOutputStream(Environment.get("HTMLREPORTSPATH")+ "\\SummaryReport.html", true);
+	        foutStrm = new FileOutputStream(g_strSummaryReportPath, true);
 	           
 			//Close the html file
 	        new PrintStream(foutStrm).println("<HTML><BODY><TABLE BORDER=0 CELLPADDING=3 CELLSPACING=1 WIDTH=100% BGCOLOR=BLACK>");
@@ -111,14 +114,14 @@ public class Reporting {
         g_strScriptName = strTestName;		
 
         //Set the name for the Test Case Report File
-        g_strTestCaseReport = Environment.get("HTMLREPORTSPATH") + "\\Report_" + g_strScriptName + ".html";
+        g_strTestCaseReport = Environment.get("HTMLREPORTSPATH") + "/Report_" + g_strScriptName + ".html";
         //System.out.print(" Detailed Report path is " + g_strTestCaseReport);
              
         //Snap Shot folder
-        g_strSnapshotFolderName = Environment.get("SNAPSHOTSFOLDER") + "\\" +  g_strScriptName;
+        g_strSnapshotFolderName = Environment.get("SNAPSHOTSFOLDER") + "/" +  g_strScriptName;
         
         //Snapshot relative path
-        g_strSnapshotRelativePath = "Snapshots\\" + g_strScriptName;
+        g_strSnapshotRelativePath = "Snapshots/" + g_strScriptName;
  
         //Delete the Summary Folder if present
 		File file = new File(g_strSnapshotFolderName);
@@ -284,7 +287,7 @@ public class Reporting {
         try
         {        
 	        //Open the test case report for writing                   
-	        foutStrm = new FileOutputStream(Environment.get("HTMLREPORTSPATH")+ "\\SummaryReport.html", true);
+	        foutStrm = new FileOutputStream(g_strSummaryReportPath, true);
 	        
 	        //Check color result
 	        if (strResult.toUpperCase().equals("PASSED") || strResult.toUpperCase().equals("PASS"))
@@ -340,7 +343,7 @@ public class Reporting {
         
         //Open the Test Summary Report File
 		try {         
-			foutStrm = new FileOutputStream(Environment.get("HTMLREPORTSPATH")+ "\\SummaryReport.html", true);
+			foutStrm = new FileOutputStream(g_strSummaryReportPath, true);
        
             new PrintStream(foutStrm).println("</TABLE><TABLE WIDTH=100%><TR>");
 	        new PrintStream(foutStrm).println("<TD BGCOLOR=BLACK WIDTH=10%></TD><TD BGCOLOR=BLACK WIDTH=70%><FONT FACE=VERDANA SIZE=2 COLOR=WHITE><B></B></FONT></TD><TD BGCOLOR=BLACK WIDTH=20%><FONT FACE=WINGDINGS SIZE=4>2</FONT><FONT FACE=VERDANA SIZE=2 COLOR=WHITE><B>Total Passed: " + g_iTCPassed + "</B></FONT></TD>");
@@ -400,7 +403,6 @@ public class Reporting {
         else
         {
             sRowColor = "#D3D3D3";
-        
         }
         
         //Check if the result is Pass or Fail
@@ -412,10 +414,10 @@ public class Reporting {
             g_iSnapshotCount++;
             
             //Get the Full path of the snapshot
-            snapshotFilePath = g_strSnapshotFolderName + "\\SS_" + g_iSnapshotCount + ".png";
+            snapshotFilePath = g_strSnapshotFolderName + "/SS_" + g_iSnapshotCount + ".png";
 
             //Get the relative path of the snapshot
-            snapshotFile = g_strSnapshotRelativePath +  "\\SS_" + g_iSnapshotCount + ".png";
+            snapshotFile = g_strSnapshotRelativePath +  "/SS_" + g_iSnapshotCount + ".png";
             
             //Capture the Snapshot
             fTakeScreenshot(snapshotFilePath);
@@ -436,10 +438,10 @@ public class Reporting {
                 g_iFailCount++;
 
                    //Get the Full path of the snapshot
-                snapshotFilePath = g_strSnapshotFolderName + "\\SS_" + g_iSnapshotCount + ".png";
+                snapshotFilePath = g_strSnapshotFolderName + "/SS_" + g_iSnapshotCount + ".png";
 
               //Get the relative path of the snapshot
-                snapshotFile = g_strSnapshotRelativePath +  "\\SS_" + g_iSnapshotCount + ".png";
+                snapshotFile = g_strSnapshotRelativePath +  "/SS_" + g_iSnapshotCount + ".png";
 
                 //Increment the snapshot count
                 //g_iSnapshotCount++;
@@ -497,7 +499,6 @@ public class Reporting {
     	catch (Exception e) {
 			e.printStackTrace();
 		}
-
     }
 	
 	
@@ -509,9 +510,9 @@ public class Reporting {
     public void fnJenkinsReport() 
     {        
         //Variables
-    	String jenkinsFilePath = Environment.get("EXECUTIONFOLDERPATH") + "\\" + Environment.get("ENV_CODE");
-    	String jenkinsHTMLRep = jenkinsFilePath + "\\Jenkins_html_report.html";
-    	String relativeClassSummary = Environment.get("HTMLREPORTSPATH") + "\\SummaryReport.html";
+    	String jenkinsFilePath = Environment.get("EXECUTIONFOLDERPATH") + "/" + Environment.get("ENV_CODE");
+    	String jenkinsHTMLRep = jenkinsFilePath + "/Jenkins_html_report.html";
+    	String relativeClassSummary = Environment.get("HTMLREPORTSPATH") + "/SummaryReport.html";
     	String sRowColor = "";    	
 		
     	

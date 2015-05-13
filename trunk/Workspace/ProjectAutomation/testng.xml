@@ -1,65 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Suite" parallel="tests" thread-count="2">
+<suite name="Suite" parallel="tests" thread-count="3">
 
-<!--      Web Flows Chrome on Desktop + Chrome on Android         -->
-<!--
-    <test name="ConsorPOCAndroidChrome">
+    <test name="AccountsWeb" parallel="instances">
         <classes>
-            <class name="com.consors.android.TestsForConsorsChrome">
+            <class name="com.autodesk.accounts.TestsForAccountLogin">
                 <methods>
-                    <include name="testConsorsWebPOC"/>
+                    <include name="testValidLogin"/>
+                    <include name="testInvalidLoginError"/>
+                    <include name="testBlankCredentialsError"/>
                 </methods>
             </class>
         </classes>
     </test>
 
-    -->
-    <test name="ConsorPOCWeb">
-        <classes>
-            <class name="com.consors.web.TestsForConsorsWeb">
-                <methods>
-                    <include name="testConsorsWebPOC"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-
-
-    <!--      Native Flows for Consors Android         -->
-<!--
-
-    <test name="ConsorPOCAndroid">
-        <classes>
-            <class name="com.consors.android.TestsForConsorsAndroid">
-                <methods>
-                    <include name="testConsorsAndroidPOC"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
--->
-
-
-
-    <!--      Native Flows for MyATT Android         -->
-
-<!--
-
-    <test name="MyATTAndroid">
-        <classes>
-            <class name="com.consors.android.TestsForMyATTAndroid">
-                <methods>
-                    <include name="testMyATTHybridTest"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-
--->
-
-
-  
-
-  
 </suite> <!-- Suite -->

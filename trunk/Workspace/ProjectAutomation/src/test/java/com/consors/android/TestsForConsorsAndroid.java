@@ -75,10 +75,10 @@ public class TestsForConsorsAndroid {
         Reporter = new Reporting(driver, Dictionary, Environment);
 
         //Create HTML Summary Report
-        Reporter.fnCreateSummaryReport();
+        Reporter.createSummaryReport();
 
         //Update Jenkins report
-        Reporter.fnJenkinsReport();
+        Reporter.createJenkinsReport();
 
         //Initialize Common functions
         objCommon = new Wrappers(driver, Reporter);
@@ -93,10 +93,10 @@ public class TestsForConsorsAndroid {
        System.out.println("Before Method" + testName);
 
        //Get the data from DataSheet corresponding to Class Name & Test Name
-       asapDriver.fGetDataForTest(testName);
+       asapDriver.getDataForTest(testName);
 
        //Create Individual HTML Report
-       Reporter.fnCreateHtmlReport(testName);
+       Reporter.createTestLevelReport(testName);
     }
 	   
 	   
@@ -109,10 +109,10 @@ public class TestsForConsorsAndroid {
        System.out.println("After Method" + testName);
 
        //Update the KeepRefer Sheet
-       asapDriver.fSetReferenceData();
+       asapDriver.setReferenceData();
 
        //Close Individual Summary Report & Update Summary Report
-       Reporter.fnCloseHtmlReport(testName);
+       Reporter.closeTestLevelReport(testName);
     }
 	   
 	   
@@ -153,7 +153,7 @@ public class TestsForConsorsAndroid {
        System.out.println("After Class TestsForAppium");
 
        //Close HTML Summary report
-       Reporter.fnCloseTestSummary();
+       Reporter.closeTestSummaryReport();
 
        //QUit webdriver
        if(driver != null) driver.quit();

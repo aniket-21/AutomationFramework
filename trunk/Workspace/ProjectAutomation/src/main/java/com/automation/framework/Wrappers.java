@@ -20,13 +20,13 @@ public class Wrappers {
     //** List<WebElement> getElements(String strDesc)
     //** WebElement getChildElement(WebElement Parent, String strDesc)
     //** List<WebElement> getChildElements(WebElement parentElem, String objDesc)
-    //** boolean verifyElementExistence(String strDesc)
+    //** boolean isWebElementPresent(String strDesc)
     //** boolean verifyElementNonExistence(String strDesc)
-    //** boolean verifyChildElementExistence(WebElement objParent, String strDesc)
+    //** boolean isChildWebElementPresent(WebElement objParent, String strDesc)
     //** boolean verifyChildElementNonExistence(WebElement objParent, String strDesc)
-	//** boolean verifyElementIsDisplayed (String strDesc)
+	//** boolean isWebElementDisplayed (String strDesc)
 	//** boolean verifyElementIsNotDisplayed (String strDesc)
-	//** boolean verifyElementIsEnabled (String strDesc)
+	//** boolean isWebElementEnabled (String strDesc)
 	//** boolean verifyElementIsDisabled (String strDesc)
 	//** boolean click (String strDesc)
 	//** boolean enterText (String strDesc, String strText)
@@ -119,12 +119,12 @@ public class Wrappers {
             }
             else
             {
-                Reporter.fnWriteToHtmlOutput("Get element matching description " + objDesc, "Element should be found and returned", "Property "  + FindBy + " specified for element is invalid", "Fail");
+                Reporter.writeToTestLevelReport("Get element matching description " + objDesc, "Element should be found and returned", "Property " + FindBy + " specified for element is invalid", "Fail");
                 throw(new InvalidSelectorException("Wrapper method getElement() : Property "  + FindBy + " specified for element is invalid"));
             }
         }
         catch(NoSuchElementException ex){
-            Reporter.fnWriteToHtmlOutput("Get element matching description " + objDesc, "Element should be found and returned", "Element not found", "Fail");
+            Reporter.writeToTestLevelReport("Get element matching description " + objDesc, "Element should be found and returned", "Element not found", "Fail");
             throw(ex);
         }
 
@@ -179,7 +179,7 @@ public class Wrappers {
             elements = ((AppiumDriver)driver).findElements(By.className(val));
         }
         else{
-            Reporter.fnWriteToHtmlOutput("Get elements matching description " + objDesc, "Element List should be returned", "Property "  + FindBy + " specified for elements is invalid", "Fail");
+            Reporter.writeToTestLevelReport("Get elements matching description " + objDesc, "Element List should be returned", "Property " + FindBy + " specified for elements is invalid", "Fail");
             throw(new InvalidSelectorException("Wrapper method getElements() : Property "  + FindBy + " specified for element is invalid"));
         }
 
@@ -236,7 +236,7 @@ public class Wrappers {
             return parentElem.findElement(By.tagName(val));
         }
         else{
-            Reporter.fnWriteToHtmlOutput("Get child object matching description " + objDesc, "Object should be found and returned", "Property "  + FindBy + " specified for object is invalid", "Fail");
+            Reporter.writeToTestLevelReport("Get child object matching description " + objDesc, "Object should be found and returned", "Property " + FindBy + " specified for object is invalid", "Fail");
             throw(new InvalidSelectorException("Wrapper method getChildElement() : Property "  + FindBy + " specified for element is invalid"));
         }
     }
@@ -294,7 +294,7 @@ public class Wrappers {
             elements = parentElem.findElements(By.tagName(val));
         }
         else{
-            Reporter.fnWriteToHtmlOutput("Get child elements matching description " + objDesc, "Child Elements should be found and returned", "Property "  + FindBy + " specified for element is invalid", "Fail");
+            Reporter.writeToTestLevelReport("Get child elements matching description " + objDesc, "Child Elements should be found and returned", "Property " + FindBy + " specified for element is invalid", "Fail");
             throw(new InvalidSelectorException("Wrapper method getChildElements() : Property "  + FindBy + " specified for element is invalid"));
         }
 
@@ -303,466 +303,114 @@ public class Wrappers {
 
 
     //*****************************************************************************************
-    //*	Name		    : verifyElementExistence
+    //*	Name		    : isWebElementPresent
     //*	Author		    : Aniket Gadre
     //*****************************************************************************************
-	public boolean verifyElementExistence(String strDesc){
-
-        //WebElement Collection
+	public boolean isWebElementPresent(String strDesc){
         List<WebElement> lst = getElements(strDesc);
-
-        //check not null
-        if(lst == null) return false;
-
-        //check Size
-        if(lst.size() > 0){
-            Reporter.fnWriteToHtmlOutput("Verify existence of element " + strDesc, "Element should exist", "Element Exist", "Pass");
-            return true;
-        }
-
-        Reporter.fnWriteToHtmlOutput("Verify existence of element " + strDesc, "Element should exist", "Element does not exist", "Fail");
-        return false;
+        boolean isPresent = (lst == null || lst.size() == 0) ? false : true;
+        Reporter.writeToTestLevelReport("Element existence with description " + strDesc, "", "Element presence state is " + isPresent, "Done");
+        return isPresent;
     }
 
+
     //*****************************************************************************************
-    //*	Name		    : verifyElementNonExistence
+    //*	Name		    : isChildWebElementPresent
     //*	Author		    : Aniket Gadre
     //*****************************************************************************************
-    public boolean verifyElementNonExistence(String strDesc){
-
-        //WebElement Collection
-        List<WebElement> lst = getElements(strDesc);
-
-        //check not null
-        if(lst == null) return false;
-
-        if(lst.size() == 0){
-            Reporter.fnWriteToHtmlOutput("Verify non existence of element " + strDesc, "Element should not exist", "Element does not exist", "Pass");
-            return true;
-        }
-
-        Reporter.fnWriteToHtmlOutput("Verify non existence of element " + strDesc, "Element should not exist", "Element exist", "Fail");
-        return false;
-    }
-
-    //*****************************************************************************************
-    //*	Name		    : verifyChildElementExistence
-    //*	Author		    : Aniket Gadre
-    //*****************************************************************************************
-	public boolean verifyChildElementExistence(WebElement objParent, String strDesc){
-        
-        //WebElement Collection
+	public boolean isChildWebElementPresent(WebElement objParent, String strDesc){
         List<WebElement> lst = getChildElements(objParent,strDesc);
-
-        //check not null
-        if(lst == null) return false;
-
-        if(lst.size() > 0){
-            Reporter.fnWriteToHtmlOutput("Verify existence of child element " + strDesc, "Child element exist", "Child element Exist", "Pass");
-            return true;
-        }
-
-        Reporter.fnWriteToHtmlOutput("Verify existence of child element " + strDesc, "Child element exist", "Child element does not exist", "Fail");
-        return false;
+        boolean isPresent = (lst == null || lst.size() == 0) ? false : true;
+        Reporter.writeToTestLevelReport("Child Element existence with description " + strDesc, "", "Child Element presence state is " + isPresent, "Done");
+        return isPresent;
     }
 	
 	//*****************************************************************************************
-    //*	Name		    : verifyChildElementNonExistence
-    //*	Author		    : Surbhi Shivhare
-    //*****************************************************************************************
-	public boolean verifyChildElementNonExistence(WebElement objParent, String strDesc){
-        
-        //WebElement Collection
-        List<WebElement> lst = getChildElements(objParent,strDesc);
-
-        //check not null
-        if(lst == null) return false;
-
-      	//check size
-        if(lst.size() == 0){
-            Reporter.fnWriteToHtmlOutput("Verify non existence of child element " + strDesc, "Child element should not exist", "Child element does not exist", "Pass");
-            return true;
-        }
-
-        Reporter.fnWriteToHtmlOutput("Verify non existence of child element " + strDesc, "Child element should not exist", "Child element exist", "Fail");
-        return false;
-
-    }
-	
-	//*****************************************************************************************
-    //*	Name		    : verifyElementIsDisplayed
+    //*	Name		    : isWebElementDisplayed
     //*	Author		    : Aniket Gadre
     //*****************************************************************************************
-	public boolean verifyElementIsDisplayed(String strDesc) throws InterruptedException {
-    		
+	public boolean isWebElementDisplayed(String strDesc) throws InterruptedException {
+        WebElement webElement = getElement(strDesc);
+        return isWebElementDisplayed(webElement);
+    }
+	
+	//*****************************************************************************************
+    //*	Name		    : isWebElementDisplayed
+    //*	Author		    : Aniket Gadre
+    //*****************************************************************************************
+	public boolean isWebElementDisplayed(WebElement webElement) throws InterruptedException {
+        boolean bIsDisplayed = webElement.isDisplayed();
+        String state = bIsDisplayed ? "displayed" : "not displayed";
+        String strDesc = webElement.toString();
+        Reporter.writeToTestLevelReport("Check if object with description  " + strDesc + " is displayed", "", "Object is " + state, "Done");
+
+        return  bIsDisplayed;
+    }
+
+	//*****************************************************************************************
+    //*	Name		    : isWebElementEnabled
+    //*	Author		    : Aniket Gadre
+    //*****************************************************************************************
+    public boolean isWebElementEnabled(String strDesc) throws InterruptedException {
         //Get WebElement
         WebElement webElement = getElement(strDesc);
-
-        //check null
-        if(webElement == null) return false;
-
-        //Set displayed flag
-        boolean bIsDisplayed = false;
-
-        int intCount = 1;
-
-        //Loop for around 10 secs to check whether object is being displayed
-        while (!(bIsDisplayed) && (intCount <= 20)){
-            bIsDisplayed = webElement.isDisplayed();
-
-            //Sleep for half a sec
-            Thread.sleep(500);
-            intCount++;
-        }
-
-        //Validate if the element should be displayed or not
-        if(bIsDisplayed){
-            Reporter.fnWriteToHtmlOutput("Check if element with description  " + strDesc + " is displayed" , "Element should be displayed", "Element is Displayed", "Pass");
-            return true;
-        }
-
-        Reporter.fnWriteToHtmlOutput("Check if element with description  " + strDesc + " is displayed" , "Element should be displayed", "Element is not displayed", "Fail");
-        return false;
-    }
-	
-	//*****************************************************************************************
-    //*	Name		    : verifyElementIsDisplayed
-    //*	Author		    : Aniket Gadre
-    //*****************************************************************************************
-	public boolean verifyElementIsDisplayed(WebElement webElement) throws InterruptedException {
-		
-		//Check if the WebElement is displayed    		
-		boolean bIsDisplayed = false;	  
-		String strDesc = webElement.toString();
-        
-        int intCount = 1;    
-
-        //Loop for around 10 secs to check whether object is being displayed
-        while (!(bIsDisplayed) && (intCount <= 20)){
-             bIsDisplayed = webElement.isDisplayed();
-
-            //Sleep for a sec
-            Thread.sleep(500);
-            intCount++;
-        }
-
-        //Validate if the element should be displayed or not
-        if(bIsDisplayed){
-            Reporter.fnWriteToHtmlOutput("Check if element with description  " + strDesc + " is displayed" , "Element should be displayed", "Element is Displayed", "Pass");
-            return true;
-        }
-
-        Reporter.fnWriteToHtmlOutput("Check if element with description  " + strDesc + " is displayed" , "Element should be displayed", "Element is not displayed", "Fail");
-        return false;
-    }
-	
-	
-	//*****************************************************************************************
-    //*	Name		    : verifyElementIsNotDisplayed
-    //*	Author		    : Surbhi Shivhare
-    //*****************************************************************************************
-	public boolean verifyElementIsNotDisplayed(String strDesc) throws InterruptedException {
-
-        //Get WebElement
-        WebElement webElement = getElement(strDesc);
-
-        //check not null
-        if(webElement == null) return false;
-
-        //Check if the WebElement is displayed
-        boolean bNotIsDisplayed = false;
-
-        int intCount = 1;
-	        
-        //Loop for around 10 secs to check whether object is being displayed
-        while (!(bNotIsDisplayed) && (intCount <=20)){
-             bNotIsDisplayed = !(webElement.isDisplayed());
-
-            //Sleep for a sec
-            Thread.sleep(500);
-            intCount++;
-        }
-
-        //Validate if the element should be displayed or not
-        if(bNotIsDisplayed){
-            Reporter.fnWriteToHtmlOutput("Check if object with description  " + strDesc + " is not displayed" , "Object should not be displayed", "Object is not displayed", "Pass");
-            return true;
-        }
-
-        Reporter.fnWriteToHtmlOutput("Check if object with description  " + strDesc + " is not displayed" , "Object should not be displayed", "Object is Displayed", "Fail");
-        return false;
-    }
-	
-	//*****************************************************************************************
-    //*	Name		    : verifyElementIsNotDisplayed
-    //*	Author		    : Aniket Gadre
-    //*****************************************************************************************
-	public boolean verifyElementIsNotDisplayed(WebElement webElement) throws InterruptedException {
-		
-		//Check if the WebElement is displayed    		
-		boolean bNotIsDisplayed = false;	
-		String strDesc = webElement.toString();
-        
-		//Counter
-        int intCount = 1;  
-
-        //Loop for around 10 secs to check whether object is being displayed
-        while (!(bNotIsDisplayed) && (intCount <= 20)){
-            bNotIsDisplayed = !(webElement.isDisplayed());
-
-            //Sleep for a sec
-            Thread.sleep(500);
-            intCount++;
-        }
-
-        //Validate if the element should be displayed or not
-        if(bNotIsDisplayed){
-            Reporter.fnWriteToHtmlOutput("Check if object with description  " + strDesc + " is not displayed" , "Object should not be displayed", "Object is not displayed", "Pass");
-            return true;
-        }
-
-        Reporter.fnWriteToHtmlOutput("Check if object with description  " + strDesc + " is not displayed" , "Object should not be displayed", "Object is Displayed", "Fail");
-        return false;
-    }
-	
-	
-	//*****************************************************************************************
-    //*	Name		    : verifyElementIsEnabled
-    //*	Author		    : Aniket Gadre
-    //*****************************************************************************************
-    public boolean verifyElementIsEnabled(String strDesc) throws InterruptedException {
-        //Get WebElement
-        WebElement webElement = getElement(strDesc);
-
-        //check not null
-        if(webElement == null) return false;
-
-        //Check if the WebElement is Enabled
-        boolean bIsEnabled = false;
-
-        int intCount = 1;
-
-        while (!(bIsEnabled) && (intCount <= 20)){
-            bIsEnabled = webElement.isEnabled();
-
-            //Sleep for a sec, increment the counter
-            Thread.sleep(500);
-            intCount++;
-        }
-	        
-        //Validate if the WebElement is Enabled
-        if (!(bIsEnabled)){
-            Reporter.fnWriteToHtmlOutput("Verify if element with description  " + strDesc + " is enabled", "Element should be enabled", "Element is not enabled", "Fail");
-            return false;
-        }
-
-        Reporter.fnWriteToHtmlOutput("Verify if element with description  " + strDesc + " is enabled", "Element should be enabled", "Element is enabled", "Pass");
-        return true;
+        return isWebElementEnabled(webElement);
     }	
     
   //*****************************************************************************************
-    //*	Name		    : verifyElementIsEnabled
+    //*	Name		    : isWebElementEnabled
     //*	Author		    : Aniket Gadre
     //*****************************************************************************************
-    public boolean verifyElementIsEnabled(WebElement webElement) throws InterruptedException {
-    	
+    public boolean isWebElementEnabled(WebElement webElement) throws InterruptedException {
     	//Check if the WebElement is Enabled
-        boolean bIsEnabled = false;
+        boolean bIsEnabled = webElement.isEnabled();
+        String state = bIsEnabled ? "enabled" : "disabled";
         String strDesc = webElement.toString();
-        int intCount = 1;
+        Reporter.writeToTestLevelReport("Check enabled state of object with description  " + strDesc, "", "Object state is " + state, "Done");
 
-        while (!(bIsEnabled) && (intCount <= 20)){
-            bIsEnabled = webElement.isEnabled();
-
-            //Sleep for a sec, increment the counter
-            Thread.sleep(500);
-            intCount++;
-        }
-
-        //Validate if the WebElement is Enabled
-        if (!(bIsEnabled)){
-            Reporter.fnWriteToHtmlOutput("Check if object with description  " + strDesc + " is enabled", "Object should be enabled", "Object is not enabled", "Fail");
-            return false;
-        }
-
-        Reporter.fnWriteToHtmlOutput("Check if object with description  " + strDesc + " is enabled", "Object should be enabled", "Object is enabled", "Pass");
-        return true;
+        return  bIsEnabled;
     }	
     
+
     //*****************************************************************************************
-    //*	Name		    : verifyElementIsDisabled
+    //*	Name		    : isWebElementSelected
     //*	Author		    : Aniket Gadre
     //*****************************************************************************************
-    public boolean verifyElementIsDisabled(String strDesc) throws InterruptedException {
-
+    public boolean isWebElementSelected(String strDesc) {
         //Get WebElement
         WebElement webElement = getElement(strDesc);
-
-        //check not null
-        if(webElement == null) return false;
-
-        //Check if the WebElement is Enabled
-        boolean bIsNotEnabled = false;
-
-        int intCount = 1;
-
-        while (!(bIsNotEnabled) && (intCount <= 20)){
-            bIsNotEnabled = !(webElement.isEnabled());
-
-            //Sleep for a sec, increment the counter
-            Thread.sleep(500);
-            intCount++;
-        }
-
-        //Validate if the WebElement is Enabled
-        if (!(bIsNotEnabled)){
-            Reporter.fnWriteToHtmlOutput("Verify element with description  " + strDesc + " is disabled", "Element should be disabled", "Element is not disabled", "Fail");
-            return false;
-        }
-
-        Reporter.fnWriteToHtmlOutput("Verify element with description  " + strDesc + " is disabled", "Element should be disabled", "Element is disabled", "Pass");
-        return true;
+        return isWebElementSelected(webElement);
     }
-    
+
     //*****************************************************************************************
-    //*	Name		    : verifyElementIsDisabled
+    //*	Name		    : isWebElementSelected
     //*	Author		    : Aniket Gadre
     //*****************************************************************************************
-    public boolean verifyElementIsDisabled(WebElement webElement) throws InterruptedException {
-    	
-    	//Check if the WebElement is Enabled
-        boolean bIsNotEnabled = false;
+    public boolean isWebElementSelected(WebElement webElement){
+        boolean bIsSelected = webElement.isSelected();
+        String state = bIsSelected ? "selected" : "unselected";
         String strDesc = webElement.toString();
-        int intCount = 1;
+        Reporter.writeToTestLevelReport("Check selected state of object with description  " + strDesc, "", "Object state is " + state, "Done");
 
-        while (!(bIsNotEnabled) && (intCount <= 20)){
-            bIsNotEnabled = !(webElement.isEnabled());
-
-            //Sleep for a sec, increment the counter
-            Thread.sleep(500);
-            intCount++;
-        }
-
-        //Validate if the WebElement is Enabled
-        if (!(bIsNotEnabled)){
-            Reporter.fnWriteToHtmlOutput("Verify element with description  " + strDesc + " is disabled", "Element should be disabled", "Element is not disabled", "Fail");
-            return false;
-        }
-
-        Reporter.fnWriteToHtmlOutput("Verify element with description  " + strDesc + " is disabled", "Element should be disabled", "Element is disabled", "Pass");
-        return true;
+        return  bIsSelected;
     }
-
-
-    //*****************************************************************************************
-    //*	Name		    : verifyElementIsSelected
-    //*	Author		    : Aniket Gadre
-    //*****************************************************************************************
-    public boolean verifyElementIsSelected(String strDesc) {
-
-        //Get WebElement
-        WebElement webElement = getElement(strDesc);
-
-        //check not null
-        if(webElement == null) return false;
-
-        //Validate if the WebElement is Selected
-        if (!(webElement.isSelected())){
-            Reporter.fnWriteToHtmlOutput("Verify element with description  " + strDesc + " is selected", "Element should be selected", "Element is not selected", "Fail");
-            return false;
-        }
-
-        Reporter.fnWriteToHtmlOutput("Verify element with description  " + strDesc + " is selected", "Element should be selected", "Element is selected", "Pass");
-        return true;
-    }
-
-    //*****************************************************************************************
-    //*	Name		    : verifyElementIsSelected
-    //*	Author		    : Aniket Gadre
-    //*****************************************************************************************
-    public boolean verifyElementIsSelected(WebElement webElement){
-        String strDesc = webElement.toString();
-
-        //Validate if the WebElement is Selected
-        if (!(webElement.isSelected())){
-            Reporter.fnWriteToHtmlOutput("Verify element with description  " + strDesc + " is selected", "Element should be selected", "Element is not selected", "Fail");
-            return false;
-        }
-
-        Reporter.fnWriteToHtmlOutput("Verify element with description  " + strDesc + " is selected", "Element should be selected", "Element is selected", "Pass");
-        return true;
-    }
-
-
-    //*****************************************************************************************
-    //*	Name		    : verifyElementIsNotSelected
-    //*	Author		    : Aniket Gadre
-    //*****************************************************************************************
-    public boolean verifyElementIsNotSelected(String strDesc) {
-
-        //Get WebElement
-        WebElement webElement = getElement(strDesc);
-
-        //check not null
-        if(webElement == null) return false;
-
-        //Validate if the WebElement is Selected
-        if (webElement.isSelected()){
-            Reporter.fnWriteToHtmlOutput("Verify element with description  " + strDesc + " is selected", "Element should not be selected", "Element is selected", "Fail");
-            return false;
-        }
-
-        Reporter.fnWriteToHtmlOutput("Verify element with description  " + strDesc + " is selected", "Element should not be selected", "Element is not selected", "Pass");
-        return true;
-    }
-
-    //*****************************************************************************************
-    //*	Name		    : verifyElementIsNotSelected
-    //*	Author		    : Aniket Gadre
-    //*****************************************************************************************
-    public boolean verifyElementIsNotSelected(WebElement webElement){
-        String strDesc = webElement.toString();
-
-        //Validate if the WebElement is Selected
-        if (webElement.isSelected()){
-            Reporter.fnWriteToHtmlOutput("Verify element with description  " + strDesc + " is not selected", "Element should not be selected", "Element is selected", "Fail");
-            return false;
-        }
-
-        Reporter.fnWriteToHtmlOutput("Verify element with description  " + strDesc + " is not selected", "Element should not be selected", "Element is not selected", "Pass");
-        return true;
-    }
-
 
     //*****************************************************************************************
     //*	Name		    : click
     //*	Author		    : Aniket Gadre
     //*****************************************************************************************
-    public void click(String strDesc)
+    public Wrappers click(String strDesc)
     {
         //Initialize
-        WebElement objClick = getElement(strDesc);
-        	
-        //Check if the object is displayed enabled, if yes click the same
-        if (objClick.isDisplayed() && objClick.isEnabled()){
-            //Click on the object
-            objClick.click();
-        }
-        else{
-            Reporter.fnWriteToHtmlOutput("Click element matching description " + strDesc, "Element with description " + strDesc + " should be clicked", "Element is either not displayed or is not enabled", "Fail");
-            throw(new ElementNotVisibleException("Wrapper method click() : Element is either not visible or is not enabled"));
-            //return false;
-        }
-            
-        Reporter.fnWriteToHtmlOutput("Click object matching description " + strDesc, "Click operation should be successful", "Successfully clicked the object", "Done");
-        //return true;
+        WebElement webElement = getElement(strDesc);
+        return click(webElement);
     }
     
   //*****************************************************************************************
     //*	Name		    : click
     //*	Author		    : Aniket Gadre
     //*****************************************************************************************
-    public void click(WebElement objClick)
+    public Wrappers click(WebElement objClick)
     {
         String strDesc = objClick.toString();
 
@@ -772,44 +420,30 @@ public class Wrappers {
             objClick.click();
         }
         else{
-            Reporter.fnWriteToHtmlOutput("Click element matching description " + strDesc, "Element with description " + strDesc + " should be clicked", "Element is either not displayed or is not enabled", "Fail");
+            Reporter.writeToTestLevelReport("Click element matching description " + strDesc, "Element with description " + strDesc + " should be clicked", "Element is either not displayed or is not enabled", "Fail");
             throw(new ElementNotVisibleException("Wrapper method click() : Element is either not visible or is not enabled"));
             //return false;
         }
 
-        Reporter.fnWriteToHtmlOutput("Click object matching description " + objClick.toString(), "Click operation should be successful", "Successfully clicked the object", "Done");
-        //return true;
+        Reporter.writeToTestLevelReport("Click object matching description " + objClick.toString(), "Click operation should be successful", "Successfully clicked the object", "Done");
+        return this;
     }	
 
 	//*****************************************************************************************
     //*	Name		    : enterText
     //*	Author		    : Aniket Gadre
     //*****************************************************************************************
-    public void enterText(String strDesc, String strText)
+    public Wrappers enterText(String strDesc, String strText)
     {
-        WebElement objEdit = getElement(strDesc);
-
-        //Check if the object is enabled, if yes click the same
-        if (objEdit.isDisplayed() && objEdit.isEnabled()){
-            //Enter the text in the edit box
-            objEdit.clear();
-            objEdit.sendKeys(strText);
-        }
-        else{
-            Reporter.fnWriteToHtmlOutput("Set value in element with description " + strDesc, "Value " + strText + " should be set in the edit box", "Element is either not displayed or not enabled", "Fail");
-            throw(new ElementNotVisibleException("Wrapper method enterText() : Element with description " + strDesc + " is either not visible or is not enabled"));
-            //return false;
-        }
-
-        Reporter.fnWriteToHtmlOutput("Set value in element with description " + strDesc, "Value " + strText + " should be set in the edit box", "Value is set in the text field", "Done");
-        //return true;
+        WebElement webElement = getElement(strDesc);
+        return enterText(webElement,strText);
     }	
     
     //*****************************************************************************************
     //*	Name		    : enterText
-    //*	Author		    : ANiket Gadre
+    //*	Author		    : Aniket Gadre
     //*****************************************************************************************
-    public void enterText(WebElement objEdit, String strText)
+    public Wrappers enterText(WebElement objEdit, String strText)
     {
     	String strDesc = objEdit.toString();
 
@@ -820,13 +454,13 @@ public class Wrappers {
             objEdit.sendKeys(strText);
         }
         else{
-            Reporter.fnWriteToHtmlOutput("Set value in element with description " + strDesc, "Value " + strText + " should be set in the edit box", "Element is either not displayed or not enabled", "Fail");
+            Reporter.writeToTestLevelReport("Set value in element with description " + strDesc, "Value " + strText + " should be set in the edit box", "Element is either not displayed or not enabled", "Fail");
             throw(new ElementNotVisibleException("Wrapper method enterText() : Element with description " + strDesc + " is either not visible or is not enabled"));
             //return false;
         }
 
-        Reporter.fnWriteToHtmlOutput("Set value in element with description " + strDesc, "Value " + strText + " should be set in the edit box", "Value is set in the text field", "Done");
-        //return true;
+        Reporter.writeToTestLevelReport("Set value in element with description " + strDesc, "Value " + strText + " should be set in the edit box", "Value is set in the text field", "Done");
+        return this;
     }	
 
 
@@ -834,37 +468,17 @@ public class Wrappers {
     //*	Name		    : selectOptionFromList
     //*	Author		    : Aniket Gadre
     //*****************************************************************************************
-    public void selectOptionFromList(String strDesc, String strText)
+    public Wrappers selectOptionFromList(String strDesc, String strText)
     {
-        WebElement objSelect = getElement(strDesc);
-
-        //Check if the object is enabled, if yes click the same
-        if (objSelect.isEnabled()){
-            //Set Select Element and select required value by text
-            try{
-                Select select = new Select(objSelect);
-                select.selectByVisibleText(strText);
-            }
-            catch(WebDriverException ex){
-                Reporter.fnWriteToHtmlOutput("Select value in element with description " + strDesc, "Value " + strText + " should be selected in the list box", "Selecting value failed due to exception " + ex.getMessage(), "Fail");
-                throw(ex);
-            }
-        }
-        else{
-            Reporter.fnWriteToHtmlOutput("Select value in element with description " + strDesc, "Value " + strText + " should be selected in the list box", "Element is either not displayed or not enabled", "Fail");
-            throw(new ElementNotVisibleException("Wrapper method selectOptionFromList() : Element with description " + strDesc + " is either not visible or is not enabled"));
-            //return false;
-        }
-
-        Reporter.fnWriteToHtmlOutput("Select value from dropdown","Select value " + strText, "Value " + strText +" selected" , "Done");
-        //return true;
+        WebElement webElement = getElement(strDesc);
+        return selectOptionFromList(webElement,strText);
     }
     
     //*****************************************************************************************
     //*	Name		    : selectOptionFromList
     //*	Author		    : Aniket Gadre
     //*****************************************************************************************
-    public void selectOptionFromList(WebElement objSelect, String strText)
+    public Wrappers selectOptionFromList(WebElement objSelect, String strText)
     {
     	String strDesc = objSelect.toString();
 
@@ -876,18 +490,18 @@ public class Wrappers {
                 select.selectByVisibleText(strText);
             }
             catch(WebDriverException ex){
-                Reporter.fnWriteToHtmlOutput("Select value in element with description " + strDesc, "Value " + strText + " should be selected in the list box", "Selecting value failed due to exception " + ex.getMessage(), "Fail");
+                Reporter.writeToTestLevelReport("Select value in element with description " + strDesc, "Value " + strText + " should be selected in the list box", "Selecting value failed due to exception " + ex.getMessage(), "Fail");
                 throw(ex);
             }
         }
         else{
-            Reporter.fnWriteToHtmlOutput("Select value in element with description " + strDesc, "Value " + strText + " should be selected in the list box", "Element is either not displayed or not enabled", "Fail");
+            Reporter.writeToTestLevelReport("Select value in element with description " + strDesc, "Value " + strText + " should be selected in the list box", "Element is either not displayed or not enabled", "Fail");
             throw(new ElementNotVisibleException("Wrapper method selectOptionFromList() : Element with description " + strDesc + " is either not visible or is not enabled"));
             //return false;
         }
 
-        Reporter.fnWriteToHtmlOutput("Select value from dropdown","Select value " + strText, "Value " + strText +" selected" , "Done");
-        //return true;
+        Reporter.writeToTestLevelReport("Select value from dropdown", "Select value " + strText, "Value " + strText + " selected", "Done");
+        return this;
     }
     
 
@@ -896,34 +510,18 @@ public class Wrappers {
     //*	Name		    : checkCheckBox
     //*	Author		    : Aniket Gadre
     //*****************************************************************************************
-    public void checkCheckBox(String strDesc)
+    public Wrappers checkCheckBox(String strDesc)
     {
         //Initialize
-        WebElement objChkBox = getElement(strDesc);
-
-        //Check if the object is enabled, if yes click the same
-        if (objChkBox.isDisplayed() && objChkBox.isEnabled()){
-            //Check state of check box
-            boolean isChecked = objChkBox.isSelected();
-
-            //Check if Not Checked
-            if(isChecked == false) objChkBox.click();
-        }
-        else{
-            Reporter.fnWriteToHtmlOutput("Check CheckBox element with description " + strDesc, "Checkbox should be checked", "Element is either not displayed or not enabled", "Fail");
-            throw(new ElementNotVisibleException("Wrapper method checkCheckBox() : Element with description " + strDesc + " is either not visible or is not enabled"));
-            //return false;
-        }
-
-        Reporter.fnWriteToHtmlOutput("Check CheckBox element with description " + strDesc, "Check operation should be successful", "Successfully checked the checkbox", "Done");
-        //return true;
+        WebElement webElement = getElement(strDesc);
+        return checkCheckBox(webElement);
     }
     
   //*****************************************************************************************
     //*	Name		    : checkCheckBox
     //*	Author		    : Aniket Gadre
     //*****************************************************************************************
-    public void checkCheckBox(WebElement objChkBox)
+    public Wrappers checkCheckBox(WebElement objChkBox)
     {
     	String strDesc = objChkBox.toString();
 
@@ -936,47 +534,31 @@ public class Wrappers {
             if(isChecked == false) objChkBox.click();
         }
         else{
-            Reporter.fnWriteToHtmlOutput("Check CheckBox element with description " + strDesc, "Checkbox should be checked", "Element is either not displayed or not enabled", "Fail");
+            Reporter.writeToTestLevelReport("Check CheckBox element with description " + strDesc, "Checkbox should be checked", "Element is either not displayed or not enabled", "Fail");
             throw(new ElementNotVisibleException("Wrapper method checkCheckBox() : Element with description " + strDesc + " is either not visible or is not enabled"));
             //return false;
         }
 
-        Reporter.fnWriteToHtmlOutput("Check CheckBox element with description " + strDesc, "Check operation should be successful", "Successfully checked the checkbox", "Done");
-        //return true;
+        Reporter.writeToTestLevelReport("Check CheckBox element with description " + strDesc, "Check operation should be successful", "Successfully checked the checkbox", "Done");
+        return this;
     }
     
     //*****************************************************************************************
     //*	Name		    : uncheckCheckBox
     //*	Author		    : Aniket Gadre
     //*****************************************************************************************
-    public void uncheckCheckBox(String strDesc)
+    public Wrappers uncheckCheckBox(String strDesc)
     {
         //Initialize
-        WebElement objChkBox = getElement(strDesc);
-
-        //Check if the object is enabled, if yes click the same
-        if (objChkBox.isDisplayed() && objChkBox.isEnabled()){
-            //Check state of check box
-            boolean isChecked = objChkBox.isSelected();
-
-            //Check if Checked
-            if(isChecked == true) objChkBox.click();
-        }
-        else{
-            Reporter.fnWriteToHtmlOutput("Check CheckBox element with description " + strDesc, "Checkbox should be unchecked", "Element is either not displayed or not enabled", "Fail");
-            throw(new ElementNotVisibleException("Wrapper method checkCheckBox() : Element with description " + strDesc + " is either not visible or is not enabled"));
-            //return false;
-        }
-
-        Reporter.fnWriteToHtmlOutput("Uncheck CheckBox element with description " + strDesc, "Un-check operation should be successful", "Successfully unchecked the checkbox", "Done");
-        //return true;
+        WebElement webElement = getElement(strDesc);
+        return uncheckCheckBox(webElement);
     }	
     
     //*****************************************************************************************
     //*	Name		    : uncheckCheckBox
     //*	Author		    : Aniket Gadre
     //*****************************************************************************************
-    public void uncheckCheckBox(WebElement objChkBox)
+    public Wrappers uncheckCheckBox(WebElement objChkBox)
     {
     	String strDesc = objChkBox.toString();
 
@@ -989,13 +571,13 @@ public class Wrappers {
             if(isChecked == true) objChkBox.click();
         }
         else{
-            Reporter.fnWriteToHtmlOutput("Check CheckBox element with description " + strDesc, "Checkbox should be unchecked", "Element is either not displayed or not enabled", "Fail");
+            Reporter.writeToTestLevelReport("Check CheckBox element with description " + strDesc, "Checkbox should be unchecked", "Element is either not displayed or not enabled", "Fail");
             throw(new ElementNotVisibleException("Wrapper method checkCheckBox() : Element with description " + strDesc + " is either not visible or is not enabled"));
             //return false;
         }
 
-        Reporter.fnWriteToHtmlOutput("Uncheck CheckBox element with description " + strDesc, "Un-check operation should be successful", "Successfully unchecked the checkbox", "Done");
-        //return true;
+        Reporter.writeToTestLevelReport("Uncheck CheckBox element with description " + strDesc, "Un-check operation should be successful", "Successfully unchecked the checkbox", "Done");
+        return this;
     }
 	
 	//*****************************************************************************************
@@ -1011,17 +593,16 @@ public class Wrappers {
 		}
 		catch(WebDriverException e)
 		{
-			Reporter.fnWriteToHtmlOutput("Get browser name", "Should return Browser Name", "Fetching Browser Name Failed. Exception " + e, "Fail");
+			Reporter.writeToTestLevelReport("Get browser name", "Should return Browser Name", "Fetching Browser Name Failed. Exception " + e, "Fail");
 			throw(e);
 		}
 	}
-
 
     //*****************************************************************************************
     //*	Name		    : rotateDeviceScreen
     //*	Author		    : Aniket Gadre
     //*****************************************************************************************
-    public void rotateDeviceScreen(String Orientation) throws InterruptedException {
+    public Wrappers rotateDeviceScreen(String Orientation) throws InterruptedException {
 
         String strOrientation = "";
         ScreenOrientation iOrientation;
@@ -1042,20 +623,20 @@ public class Wrappers {
             Thread.sleep(1000);
         }
         catch(WebDriverException ex){
-            Reporter.fnWriteToHtmlOutput("Rotate Screen", "Set screen orientation to " + strOrientation, "Orientation Setting Failed", "Fail");
+            Reporter.writeToTestLevelReport("Rotate Screen", "Set screen orientation to " + strOrientation, "Orientation Setting Failed", "Fail");
             throw(ex);
             //return false;
         }
 
-        Reporter.fnWriteToHtmlOutput("Rotate Screen", "Set screen orientation to " + strOrientation, "Orientation Set Successfully", "Pass");
-        //return true;
+        Reporter.writeToTestLevelReport("Rotate Screen", "Set screen orientation to " + strOrientation, "Orientation Set Successfully", "Pass");
+        return this;
     }
 
     //*****************************************************************************************
     //*	Name		    : setGeoLocation
     //*	Author		    : Aniket Gadre
     //*****************************************************************************************
-    public void setGeoLocation(String lat, String lon){
+    public Wrappers setGeoLocation(String lat, String lon){
         //js
         String Script = "window.navigator.geolocation.getCurrentPosition =  function(success){var position = {'coords' : {'latitude': '" + lat + "', 'longitude': '" + lon + "'}}; success(position);}";
 
@@ -1063,6 +644,8 @@ public class Wrappers {
         JavascriptExecutor js = (JavascriptExecutor)driver;
         Object[] args = {null};
         js.executeScript(Script, args);
+
+        return this;
     }
 
     //*****************************************************************************************
@@ -1085,27 +668,26 @@ public class Wrappers {
     //*	Name		    : maximizeWindow
     //*	Author		    : Aniket Gadre
     //*****************************************************************************************
-    public void maximizeWindow()
+    public Wrappers maximizeWindow()
     {
         try{
             driver.manage().window().maximize();
         }
         catch(WebDriverException e){
-            Reporter.fnWriteToHtmlOutput("Maximize Window","Window should be maximized successfully","Error occured " + e.getMessage(),"Fail");
+            Reporter.writeToTestLevelReport("Maximize Window", "Window should be maximized successfully", "Error occured " + e.getMessage(), "Fail");
             throw(e);
             //return false;
         }
 
-        Reporter.fnWriteToHtmlOutput("Maximize Window","Window should be maximized successfully","Window Maximized successfully","Pass");
-        //return true;
+        Reporter.writeToTestLevelReport("Maximize Window", "Window should be maximized successfully", "Window Maximized successfully", "Pass");
+        return this;
     }
 
     //*****************************************************************************************
     //*	Name		    : switchToWindowWithName
     //*	Author		    : Aniket Gadre
     //*****************************************************************************************
-	public boolean switchToWindowWithName()
-	{
+	public Wrappers switchToWindowWithName() throws Exception {
 		try
 		{
 			//driver.switchTo().window(strWindowName);
@@ -1116,18 +698,18 @@ public class Wrappers {
 		}
 		catch(Exception e)
 		{
-			Reporter.fnWriteToHtmlOutput("Switch Window", "Switch to new Window ", "Exception occured : " + e, "Fail");
-			return false;
+			Reporter.writeToTestLevelReport("Switch Window", "Switch to new Window ", "Exception occured : " + e, "Fail");
+			throw(e);
 		}
 		
-		return true;
+		return this;
 	}
 
     //*****************************************************************************************
     //*	Name		    : waitForAndroidActivity
     //*	Author		    : Aniket Gadre
     //*****************************************************************************************
-    public void waitForAndroidActivity(String expectedActivity,int sec)
+    public Wrappers waitForAndroidActivity(String expectedActivity,int sec)
     {
     	int i = 0;
     	String actualActivity="";
@@ -1138,8 +720,8 @@ public class Wrappers {
 
     		actualActivity = ((AndroidDriver)driver).currentActivity();
     		if(actualActivity.equals(expectedActivity)){
-                Reporter.fnWriteToHtmlOutput("Wait for activity " + expectedActivity,"Activity " +  expectedActivity + " should open","Activity " + expectedActivity + " opened","Pass");
-                return;
+                Reporter.writeToTestLevelReport("Wait for activity " + expectedActivity, "Activity " + expectedActivity + " should open", "Activity " + expectedActivity + " opened", "Pass");
+                return this;
             }
     		
     		try {
@@ -1153,7 +735,7 @@ public class Wrappers {
     		i++;
     	}
 
-        Reporter.fnWriteToHtmlOutput("Wait for activity " + expectedActivity,"Activity " +  expectedActivity + " should open","Activity " + expectedActivity + " didnt open. Current Activity is " + actualActivity,"Done");
+        Reporter.writeToTestLevelReport("Wait for activity " + expectedActivity, "Activity " + expectedActivity + " should open", "Activity " + expectedActivity + " didnt open. Current Activity is " + actualActivity, "Done");
     	throw(new TimeoutException("Timeout occured while waiting for Android Activity " + expectedActivity + " Current Activity is " + actualActivity));
     }
 
@@ -1192,12 +774,12 @@ public class Wrappers {
         //Validate
         if (!(driver.getTitle().equalsIgnoreCase(strExpectedTitle)))
         {
-            Reporter.fnWriteToHtmlOutput("Validate Title", "Title should be " + strExpectedTitle, "Title is " + strActualTitle, "Fail");
+            Reporter.writeToTestLevelReport("Validate Title", "Title should be " + strExpectedTitle, "Title is " + strActualTitle, "Fail");
             return false;
         }
 
-        //Reporter.fnWriteToHtmlOutput("Validate Title", "Title should be " + strTitle, "Title is " + strActualTitle, "Pass");
-        Reporter.fnWriteToHtmlOutput("Validate Title", "Title should be " + strExpectedTitle, "Title is " + strActualTitle, "Pass");
+        //Reporter.writeToTestLevelReport("Validate Title", "Title should be " + strTitle, "Title is " + strActualTitle, "Pass");
+        Reporter.writeToTestLevelReport("Validate Title", "Title should be " + strExpectedTitle, "Title is " + strActualTitle, "Pass");
         return true;
     }
     */

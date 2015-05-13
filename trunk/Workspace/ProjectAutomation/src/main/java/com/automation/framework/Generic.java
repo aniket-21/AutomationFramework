@@ -11,7 +11,7 @@ public class Generic {
     //*	Name		    : getTimeStamp
     //*	Author		    : Aniket Gadre
     //*****************************************************************************************
-    public String getTimeStamp(){
+    public static String getTimeStamp(){
         java.util.Date today = new java.util.Date();
         Timestamp now = new java.sql.Timestamp(today.getTime());
         String timeStamp = now.toString().replaceAll(":", "").replaceAll("-", "").replaceAll(" ", "");
@@ -26,7 +26,7 @@ public class Generic {
     //*	Input Params	: strDesc - The description of the object to click
     //*	Return Values	: Boolean - Depending on the success
     //*****************************************************************************************
-    public String getRandomString(){
+    public static String getRandomString(){
 
         //Get time stamp
         String timeStamp = getTimeStamp();
@@ -41,5 +41,44 @@ public class Generic {
         }
 
         return Random;
+    }
+
+    //*****************************************************************************************
+    //*    Name         : getTimeDifference
+    //*    Description  : The function takes the screenshot
+    //*    Author       : Aniket Gadre
+    //*    Input Params : startTime - Start time in long format
+    //*					  endTime - End time in long format
+    //*    Return Values: None
+    //*****************************************************************************************
+    public static String getTimeDifference(long startTime, long endTime) {
+
+        //Finding the difference in milliseconds
+        long delta = endTime - startTime;
+
+        //Finding number of days
+        int days = (int) delta / (24 * 3600 * 1000);
+
+        //Finding the remainder
+        delta = (int) delta % (24 * 3600 * 1000);
+
+        //Finding number of hrs
+        int hrs = (int) delta / (3600 * 1000);
+
+        //Finding the remainder
+        delta = (int) delta % (3600 * 1000);
+
+        //Finding number of minutes
+        int min = (int) delta / (60 * 1000);
+
+        //Finding the remainder
+        delta = (int) delta % (60 * 1000);
+
+        //Finding number of seconds
+        int sec = (int) delta / 1000;
+
+        //Concatenting to get time difference in the form day:hr:min:sec
+        String strTimeDifference = days + ":" + hrs + ":" + min + ":" + sec;
+        return strTimeDifference;
     }
 }

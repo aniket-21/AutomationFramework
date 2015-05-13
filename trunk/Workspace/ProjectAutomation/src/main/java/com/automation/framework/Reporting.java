@@ -46,22 +46,30 @@ public class Reporting {
 	
 	public Reporting(WebDriver GDriver, HashMap <String, String> GDictionary, 	HashMap <String, String> GEnvironment)
 	{
-		driver = GDriver;
-		Dictionary = GDictionary;
-		Environment = GEnvironment;
-
-		g_strSummaryReportPath = Environment.get("HTMLREPORTSPATH")+ "/SummaryReport.html";
+		this(GDictionary, GEnvironment);
+        driver = GDriver;
 	}
+
+    public Reporting(HashMap <String, String> GDictionary, 	HashMap <String, String> GEnvironment)
+    {
+        Dictionary = GDictionary;
+        Environment = GEnvironment;
+        g_strSummaryReportPath = Environment.get("HTMLREPORTSPATH")+ "/SummaryReport.html";
+    }
+
+    public void setDriver(WebDriver webDriver){
+        driver = webDriver;
+    }
 	
 	
 	//*****************************************************************************************
-    //*    Name        : fnCreateSummaryReport
+    //*    Name        : createSummaryReport
     //*    Description    : The function creates the summary HTML file
     //*    Author        :  Aniket Gadre
     //*    Input Params    :     None
     //*    Return Values    :     None
     //*****************************************************************************************
-    public void fnCreateSummaryReport() 
+    public void createSummaryReport()
     {
         //Setting counter value
         g_iTCPassed = 0;
@@ -91,14 +99,14 @@ public class Reporting {
     }	
     
     //*****************************************************************************************
-    //*    Name            : fnCreateHtmlReport
+    //*    Name            : createTestLevelReport
     //*    Description        : The function creates the result HTML file
     //*                      In Case the file already exists, it will overwrite it and also delete the existing folders.
     //*    Author            : Aniket Gadre
     //*    Input Params    : None
     //*    Return Values    : None
     //*****************************************************************************************
-	public void fnCreateHtmlReport(String strTestName) {
+	public void createTestLevelReport(String strTestName) {
 
         //Set the default Operation count as 0
         g_OperationCount = 0;
@@ -169,13 +177,13 @@ public class Reporting {
 	
 	
 	//*****************************************************************************************
-    //*    Name        : fnCloseHtmlReport
+    //*    Name        : closeTestLevelReport
     //*    Description    : The function Closes the HTML file
     //*    Author        : Aniket Gadre
     //*    Input Params    :     None
     //*    Return Values    :     None
     //*****************************************************************************************
-	public void fnCloseHtmlReport(String strTestName) {
+	public void closeTestLevelReport(String strTestName) {
 
 		//Declaring variables
 
@@ -193,7 +201,7 @@ public class Reporting {
 		g_EndTime = new Date();
 		
 		//Fetch the time difference
-		String strTimeDifference = fnTimeDiffference(g_StartTime.getTime(),g_EndTime.getTime());
+		String strTimeDifference = Generic.getTimeDifference(g_StartTime.getTime(), g_EndTime.getTime());
 		
 		//Close the html file
 		try {		
@@ -220,55 +228,16 @@ public class Reporting {
 			strTestCaseResult = "Pass";
 		}
 		
-        //fnCloseHtmlReport = strTestCaseResult
+        //closeTestLevelReport = strTestCaseResult
         
         //Write into the Summary Report
-        fnWriteTestSummary ("Report_"+ strTestName ,strTestCaseResult);
+        writeToTestSummary("Report_" + strTestName, strTestCaseResult);
 		
-	}
-	
-	 //*****************************************************************************************
-    //*    Name         : fnTimeDiffference
-    //*    Description  : The function takes the screenshot
-    //*    Author       : Aniket Gadre
-    //*    Input Params : startTime - Start time in long format
-	//*					  endTime - End time in long format	
-    //*    Return Values: None
-    //*****************************************************************************************
-	public String fnTimeDiffference(long startTime, long endTime) {
-
-		//Finding the difference in milliseconds
-		long delta = endTime - startTime;
-
-		//Finding number of days
-		int days = (int) delta / (24 * 3600 * 1000);
-
-		//Finding the remainder
-		delta = (int) delta % (24 * 3600 * 1000);
-
-		//Finding number of hrs
-		int hrs = (int) delta / (3600 * 1000);
-
-		//Finding the remainder
-		delta = (int) delta % (3600 * 1000);
-
-		//Finding number of minutes
-		int min = (int) delta / (60 * 1000);
-
-		//Finding the remainder
-		delta = (int) delta % (60 * 1000);
-
-		//Finding number of seconds
-		int sec = (int) delta / 1000;
-
-		//Concatenting to get time difference in the form day:hr:min:sec 
-		String strTimeDifference = days + ":" + hrs + ":" + min + ":" + sec;
-		return strTimeDifference;
 	}
 	
 	
 	//*****************************************************************************************
-    //*    Name        : fnWriteTestSummary
+    //*    Name        : writeToTestSummary
     //*    Description    : The function Writes the final outcome of a test case to a summary file.
     //*    Author        :  Aniket Gadre
     //*    Input Params    :     
@@ -278,7 +247,7 @@ public class Reporting {
     //*            (Boolean) TRUE - Succeessful write
     //*                 FALSE - Report file not created
     //*****************************************************************************************
-    public void fnWriteTestSummary(String strTestCaseName, String strResult)
+    public void writeToTestSummary(String strTestCaseName, String strResult)
     {
      
         String sColor,sRowColor;
@@ -331,13 +300,13 @@ public class Reporting {
     
     
   //*****************************************************************************************
-    //*    Name        : fnCloseTestSummary
+    //*    Name        : closeTestSummaryReport
     //*    Description    : The function Closes the summary file
     //*    Author        :  Aniket Gadre
     //*    Input Params    :     None
     //*    Return Values    :     None
     //*****************************************************************************************
-    public void fnCloseTestSummary()
+    public void closeTestSummaryReport()
     {
         g_SummaryEndTime = new Date();
         
@@ -363,7 +332,7 @@ public class Reporting {
     
     
   //*****************************************************************************************
-    //*    Name            : fnWriteToHtmlOutput
+    //*    Name            : writeToTestLevelReport
     //*    Description        : The function Writes output to the HTML file
     //*    Author            : Aniket Gadre
     //*    Input Params    :     
@@ -375,7 +344,7 @@ public class Reporting {
     //*                        (Boolean) TRUE - Successful write
     //*                                  FALSE - Report file not created
     //*****************************************************************************************
-    public void fnWriteToHtmlOutput(String strDescription, String strExpectedValue, String strObtainedValue, String strResult)
+    public void writeToTestLevelReport(String strDescription, String strExpectedValue, String strObtainedValue, String strResult)
     {
       
         //Declaring Variables
@@ -420,7 +389,7 @@ public class Reporting {
             snapshotFile = g_strSnapshotRelativePath +  "/SS_" + g_iSnapshotCount + ".png";
             
             //Capture the Snapshot
-            fTakeScreenshot(snapshotFilePath);
+            takeScreenshot(snapshotFilePath);
 
             
             //Write the result into the file
@@ -447,7 +416,7 @@ public class Reporting {
                 //g_iSnapshotCount++;
 
                 //Capture the Snapshot
-                fTakeScreenshot(snapshotFilePath);
+                takeScreenshot(snapshotFilePath);
                 
                 //Write the result into the file
                 new PrintStream(foutStrm).println("<TR WIDTH=100%><TD BGCOLOR=" + sRowColor + " WIDTH=5% ALIGN=CENTER><FONT FACE=VERDANA SIZE=2 ><B>" + g_OperationCount + "</B></FONT></TD><TD BGCOLOR=" + sRowColor + " WIDTH=28%><FONT FACE=VERDANA SIZE=2>" + strDescription + " </FONT></TD><TD BGCOLOR=" + sRowColor + " WIDTH=25%><FONT FACE=VERDANA SIZE=2>" + strExpectedValue +" </FONT></TD><TD BGCOLOR=" + sRowColor + " WIDTH=25%><FONT FACE=VERDANA SIZE=2>" + strObtainedValue +" </FONT></TD><TD BGCOLOR=" + sRowColor + " WIDTH=7% ALIGN=CENTER><A HREF='" + snapshotFile + "'><FONT FACE=VERDANA SIZE=2 COLOR=RED><B>" + strResult + " </B></FONT></A></TD></TR>");
@@ -480,13 +449,13 @@ public class Reporting {
     }
  
     //*****************************************************************************************
-    //*    Name        : fTakeScreenshot
+    //*    Name        : takeScreenshot
     //*    Description    : The function takes the screenshot
     //*    Author        :  Aniket Gadre
     //*    Input Params    :     SSPath - Screenshot path
     //*    Return Values    :     None
     //*****************************************************************************************
-	public void fTakeScreenshot(String SSPath)
+	public void takeScreenshot(String SSPath)
     {
     	try
     	{
@@ -500,22 +469,19 @@ public class Reporting {
 			e.printStackTrace();
 		}
     }
-	
-	
-	
+
 	//*****************************************************************************************
-    //*    Name        : fnJenkinsReport
+    //*    Name        : createJenkinsReport
     //*    Author      :  Aniket Gadre
     //*****************************************************************************************
-    public void fnJenkinsReport() 
+    public void createJenkinsReport()
     {        
         //Variables
     	String jenkinsFilePath = Environment.get("EXECUTIONFOLDERPATH") + "/" + Environment.get("ENV_CODE");
     	String jenkinsHTMLRep = jenkinsFilePath + "/Jenkins_html_report.html";
     	String relativeClassSummary = Environment.get("HTMLREPORTSPATH") + "/SummaryReport.html";
     	String sRowColor = "";    	
-		
-    	
+
     	try 
 		{ 
     		File htmlReport = new File(jenkinsHTMLRep);

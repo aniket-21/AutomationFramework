@@ -115,7 +115,7 @@ public class CheckingAccountDetailsPage {
 				objCommon.click(rdbtnNoTaxLiability);
 			}
 
-            Reporter.fnWriteToHtmlOutput("Enter Personal Details","Personal details should be Entered", "Personal Details entered Successfully", "Pass");
+            Reporter.writeToTestLevelReport("Enter Personal Details", "Personal details should be Entered", "Personal Details entered Successfully", "Pass");
 			//return true;
 		}
 		
@@ -132,7 +132,7 @@ public class CheckingAccountDetailsPage {
 			objCommon.enterText(edtCity, Dictionary.get("CITY"));
 			objCommon.selectOptionFromList(LstCountry, Dictionary.get("COUNTRY"));
 
-			Reporter.fnWriteToHtmlOutput("Enter Address Details","Address details should be Entered", "Address Details entered Successfully", "Pass");
+			Reporter.writeToTestLevelReport("Enter Address Details", "Address details should be Entered", "Address Details entered Successfully", "Pass");
 		}
 		
 		//*****************************************************************************************
@@ -145,7 +145,7 @@ public class CheckingAccountDetailsPage {
 			objCommon.enterText(edtEmailID, Dictionary.get("EMAIL_ID"));
 			objCommon.enterText(edtPhoneNumber, Dictionary.get("PHONE_NUMBER"));
 
-			Reporter.fnWriteToHtmlOutput("Enter Contact Details","Contact details should be Entered", "Contact Details entered Successfully", "Pass");
+			Reporter.writeToTestLevelReport("Enter Contact Details", "Contact details should be Entered", "Contact Details entered Successfully", "Pass");
 		}
 		
 		//*****************************************************************************************
@@ -165,7 +165,7 @@ public class CheckingAccountDetailsPage {
 			objCommon.enterText(edtTANProcedure1, Dictionary.get("TAN_PROCEDURE_1"));
 			objCommon.enterText(edtTANProcedure2, Dictionary.get("TAN_PROCEDURE_2"));
 
-			Reporter.fnWriteToHtmlOutput("Enter Profesional Details","Professional details should be Entered", "Professional Details entered Successfully", "Pass");
+			Reporter.writeToTestLevelReport("Enter Profesional Details", "Professional details should be Entered", "Professional Details entered Successfully", "Pass");
 
 		}				
 	}

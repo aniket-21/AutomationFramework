@@ -1,7 +1,5 @@
 package com.automation.framework;
 
-import io.appium.java_client.AppiumDriver;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -142,7 +140,7 @@ public class Driver {
 		    boolean bFlag = false;
 			
 		    /*//Get the Column Index for the VERSION Column
-		    iVersion = fGetColumnIndex(Environment.get("ENVIRONMENTXLSPATH"), "ENVIRONMENTS", "VERSION");
+		    iVersion = getColumnIndex(Environment.get("ENVIRONMENTXLSPATH"), "ENVIRONMENTS", "VERSION");
 		    
 		    //Check if the index value is proper
 		    if (iVersion == -1 ){
@@ -151,7 +149,7 @@ public class Driver {
 		    }*/
 
 		    //Get the Column Index for the ENVIRONMENT Column
-		    iEnvironment = fGetColumnIndex(enviromentsPath, "ENVIRONMENTS", "ENVIRONMENT");
+		    iEnvironment = getColumnIndex(enviromentsPath, "ENVIRONMENTS", "ENVIRONMENT");
 		    
 		    //Check if the index value is proper
 		    if (iEnvironment == -1 ){
@@ -261,13 +259,13 @@ public class Driver {
 	}
 	
 	//*****************************************************************************************
-    //*	Name		    : fGetColumnIndex
+    //*	Name		    : getColumnIndex
     //*	Description	    : Function to get the Column Index
     //*	Author		    : Aniket Gadre
     //* Input Params	: int row - Row number to skip
     //*	Return Values	: None
     //***********************************************************************
-	public int fGetColumnIndex (String strXLS, String strSheetName, String strColumnName)
+	public int getColumnIndex(String strXLS, String strSheetName, String strColumnName)
 	{
 		try
 		{
@@ -337,13 +335,13 @@ public class Driver {
 	
 	
 	//*****************************************************************************************
-    //*	Name		    : fGetDataForTest
+    //*	Name		    : getDataForTest
     //*	Description	    : Function to get Data corresponding to Test
     //*	Author		    : Aniket Gadre
     //* Input Params	: int row - Row number to skip
     //*	Return Values	: None
     //***********************************************************************
-	public boolean fGetDataForTest(String testName)
+	public boolean getDataForTest(String testName)
 	{
 		//DataSheet
 		final String dataSheet = dataSheetsPath + "/" + Environment.get("CLASSNAME") + ".xls";
@@ -355,7 +353,7 @@ public class Driver {
 		orgDictionary.clear();
 		
 		//Get column index of test name column
-	    int iColTestName = fGetColumnIndex(dataSheet, mainSheet, testNameColumn);
+	    int iColTestName = getColumnIndex(dataSheet, mainSheet, testNameColumn);
 	    
 	    try{
 	    	
@@ -425,7 +423,7 @@ public class Driver {
 		    }
 		    
 		    //Give call to get Reference data to replace & parameters
-		    if (fGetReferenceData() == false) return false;		    		
+		    if (getReferenceData() == false) return false;
 		    			    		   
 	        return true;
 	    }
@@ -437,13 +435,13 @@ public class Driver {
 	}
 	
 		//*****************************************************************************************
-	   //*	Name		    : fGetReferenceData
+	   //*	Name		    : getReferenceData
 	   //*	Description	    : Fetch the data from keep refer sheet
 	   //*	Author		    : Aniket Gadre
 	   //*	Input Params	: None
 	   //*	Return Values	: Boolean 
 	   //*****************************************************************************************	
-		public boolean fGetReferenceData()
+		public boolean getReferenceData()
 		{
 			//Declare few variables
 			String key, value;
@@ -468,7 +466,7 @@ public class Driver {
 		        String colName = Environment.get("BROWSER").toUpperCase() + "_KEY_VALUE";
 		        
 		        //Call the function to get the Column Index in the KEEP_REFER sheet
-		        int iColIndex = fGetColumnIndex(dataSheet, krSheet, colName);
+		        int iColIndex = getColumnIndex(dataSheet, krSheet, colName);
 		        
 		        //Validate if we get the index
 		        if (iColIndex == -1){
@@ -572,20 +570,20 @@ public class Driver {
 	   		}
 	   		catch (Exception err)
 	   		{
-	        	System.out.print("Exception " + err + " occured in fGetReferenceData");
+	        	System.out.print("Exception " + err + " occured in getReferenceData");
 	        	err.printStackTrace();
 	        	return false;
 	   		}
 	   }	
 		
 	//*****************************************************************************************
-   //*	Name		    : fSetReferenceData
+   //*	Name		    : setReferenceData
    //*	Description	    : Set the data in keep refer sheet
    //*	Author		    : Aniket Gadre
    //*	Input Params	: None
    //*	Return Values	: Boolean 
    //*****************************************************************************************	
-	public boolean fSetReferenceData()
+	public boolean setReferenceData()
 	{
 		
 		//Declare few variables
@@ -613,7 +611,7 @@ public class Driver {
 	        
 	        
 	        //Call the function to get the Column Index in the KEEP_REFER sheet
-	        int iColIndex = fGetColumnIndex(dataSheet, krSheet, colName);
+	        int iColIndex = getColumnIndex(dataSheet, krSheet, colName);
 	        
 	        //Validate if we get the index
 	        if (iColIndex == -1){
@@ -719,7 +717,7 @@ public class Driver {
 	
    		}catch (Exception err)
    		{
-   			System.out.print("Exception " + err + " occured in fSetReferenceData");
+   			System.out.print("Exception " + err + " occured in setReferenceData");
    			err.printStackTrace();
    			return false;
    		}
@@ -727,13 +725,13 @@ public class Driver {
    }
 	
    //*****************************************************************************************
-   //*	Name		    : fGetEnv
+   //*	Name		    : getEnv
    //*	Description	    : Returns the current environment
    //*	Author		    : Aniket Gadre
    //*	Input Params	: None
    //*	Return Values	: WebDriver 
    //*****************************************************************************************
-	public String fGetEnv(){
+	public String getEnv(){
 				
 		try{	
 			File fXmlFile = new File(configXML);
@@ -758,13 +756,13 @@ public class Driver {
 	
 	
    //*****************************************************************************************
-   //*	Name		    : fGetWebDriver
+   //*	Name		    : getWebDriver
    //*	Description	    : Returns the required webdriver
    //*	Author		    : Aniket Gadre
    //*	Input Params	: None
    //*	Return Values	: WebDriver 
    //*****************************************************************************************
-	public WebDriver fGetWebDriver(String browser) throws MalformedURLException
+	public WebDriver getWebDriver(String browser) throws MalformedURLException
 	{
 		String osName = System.getProperty("os.name");
         String webDriverType = browser;

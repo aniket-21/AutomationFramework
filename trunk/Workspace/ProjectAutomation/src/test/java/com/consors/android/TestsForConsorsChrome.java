@@ -99,10 +99,10 @@ public class TestsForConsorsChrome {
         Reporter = new Reporting(driver, Dictionary, Environment);
 
         //Create HTML Summary Report
-        Reporter.fnCreateSummaryReport();
+        Reporter.createSummaryReport();
 
         //Update Jenkins report
-        Reporter.fnJenkinsReport();
+        Reporter.createJenkinsReport();
 
         //Initialize Common functions
         objCommon = new Wrappers(driver, Reporter);
@@ -117,10 +117,10 @@ public class TestsForConsorsChrome {
 	   System.out.println("Before Method" + testName);
 	   
 	   //Get the data from DataSheet corresponding to Class Name & Test Name
-	   asapDriver.fGetDataForTest(testName);
+	   asapDriver.getDataForTest(testName);
 	   
 	   //Create Individual HTML Report	
-	   Reporter.fnCreateHtmlReport(testName);	  
+	   Reporter.createTestLevelReport(testName);
    }
 	   
 	   
@@ -145,7 +145,7 @@ public class TestsForConsorsChrome {
 
 		//Check whether required page is opened
 	     Assert.assertEquals(objCommon.getTitle(), "Girokonto");
-        Reporter.fnWriteToHtmlOutput("Check Title","Title should be Girokonto","Title is Girokonto","Pass");
+        Reporter.writeToTestLevelReport("Check Title", "Title should be Girokonto", "Title is Girokonto", "Pass");
 		 
 	    //Click on Button open Checking Account
 		CheckingAccountPage objCA= objHP.clickOpenCheckingAccount();
@@ -181,10 +181,10 @@ public class TestsForConsorsChrome {
 	   System.out.println("After Method" + testName);
 	   	   
 	   //Update the KeepRefer Sheet
-	   asapDriver.fSetReferenceData();
+	   asapDriver.setReferenceData();
 	   
 	   //Close Individual Summary Report & Update Summary Report
-	   Reporter.fnCloseHtmlReport(testName);
+	   Reporter.closeTestLevelReport(testName);
    }
    	   	   
    @AfterClass
@@ -192,7 +192,7 @@ public class TestsForConsorsChrome {
 	   System.out.println("After Class TestsForConsorsChrome");
 	   
 	   //Close HTML Summary report
-	   Reporter.fnCloseTestSummary();
+	   Reporter.closeTestSummaryReport();
 	   
 	   //QUit webdriver
 	   if(driver != null) driver.quit();

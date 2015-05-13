@@ -21,7 +21,7 @@ public class LaunchApplication {
 	
 	public HomePage openApplication(){
 		driver.get(Environment.get("CONSORS_URL"));
-		Reporter.fnWriteToHtmlOutput("Navigate to specified URL", "URL: https://www.cortalconsors.de/", "Navigated to URL:https://www.cortalconsors.de/" , "Done");
+		Reporter.writeToTestLevelReport("Navigate to specified URL", "URL: https://www.cortalconsors.de/", "Navigated to URL:https://www.cortalconsors.de/", "Done");
 		return new HomePage(driver, Dictionary,Environment,Reporter);
 	}
 }

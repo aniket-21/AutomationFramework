@@ -1,9 +1,7 @@
-package com.autodesk.oxygen;
+package com.autodesk.accounts;
 
 import com.automation.framework.Reporting;
-import com.consors.web.HomePage;
 import org.openqa.selenium.WebDriver;
-
 import java.util.HashMap;
 
 public class LaunchApplication {
@@ -20,9 +18,9 @@ public class LaunchApplication {
 		Environment = GEnvironment;
 	}	
 	
-	public HomePage openApplication(){
+	public LoginPage launchIdentityApplication(){
 		driver.get(Environment.get("OXYGEN_URL"));
-		Reporter.fnWriteToHtmlOutput("Navigate to specified URL", "URL: " + Environment.get("OXYGEN_URL"), "Navigated to URL: " + Environment.get("OXYGEN_URL") , "Done");
-		return new HomePage(driver, Dictionary,Environment,Reporter);
+		Reporter.writeToTestLevelReport("Navigate to specified URL", "URL: " + Environment.get("OXYGEN_URL"), "Navigated to URL: " + Environment.get("OXYGEN_URL"), "Done");
+		return new LoginPage(driver, Dictionary,Environment,Reporter);
 	}
 }

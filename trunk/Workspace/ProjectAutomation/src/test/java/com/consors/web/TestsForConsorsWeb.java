@@ -71,15 +71,15 @@ public class TestsForConsorsWeb {
         Assert.assertTrue(asapDriver.fetchEnvironmentDetailsFromConfigXML(),"Fetching Environment Details");
 
         //Initiate WebDriver
-        driver = asapDriver.fGetWebDriver(browser);
+        driver = asapDriver.getWebDriver(browser);
 
         //Set implicit time
         if(driver != null) driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 
         //Instantiate reporter
         Reporter = new Reporting(driver, Dictionary, Environment);
-        Reporter.fnCreateSummaryReport();
-        Reporter.fnJenkinsReport();
+        Reporter.createSummaryReport();
+        Reporter.createJenkinsReport();
 
         //Initialize Common functions
         objCommon = new Wrappers(driver,Reporter);
@@ -89,8 +89,8 @@ public class TestsForConsorsWeb {
    public void beforeMethod(Method method){
 	   String testName = method.getName();
 	   System.out.println("Before Method for test " + testName);
-	   asapDriver.fGetDataForTest(testName);
-	   Reporter.fnCreateHtmlReport(testName);	  
+	   asapDriver.getDataForTest(testName);
+	   Reporter.createTestLevelReport(testName);
    }
 
    @Test
@@ -131,14 +131,14 @@ public class TestsForConsorsWeb {
 	   //Get the test name
 	   String testName = method.getName();
 	   System.out.println("After Method for test " + testName);
-	   asapDriver.fSetReferenceData();
-	   Reporter.fnCloseHtmlReport(testName);
+	   asapDriver.setReferenceData();
+	   Reporter.closeTestLevelReport(testName);
    }
    	   	   
    @AfterClass
    public void afterClass(){
 	   System.out.println("After Class method for " + className);
-	   Reporter.fnCloseTestSummary();
+	   Reporter.closeTestSummaryReport();
 	   if(driver != null) driver.quit();
    }
 	 

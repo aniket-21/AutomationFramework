@@ -23,9 +23,9 @@ public class LoginPage {
     public static final String pageTitle = "Autodesk - Sign In";
 
     //Page UI Objects
-    public final String edtUserName = "id:=userName_str";
-    public final String edtPassword = "id:=password_str";
-    public final String btnSubmit = "xpath:=//div[@id='login_container']//button[@type='submit']";
+    public final String edtUserName = "id:=userName";
+    public final String edtPassword = "id:=password";
+    public final String btnSubmit = "id:=btnSubmit";
     public final String txtErrors = "xpath:=//span[contains(@class,'field-validation-error')]/span";
 
     //Define the constructor

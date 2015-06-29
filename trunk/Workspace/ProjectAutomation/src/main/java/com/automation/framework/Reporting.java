@@ -127,6 +127,7 @@ public class Reporting {
              
         //Snap Shot folder
         g_strSnapshotFolderName = Environment.get("SNAPSHOTSFOLDER") + "/" +  g_strScriptName;
+
         
         //Snapshot relative path
         g_strSnapshotRelativePath = "Snapshots/" + g_strScriptName;
@@ -134,12 +135,11 @@ public class Reporting {
         //Delete the Summary Folder if present
 		File file = new File(g_strSnapshotFolderName);
 
-		if (file.exists()) {
-			file.delete();
-		}
+		if (file.exists())file.delete();
 
 		//Make a new snapshot folder
 		file.mkdir();
+
 
 		//Open the report file to write the report
 

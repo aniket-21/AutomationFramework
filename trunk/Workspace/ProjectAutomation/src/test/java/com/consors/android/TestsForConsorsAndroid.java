@@ -15,7 +15,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
-public class TestsForConsorsAndroid {
+public class    TestsForConsorsAndroid {
 	
 	//Variables
 	String className;

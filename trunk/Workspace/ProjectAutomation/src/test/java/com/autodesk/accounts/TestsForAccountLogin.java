@@ -97,7 +97,6 @@ public class TestsForAccountLogin {
         //Initialize Common functions
         objCommon = new Wrappers(driver,Reporter);
 
-        
     }
 
     @AfterMethod

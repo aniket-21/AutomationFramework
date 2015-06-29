@@ -18,7 +18,7 @@ public class ProfilePage {
     private Wrappers objWrapper;
 
     public static final String pageTitle = "Autodesk - User Profile";
-    String tbProfile = "linktext:=my profile";
+    String tbProfile = "classname:=profile";
 
     //Define the constructor
     public ProfilePage(WebDriver GDriver, HashMap<String, String> GDictionary, HashMap<String, String> GEnvironment, Reporting GReporter)

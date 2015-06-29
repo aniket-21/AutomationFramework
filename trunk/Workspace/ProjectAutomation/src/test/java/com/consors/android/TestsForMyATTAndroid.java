@@ -4,7 +4,8 @@ import com.automation.framework.Driver;
 import com.automation.framework.Reporting;
 import com.automation.framework.Wrappers;
 import io.appium.java_client.android.AndroidDriver;
-import io.selendroid.SelendroidCapabilities;
+import io.selendroid.client.SelendroidDriver;
+import io.selendroid.common.SelendroidCapabilities;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -73,8 +74,6 @@ public class TestsForMyATTAndroid {
         //Initiate WebDriver
         driver = new AndroidDriver(new URL("http://0.0.0.0:4723/wd/hub"), DC);
 */
-
-
         //Selendroid Caps
         SelendroidCapabilities DC = new SelendroidCapabilities("com.att.myWireless:4.2.1");
         DC.setCapability("app","C:\\Users\\aniketg\\Downloads\\MyATT.apk");
@@ -83,7 +82,6 @@ public class TestsForMyATTAndroid {
         DC.setCapability("platformName", "Android");
         DC.setCapability("newCommandTimeout",3000);
         DC.setCapability("appWaitActivity",".activities.EULAActivity,.activities.LoginActivity");
-
 
        // driver = new SelendroidDriver(new URL("http://0.0.0.0:4723/wd/hub"), DC);
         driver = new AndroidDriver(new URL("http://0.0.0.0:4723/wd/hub"), DC);

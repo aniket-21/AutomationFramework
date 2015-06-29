@@ -6,16 +6,25 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.*;
+
+import io.appium.java_client.android.AndroidDriver;
+import io.selendroid.client.SelendroidDriver;
+import io.selendroid.common.SelendroidCapabilities;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
+import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.w3c.dom.*;
 
 public class Driver {
@@ -76,16 +85,19 @@ public class Driver {
 		curExecutionFolder = executionPath + "/" + Environment.get("ENV_CODE") + "/" + Environment.get("CLASSNAME");
 		htmlReportsPath = curExecutionFolder + "/" + Environment.get("BROWSER").toUpperCase() + "_HTML_Reports";
 		snapShotsPath = htmlReportsPath + "/Snapshots";
+		String harFilePath = htmlReportsPath + "/Hars";
 		
 		//Put in Environments
 		Environment.put("CURRENTEXECUTIONFOLDER", curExecutionFolder);
 		Environment.put("HTMLREPORTSPATH", htmlReportsPath);
 		Environment.put("SNAPSHOTSFOLDER", snapShotsPath);
+		Environment.put("HARFOLDER", harFilePath);
 
 		//Delete if folder already exists
 		if (new File(htmlReportsPath).exists())
 			deleteFile(new File(htmlReportsPath));
-		return (new File(snapShotsPath)).mkdirs();
+		if ((new File(snapShotsPath)).mkdirs() && (new File(harFilePath)).mkdirs()) return true;
+		else return false;
 	}
 	
 	//*****************************************************************************************
@@ -882,5 +894,46 @@ public class Driver {
 			e.printStackTrace();
 			return null;
 		}*/
+	}
+
+	public AndroidDriver getAppiumAndroidDriver(String appPackage, String appActivity, String deviceName, String appiumServerURL) throws MalformedURLException {
+		//Desired Caps
+		DesiredCapabilities DC = new DesiredCapabilities();
+		DC.setCapability("automationName", "Appium");
+		DC.setCapability("platformName", "Android");
+		DC.setCapability("appPackage", appPackage);
+		DC.setCapability("appActivity", appActivity);
+		DC.setCapability("deviceName", deviceName);
+
+		//Initiate WebDriver
+		return new AndroidDriver(new URL(appiumServerURL), DC);
+	}
+
+	public AndroidDriver getAndroidChromeDriver(String deviceName, String appiumServerURL, Proxy proxy) throws MalformedURLException {
+		//Desired Caps
+		DesiredCapabilities DC = new DesiredCapabilities();
+		DC.setCapability("automationName", "Appium");
+		DC.setCapability("platformName", "Android");
+		DC.setCapability("browserName", "Chrome");
+		DC.setCapability("deviceName", deviceName);
+
+		if(proxy != null) DC.setCapability(CapabilityType.PROXY,proxy);
+
+		//Initiate WebDriver
+		return new AndroidDriver(new URL(appiumServerURL), DC);
+	}
+
+
+	public AndroidDriver getSelendroidDriver(String apkPath, String appPackage, String appWaitActivity, String deviceName, String appiumServerURL) throws MalformedURLException {
+		//Selendroid Caps
+		SelendroidCapabilities DC = new SelendroidCapabilities(appPackage);
+		DC.setCapability("appWaitActivity",appWaitActivity);
+		DC.setCapability("deviceName",deviceName);
+		DC.setCapability("app",apkPath);
+		DC.setCapability("automationName", "Selendroid");
+		DC.setCapability("platformName", "Android");
+		DC.setCapability("newCommandTimeout",3000);
+
+		return new AndroidDriver(new URL(appiumServerURL), DC);
 	}
 }

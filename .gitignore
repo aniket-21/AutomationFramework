@@ -1,7 +1,11 @@
 Execution
 trunk/Workspace/.metadata
+trunk/Workspace/.gradle
+trunk/Workspace/Workspace.iml
 trunk/Workspace/*/.settings
 trunk/Workspace/*/.idea
+trunk/Workspace/*/.gradle
 trunk/Workspace/*/target
 trunk/Workspace/*/test-output
+trunk/Workspace/*/build
 

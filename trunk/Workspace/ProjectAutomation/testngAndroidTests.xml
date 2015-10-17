@@ -2,13 +2,13 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Suite" parallel="tests" thread-count="3">
 
-    <test name="PredecitonGuru" parallel="instances">
+    <test name="XETests" parallel="instances">
         <classes>
-            <class name="com.guru.prediction.TestsForPredictionGuru">
+            <class name="com.xe.currency.TestsForXEAndroid">
                 <methods>
-                    <include name="testPredictionGuruLoginWithFacebook"/>
-                    <include name="testWizardTabs"/>
-                    <include name="testPredictionGuruLoginWithGoogle"/>
+                    <include name="testAddNewCurrency"/>
+                    <include name="testRemoveCurrency"/>
+                    <include name="testSelectCurrency"/>
                 </methods>
                 </class>
         </classes>

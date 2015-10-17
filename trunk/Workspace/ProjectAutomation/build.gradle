@@ -1,0 +1,21 @@
+dependencies{
+    compile 'org.seleniumhq.selenium:selenium-java:2.48.2'
+    compile 'io.appium:java-client:3.2.0'
+    compile 'org.jvnet.com4j:com4j:2.1'
+    compile 'io.selendroid:selendroid-standalone:0.16.0'
+    compile 'io.selendroid:selendroid-client:0.16.0'
+    compile 'org.testng:testng:6.9.8'
+    compile 'org.apache.poi:poi:3.13'
+    compile 'org.apache.commons:commons-exec:1.3'
+    compile 'net.lightbody.bmp:browsermob-core-littleproxy:2.1.0-beta-3'
+    compile 'org.slf4j:slf4j-api:1.7.12'
+    compile 'org.slf4j:slf4j-simple:1.7.12'
+}
+
+test{
+    useTestNG(){
+        systemProperties = System.properties
+        scanForTestClasses = false
+        suites systemProperties.get('suiteFile')
+    }
+}

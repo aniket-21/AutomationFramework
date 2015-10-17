@@ -15,6 +15,7 @@ import io.selendroid.common.SelendroidCapabilities;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -25,6 +26,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.w3c.dom.*;
 
 public class Driver {
@@ -804,6 +806,8 @@ public class Driver {
             return null;
         }
 
+
+
 		/*String URL = "";
 		String strDCName, strDCValue;
 		DesiredCapabilities DC = new DesiredCapabilities();
@@ -896,6 +900,17 @@ public class Driver {
 		}*/
 	}
 
+	//*****************************************************************************************
+	//*	Name		    : getRemoteWebDriver
+	//*	Description	    : Returns the required webdriver
+	//*	Author		    : Aniket Gadre
+	//*	Input Params	: None
+	//*	Return Values	: WebDriver
+	//*****************************************************************************************
+	public WebDriver getRemoteWebDriver(String URL, DesiredCapabilities dc) throws MalformedURLException {
+		return new RemoteWebDriver(new URL(URL),dc);
+	}
+
 	public AndroidDriver getAppiumAndroidDriver(String appPackage, String appActivity, String deviceName, String appiumServerURL) throws MalformedURLException {
 		//Desired Caps
 		DesiredCapabilities DC = new DesiredCapabilities();
@@ -935,5 +950,19 @@ public class Driver {
 		DC.setCapability("newCommandTimeout",3000);
 
 		return new AndroidDriver(new URL(appiumServerURL), DC);
+	}
+
+	public Platform getPlatform(String platformName){
+		String osName = platformName.toUpperCase();
+		if(osName.equals("WIN8.1")) return Platform.WIN8_1;
+		else if (osName.equals("WIN8")) return Platform.WIN8;
+		else if (osName.equals("ANDROID")) return Platform.ANDROID;
+		else if (osName.equals("LINUX")) return Platform.LINUX;
+		else if (osName.equals("MAC")) return Platform.MAC;
+		else if (osName.equals("WIN")) return Platform.WINDOWS;
+		else return Platform.ANY;
+
+
+
 	}
 }

@@ -18,20 +18,15 @@ import java.util.concurrent.TimeUnit;
  */
 public class TestsForAccountLogin {
 
-    //Variables
-    String className;
-    String env;
-    String browser;
-
     //Instances
+    String browser;
     Driver asapDriver;
     WebDriver driver = null;
-    Wrappers objCommon;
-
+    Reporting Reporter;
     HashMap<String, String> Environment = new HashMap<String, String>();
     HashMap <String, String> Dictionary = new HashMap<String, String>();
-    Reporting Reporter;
 
+    //DataProvider
     @DataProvider(name = "browsers", parallel = true)
     public static Object[][] getData() {
         String[] browser = System.getProperty("browserName").split(",");
@@ -53,26 +48,24 @@ public class TestsForAccountLogin {
 
     @BeforeClass
     public void beforeClass() throws IOException {
+        String className,env;
 
-        //Set the DataSheet name by getting the class name
+        //Get Test class name
         String[] strClassNameArray = this.getClass().getName().split("\\.");
         className = strClassNameArray[strClassNameArray.length-1];
+        System.out.println(className);
+
+        //Get Env and initiate asap driver
+        env = System.getProperty("envName");
+
+        //Add environment variables
         Environment.put("CLASSNAME", className);
         Environment.put("BROWSER", browser);
-
-        System.out.println("Before Class method for " + className);
-
-        //Initiate asapDriver
-        asapDriver = new Driver(Dictionary, Environment);
-
-        //Get Env
-        env = System.getProperty("envName");
-        Assert.assertNotNull(env, "No Environment Parameter value received");
-
-        //Add env global environments
         Environment.put("ENV_CODE", env);
-        Assert.assertTrue(asapDriver.createExecutionFolders(),"Creating Execution Folders");
-        Assert.assertTrue(asapDriver.fetchEnvironmentDetailsFromConfigXML(),"Fetching Environment Details");
+
+        asapDriver = new Driver(Dictionary, Environment);
+        asapDriver.createExecutionFolders();
+        asapDriver.fetchEnvironmentDetailsFromConfigXML();
 
         //Instantiate reporter
         Reporter = new Reporting(Dictionary, Environment);
@@ -83,7 +76,6 @@ public class TestsForAccountLogin {
     @BeforeMethod
     public void beforeMethod(Method method) throws MalformedURLException {
         String testName = method.getName();
-        System.out.println("Before Method for test " + testName);
         asapDriver.getDataForTest(testName);
         Reporter.createTestLevelReport(testName);
 
@@ -93,34 +85,7 @@ public class TestsForAccountLogin {
             driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
             Reporter.setDriver(driver);
         }
-
-        //Initialize Common functions
-        objCommon = new Wrappers(driver,Reporter);
-
     }
-
-    @AfterMethod
-    public void afterMethod(Method method){
-        String testName = method.getName();
-        System.out.println("After Method for test " + testName);
-        asapDriver.setReferenceData();
-        Reporter.closeTestLevelReport(testName);
-        if(driver != null) {
-            driver.quit();
-            driver = null;
-        }
-    }
-
-    @AfterClass
-    public void afterClass(){
-        System.out.println("After Class method for " + className);
-        Reporter.closeTestSummaryReport();
-        if(driver != null) {
-            driver.quit();
-            driver = null;
-        }
-    }
-
 
     @Test
     public void testValidLogin(){
@@ -148,5 +113,28 @@ public class TestsForAccountLogin {
                 .clickSignIn();
         Assert.assertTrue(loginPage.shouldDisplayError("Please enter an Autodesk ID or email address."));
         Assert.assertTrue(loginPage.shouldDisplayError("Please enter your password."));
+    }
+
+    @AfterMethod
+    public void afterMethod(Method method){
+        asapDriver.setReferenceData();
+        Reporter.closeTestLevelReport(method.getName());
+        try{
+            if(driver != null) {
+                driver.quit();
+                driver = null;
+            }
+        }
+        catch(Exception e){}
+    }
+
+    @AfterClass
+    public void afterClass(){
+        //System.out.println("After Class method for " + className);
+        Reporter.closeTestSummaryReport();
+        if(driver != null) {
+            driver.quit();
+            driver = null;
+        }
     }
 }

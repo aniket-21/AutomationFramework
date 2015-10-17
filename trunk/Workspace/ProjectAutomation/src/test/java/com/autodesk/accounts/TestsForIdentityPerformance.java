@@ -8,12 +8,13 @@ import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
+import net.lightbody.bmp.proxy.BlacklistEntry;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.UnknownHostException;
-import java.util.HashMap;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -77,7 +78,10 @@ public class TestsForIdentityPerformance {
         if(driver==null){
             //Start proxy
             Proxy proxy = bmphandler.startBrowserMobProxy();
+            BlacklistEntry ble = new BlacklistEntry("http:\\/\\/[a-z]*\\/|http:\\/\\/metrics.autodesk.com\\/.*",200);
 
+            Collection<BlacklistEntry> blackListCollection = new ArrayList<BlacklistEntry>(Arrays.asList(ble));
+            bmphandler.setBlacklist(blackListCollection);
             driver = asapDriver.getAndroidChromeDriver("ASUS Zenfone 5","http://0.0.0.0:4723/wd/hub",proxy);
             driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
             Reporter.setDriver(driver);

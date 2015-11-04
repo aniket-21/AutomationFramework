@@ -16,6 +16,7 @@ test{
     useTestNG(){
         systemProperties = System.properties
         scanForTestClasses = false
-        suites systemProperties.get('suiteFile')
+        String suiteFile = systemProperties.get('suiteFile')
+        suiteName = suiteFile
     }
 }

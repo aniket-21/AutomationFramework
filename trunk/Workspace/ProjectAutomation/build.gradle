@@ -17,6 +17,6 @@ test{
         systemProperties = System.properties
         scanForTestClasses = false
         String suiteFile = systemProperties.get('suiteFile')
-        suiteName = suiteFile
+        suites suiteFile
     }
 }

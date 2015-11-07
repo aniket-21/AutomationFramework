@@ -2,10 +2,10 @@ package com.consors.web;
 
 import java.util.HashMap;
 
-import com.automation.framework.Wrappers;
+import com.automation.framework.core.Wrappers;
 import org.openqa.selenium.WebDriver;
 
-import com.automation.framework.Reporting;
+import com.automation.framework.core.Reporting;
 
 public class CheckingAccountDetailsPage {
 

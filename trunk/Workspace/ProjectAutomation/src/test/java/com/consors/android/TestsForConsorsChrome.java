@@ -1,8 +1,8 @@
 package com.consors.android;
 
-import com.automation.framework.Driver;
-import com.automation.framework.Reporting;
-import com.automation.framework.Wrappers;
+import com.automation.framework.core.Driver;
+import com.automation.framework.core.Reporting;
+import com.automation.framework.core.Wrappers;
 import com.consors.web.CheckingAccountDetailsPage;
 import com.consors.web.CheckingAccountPage;
 import com.consors.web.HomePage;
@@ -38,7 +38,7 @@ public class TestsForConsorsChrome {
 	Reporting Reporter;
 
    /* @DataProvider(name = "browsers", parallel = true)
-    public static Object[][] getData() {
+    public static Object[][] getBrowsers() {
         String[] browser = System.getProperty("browserName").split(",");
         final int size = browser.length;
         Object[][] browsers = new Object[size][1];

@@ -1,10 +1,10 @@
 package com.consors.android;
 
-import com.automation.framework.Wrappers;
+import com.automation.framework.core.Wrappers;
 import io.appium.java_client.AppiumDriver;
 
 import java.util.HashMap;
-import com.automation.framework.Reporting;
+import com.automation.framework.core.Reporting;
 import org.openqa.selenium.WebDriver;
 
 public class SnapShotActivity {

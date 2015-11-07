@@ -2,7 +2,7 @@ package com.consors.web;
 
 import java.util.HashMap;
 
-import com.automation.framework.Reporting;
+import com.automation.framework.core.Reporting;
 import org.openqa.selenium.WebDriver;
 
 public class LaunchApplication {

@@ -1,7 +1,7 @@
 package com.xe.currency;
 
-import com.automation.framework.Reporting;
-import com.automation.framework.Wrappers;
+import com.automation.framework.core.Reporting;
+import com.automation.framework.core.Wrappers;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.TouchAction;
 import org.openqa.selenium.WebDriver;

@@ -7,8 +7,8 @@ import java.util.HashMap;
 
 import org.openqa.selenium.WebDriver;
 
-import com.automation.framework.Wrappers;
-import com.automation.framework.Reporting;
+import com.automation.framework.core.Wrappers;
+import com.automation.framework.core.Reporting;
 
 public class GlobalSecurityListActivity {
 	

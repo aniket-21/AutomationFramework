@@ -1,9 +1,11 @@
 package com.guru.prediction;
 
-import com.automation.framework.Driver;
-import com.automation.framework.Generic;
-import com.automation.framework.Reporting;
-import com.automation.framework.Wrappers;
+import com.automation.framework.core.Driver;
+import com.automation.framework.helpers.Generic;
+import com.automation.framework.core.Reporting;
+import com.automation.framework.core.Wrappers;
+import io.appium.java_client.service.local.AppiumDriverLocalService;
+import io.appium.java_client.service.local.AppiumServiceBuilder;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
@@ -30,13 +32,14 @@ public class TestsForPredictionGuru {
     Driver asapDriver;
     WebDriver driver = null;
     Wrappers doAction;
+    AppiumDriverLocalService service;
 
     HashMap<String, String> Environment = new HashMap<String, String>();
     HashMap <String, String> Dictionary = new HashMap<String, String>();
     Reporting Reporter;
 
    /* @DataProvider(name = "browsers", parallel = true)
-    public static Object[][] getData() {
+    public static Object[][] getBrowsers() {
         String[] browser = System.getProperty("browserName").split(",");
         final int size = browser.length;
         Object[][] browsers = new Object[size][1];
@@ -49,7 +52,6 @@ public class TestsForPredictionGuru {
 
     @BeforeClass
     public void beforeClass() throws IOException {
-
         //Set the DataSheet name by getting the class name
         String[] strClassNameArray = this.getClass().getName().split("\\.");
         className = strClassNameArray[strClassNameArray.length- 1];
@@ -74,14 +76,19 @@ public class TestsForPredictionGuru {
         Reporter = new Reporting(Dictionary, Environment);
         Reporter.createSummaryReport();
         Reporter.createJenkinsReport();
+
+        //start appium server
+        service = AppiumDriverLocalService.buildService(new AppiumServiceBuilder());
+        service.start();
+        Assert.assertTrue(service.isRunning(), "Appium server is not running");
     }
 
     @BeforeMethod
     public void beforeMethod(Method method) throws MalformedURLException {
-        String testName = method.getName();
+        /*String testName = method.getName();
         System.out.println("Before Method for test " + testName);
         asapDriver.getDataForTest(testName);
-        Reporter.createTestLevelReport(testName);
+        Reporter.createTestLevelReport(testName);*/
 
         //Initiate WebDriver
         if(driver == null){
@@ -92,31 +99,6 @@ public class TestsForPredictionGuru {
 
             //Initialize Common functions
             doAction = new Wrappers(driver,Reporter);
-        }
-    }
-
-    @AfterMethod
-    public void afterMethod(Method method){
-        String testName = method.getName();
-        System.out.println("After Method for test " + testName);
-        asapDriver.setReferenceData();
-        Reporter.closeTestLevelReport(testName);
-        String cmd = "\"C:\\Program Files (x86)\\Android\\android-sdk\\platform-tools\\adb.exe\" shell pm clear " + appPackage;
-        System.out.println("Executing command :" + cmd);
-        Generic.executeCommand(cmd);
-        if(driver != null) {
-            driver.close();
-            driver = null;
-        }
-    }
-
-    @AfterClass
-    public void afterClass(){
-        System.out.println("After Class method for " + className);
-        Reporter.closeTestSummaryReport();
-        if(driver != null) {
-            driver.quit();
-            driver = null;
         }
     }
 
@@ -164,5 +146,33 @@ public class TestsForPredictionGuru {
 
         //Navigate Tabs
         //objWizardActivity
+    }
+
+    @AfterMethod
+    public void afterMethod(Method method){
+        String testName = method.getName();
+        System.out.println("After Method for test " + testName);
+        asapDriver.setReferenceData();
+        Reporter.closeTestLevelReport(testName);
+        String cmd = "\"C:\\Program Files (x86)\\Android\\android-sdk\\platform-tools\\adb.exe\" shell pm clear " + appPackage;
+        System.out.println("Executing command :" + cmd);
+        Generic.executeCommand(cmd);
+        if(driver != null) {
+            driver.close();
+            driver = null;
+        }
+    }
+
+    @AfterClass
+    public void afterClass(){
+        System.out.println("After Class method for " + className);
+        Reporter.closeTestSummaryReport();
+        if(driver != null) {
+            driver.quit();
+            driver = null;
+        }
+
+        if(service.isRunning())
+            service.stop();
     }
 }

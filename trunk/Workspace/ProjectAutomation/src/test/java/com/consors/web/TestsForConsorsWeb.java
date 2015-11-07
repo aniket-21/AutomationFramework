@@ -5,9 +5,9 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
-import com.automation.framework.Driver;
-import com.automation.framework.Reporting;
-import com.automation.framework.Wrappers;
+import com.automation.framework.core.Driver;
+import com.automation.framework.core.Reporting;
+import com.automation.framework.core.Wrappers;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;

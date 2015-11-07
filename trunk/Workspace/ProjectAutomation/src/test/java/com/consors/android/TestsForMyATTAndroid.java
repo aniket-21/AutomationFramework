@@ -1,10 +1,9 @@
 package com.consors.android;
 
-import com.automation.framework.Driver;
-import com.automation.framework.Reporting;
-import com.automation.framework.Wrappers;
+import com.automation.framework.core.Driver;
+import com.automation.framework.core.Reporting;
+import com.automation.framework.core.Wrappers;
 import io.appium.java_client.android.AndroidDriver;
-import io.selendroid.client.SelendroidDriver;
 import io.selendroid.common.SelendroidCapabilities;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;

@@ -1,7 +1,7 @@
 package com.autodesk.accounts;
 
-import com.automation.framework.Reporting;
-import com.automation.framework.Wrappers;
+import com.automation.framework.core.Reporting;
+import com.automation.framework.core.Wrappers;
 import org.openqa.selenium.WebDriver;
 
 import java.util.HashMap;

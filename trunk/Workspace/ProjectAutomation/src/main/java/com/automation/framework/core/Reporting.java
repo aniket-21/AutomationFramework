@@ -1,4 +1,4 @@
-package com.automation.framework;
+package com.automation.framework.core;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -9,6 +9,8 @@ import java.net.InetAddress;
 import java.util.Date;
 import java.util.HashMap;
 
+import com.automation.framework.Global;
+import com.automation.framework.helpers.Generic;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -487,7 +489,7 @@ public class Reporting {
     		File htmlReport = new File(jenkinsHTMLRep);
     		
     		//If jenkins flag is false 
-    		if(Global.flgJenkinsHtml == false) { 
+    		if(Global.flgJenkinsHtml == false) {
     			
     			//Set flag to true
     	        Global.flgJenkinsHtml = true;

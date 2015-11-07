@@ -1,4 +1,4 @@
-package com.automation.framework;
+package com.automation.framework.helpers;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

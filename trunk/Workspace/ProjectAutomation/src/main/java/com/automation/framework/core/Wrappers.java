@@ -1,4 +1,4 @@
-package com.automation.framework;
+package com.automation.framework.core;
 
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.AppiumDriver;

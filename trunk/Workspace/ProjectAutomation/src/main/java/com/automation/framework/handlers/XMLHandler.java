@@ -1,4 +1,4 @@
-package com.automation.framework;
+package com.automation.framework.handlers;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;

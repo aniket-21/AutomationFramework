@@ -1,4 +1,4 @@
-package com.automation.framework;
+package com.automation.framework.core;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,8 +9,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
 
+import com.automation.framework.handlers.XMLHandler;
 import io.appium.java_client.android.AndroidDriver;
-import io.selendroid.client.SelendroidDriver;
 import io.selendroid.common.SelendroidCapabilities;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;

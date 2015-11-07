@@ -1,4 +1,4 @@
-package com.automation.framework;
+package com.automation.framework.handlers;
 
 import net.lightbody.bmp.BrowserMobProxy;
 import net.lightbody.bmp.BrowserMobProxyServer;

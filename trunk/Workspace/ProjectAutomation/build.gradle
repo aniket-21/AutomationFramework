@@ -14,7 +14,10 @@ dependencies{
 
 test{
     useTestNG(){
-        systemProperties = System.properties
+        /*systemProperties = System.properties*/
+        systemProperty "envName", System.getProperty("envName")
+        systemProperty "suiteFile", System.getProperty("suiteFile")
+        systemProperty "browserName", System.getProperty("browserName")
         scanForTestClasses = false
         String suiteFile = systemProperties.get('suiteFile')
         suites suiteFile

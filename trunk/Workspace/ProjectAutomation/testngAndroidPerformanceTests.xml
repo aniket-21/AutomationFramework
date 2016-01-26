@@ -3,7 +3,7 @@
 <suite name="Suite" parallel="tests" thread-count="3">
     <test name="IdentityPerfTests" parallel="instances">
         <classes>
-            <class name="com.autodesk.accounts.TestsForIdentityPerformance">
+            <class name="com.autodesk.accounts.TestsForIdentityOnAndroid">
                 <methods>
                     <include name="testValidLogin"/>
                 </methods>

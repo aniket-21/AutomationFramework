@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by Aniket on 6/29/2015.
  */
-public class TestsForIdentityPerformance extends BaseAppiumAndroidTest{
+public class TestsForIdentityOnAndroid extends BaseAppiumAndroidTest{
 
     //Variables
     BMPHandler bmphandler;
@@ -32,10 +32,13 @@ public class TestsForIdentityPerformance extends BaseAppiumAndroidTest{
         String[] strClassNameArray = this.getClass().getName().split("\\.");
         className = strClassNameArray[strClassNameArray.length-1];
         super.beforeClass();
+
+        bmphandler = new BMPHandler(Environment);
     }
 
     @BeforeMethod
     public void beforeMethod(Method method) {
+        super.beforeMethod(method);
         //Initiate WebDriver
         if(driver==null){
             try{

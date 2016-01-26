@@ -18,20 +18,21 @@ public class BaseAppiumAndroidTest extends BaseTest {
     AppiumDriverLocalService service;
 
     public void beforeClass() throws IOException {
+        browser = "ANDROID";
         super.beforeClass();
 
-        //start appium server
+    /*    //start appium server
         service = AppiumDriverLocalService.buildService(new AppiumServiceBuilder());
         service.start();
-        Assert.assertTrue(service.isRunning(), "Appium server is not running");
+        Assert.assertTrue(service.isRunning(), "Appium server is not running"); */
     }
 
     public void afterClass(){
         super.afterClass();
 
-        //Stop Service
+    /*    //Stop Service
         if(service.isRunning())
-            service.stop();
+            service.stop(); */
     }
 
     public void setAppiumAndroidDriver(String appPackage, String appActivity, String deviceName, String serverURL) throws MalformedURLException {

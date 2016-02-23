@@ -3,7 +3,7 @@
 <suite name="Suite" parallel="tests" thread-count="3">
     <test name="IdentityPerfTests" parallel="instances">
         <classes>
-            <class name="com.autodesk.accounts.TestsForGridAccountsLogin">
+            <class name="com.tests.ui.web.autodesk.accounts.TestsForGridAccountsLogin">
                 <methods>
                     <include name="testValidLogin"/>
                     <include name="testInvalidLoginError"/>

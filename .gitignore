@@ -8,4 +8,5 @@ trunk/Workspace/*/.gradle
 trunk/Workspace/*/target
 trunk/Workspace/*/test-output
 trunk/Workspace/*/build
+trunk/Workspace/*/*.iml
 

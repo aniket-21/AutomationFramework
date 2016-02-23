@@ -1,6 +1,11 @@
+repositories{
+    mavenCentral()
+}
+
 dependencies{
     compile 'org.seleniumhq.selenium:selenium-java:2.48.2'
     compile 'io.appium:java-client:3.2.0'
+    compile 'com.jayway.restassured:rest-assured:2.8.0'
     compile 'org.jvnet.com4j:com4j:2.1'
     compile 'io.selendroid:selendroid-standalone:0.16.0'
     compile 'io.selendroid:selendroid-client:0.16.0'

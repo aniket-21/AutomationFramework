@@ -4,7 +4,7 @@
 
     <test name="AccountsWeb" parallel="instances">
         <classes>
-            <class name="com.autodesk.accounts.TestsForAccountLogin">
+            <class name="com.tests.ui.web.autodesk.accounts.TestsForAccountLogin">
                 <methods>
                     <include name="testValidLogin"/>
                     <include name="testInvalidLoginError"/>

@@ -1,10 +1,10 @@
 package com.tests.ui.web.autodesk.accounts;
 
-import com.ui.pages.web.autodesk.accounts.LaunchApplication;
-import com.ui.pages.web.autodesk.accounts.LoginPage;
-import com.ui.pages.web.autodesk.accounts.ProfilePage;
-import com.framework.components.Global;
-import com.framework.components.base.BaseSeleniumWebTest;
+import com.ui.pageobjects.web.autodesk.accounts.LaunchApplication;
+import com.ui.pageobjects.web.autodesk.accounts.LoginPage;
+import com.ui.pageobjects.web.autodesk.accounts.ProfilePage;
+import com.framework.Global;
+import com.framework.base.BaseSeleniumWebTest;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.Assert;
 import org.testng.annotations.*;
@@ -57,7 +57,7 @@ public class TestsForGridAccountsLogin extends BaseSeleniumWebTest{
 
     @Test
     public void testValidLogin(){
-        LaunchApplication app = new LaunchApplication(driver,Dictionary,Environment,Reporter);
+        LaunchApplication app = new LaunchApplication(driver, dictionary, environment,Reporter);
         LoginPage loginPage = app.launchIdentityApplication();
         loginPage.enterLoginCredentials("aniket@autodesk","Jaguar21");
         ProfilePage profilePage = loginPage.clickSignIn();
@@ -66,7 +66,7 @@ public class TestsForGridAccountsLogin extends BaseSeleniumWebTest{
 
     @Test
     public void testInvalidLoginError(){
-        LaunchApplication app = new LaunchApplication(driver,Dictionary,Environment,Reporter);
+        LaunchApplication app = new LaunchApplication(driver, dictionary, environment,Reporter);
         LoginPage loginPage = app.launchIdentityApplication();
         loginPage.enterLoginCredentials("aniket@autodesk","Jaguar22")
                 .clickSignIn();
@@ -75,7 +75,7 @@ public class TestsForGridAccountsLogin extends BaseSeleniumWebTest{
 
     @Test
     public void testBlankCredentialsError(){
-        LaunchApplication app = new LaunchApplication(driver,Dictionary,Environment,Reporter);
+        LaunchApplication app = new LaunchApplication(driver, dictionary, environment,Reporter);
         LoginPage loginPage = app.launchIdentityApplication();
         loginPage.enterLoginCredentials("","")
                 .clickSignIn();

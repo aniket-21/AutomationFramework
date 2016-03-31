@@ -1,8 +1,8 @@
 package com.tests.ui.android.xe.currency;
 
-import com.ui.pages.android.xe.currency.AddCurrencyActivity;
-import com.ui.pages.android.xe.currency.XeCurrencyActivity;
-import com.framework.components.base.BaseAppiumAndroidTest;
+import com.ui.pageobjects.android.xe.currency.AddCurrencyActivity;
+import com.ui.pageobjects.android.xe.currency.XeCurrencyActivity;
+import com.framework.base.BaseAppiumAndroidTest;
 import org.testng.annotations.*;
 
 import java.io.IOException;
@@ -39,7 +39,7 @@ public class TestsForXEAndroid extends BaseAppiumAndroidTest {
     public void testAddNewCurrency() throws InterruptedException {
 
         doAction.waitForAndroidActivity(appActivity, 20);
-        XeCurrencyActivity objXE = new XeCurrencyActivity(driver,Dictionary,Environment,Reporter);
+        XeCurrencyActivity objXE = new XeCurrencyActivity(driver, dictionary, environment,Reporter);
         AddCurrencyActivity objAddCurr = objXE.scrollToAddNewCurrency()
                                                 .clickAddNewCurrency();
 
@@ -53,7 +53,7 @@ public class TestsForXEAndroid extends BaseAppiumAndroidTest {
     public void testRemoveCurrency() throws InterruptedException {
         //Wait for activity
         doAction.waitForAndroidActivity(appActivity, 20);
-        XeCurrencyActivity objXE = new XeCurrencyActivity(driver,Dictionary,Environment,Reporter);
+        XeCurrencyActivity objXE = new XeCurrencyActivity(driver, dictionary, environment,Reporter);
         String currencyToRemove = "ZAR - South African Rand";
         objXE.removeCurrency(currencyToRemove);
     }
@@ -61,7 +61,7 @@ public class TestsForXEAndroid extends BaseAppiumAndroidTest {
     @Test
     public void testSelectCurrency() throws InterruptedException {
         doAction.waitForAndroidActivity(appActivity, 20);
-        XeCurrencyActivity objXE = new XeCurrencyActivity(driver,Dictionary,Environment,Reporter);
+        XeCurrencyActivity objXE = new XeCurrencyActivity(driver, dictionary, environment,Reporter);
         String currency = "AUD";
         objXE.selectCurrency(currency)
             .openCurrencyCalculator()

@@ -6,12 +6,12 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
-import com.ui.pages.android.cortal.consors.GlobalMarketListActivity;
-import com.ui.pages.android.cortal.consors.GlobalSecurityListActivity;
-import com.ui.pages.android.cortal.consors.SnapShotActivity;
-import com.framework.components.core.Driver;
-import com.framework.components.core.Reporting;
-import com.framework.components.core.Wrappers;
+import com.ui.pageobjects.android.cortal.consors.GlobalMarketListActivity;
+import com.ui.pageobjects.android.cortal.consors.GlobalSecurityListActivity;
+import com.ui.pageobjects.android.cortal.consors.SnapShotActivity;
+import com.framework.core.Driver;
+import com.framework.core.Reporting;
+import com.framework.core.Wrappers;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -57,7 +57,7 @@ public class    TestsForConsorsAndroid {
         //Create folder structure
         Assert.assertTrue(asapDriver.createExecutionFolders());
 
-        //Get Environment Variables
+        //Get environment Variables
         Assert.assertTrue(asapDriver.fetchEnvironmentDetails());
 
         //Desired Caps

@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.jvnet.com4j:com4j:2.1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jvnet.com4j/com4j/2.1/eb68debf665fbf044fa95301e134016d892624ae/com4j-2.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jvnet.com4j/com4j/2.1/aa654318639820703a966e6344bdf6b567dbe010/com4j-2.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

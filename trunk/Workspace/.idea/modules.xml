@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ProjectAutomation/ProjectAutomation.iml" filepath="$PROJECT_DIR$/.idea/modules/ProjectAutomation/ProjectAutomation.iml" group="ProjectAutomation" />
+      <module fileurl="file://$PROJECT_DIR$/ProjectAutomation/ProjectAutomation.iml" filepath="$PROJECT_DIR$/ProjectAutomation/ProjectAutomation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ProjectAutomation/ProjectAutomation_main.iml" filepath="$PROJECT_DIR$/.idea/modules/ProjectAutomation/ProjectAutomation_main.iml" group="ProjectAutomation" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ProjectAutomation/ProjectAutomation_test.iml" filepath="$PROJECT_DIR$/.idea/modules/ProjectAutomation/ProjectAutomation_test.iml" group="ProjectAutomation" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Workspace.iml" filepath="$PROJECT_DIR$/.idea/modules/Workspace.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Workspace.iml" filepath="$PROJECT_DIR$/Workspace.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Workspace_main.iml" filepath="$PROJECT_DIR$/.idea/modules/Workspace_main.iml" group="Workspace" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Workspace_test.iml" filepath="$PROJECT_DIR$/.idea/modules/Workspace_test.iml" group="Workspace" />
+    </modules>
+  </component>
+</project>

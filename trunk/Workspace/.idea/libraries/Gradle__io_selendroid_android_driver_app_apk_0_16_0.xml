@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: io.selendroid:android-driver-app:apk:0.16.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.selendroid/android-driver-app/0.16.0/1e881a13197f9c2f3b10a61a91660816d61b4348/android-driver-app-0.16.0.apk!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.selendroid/android-driver-app/0.16.0/50cfa33fde778d682766bff4f0dbc4fe9e3dd12d/android-driver-app-0.16.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

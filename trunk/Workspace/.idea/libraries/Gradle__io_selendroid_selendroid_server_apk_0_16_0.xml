@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: io.selendroid:selendroid-server:apk:0.16.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.selendroid/selendroid-server/0.16.0/70cd558cd9dfb5a2a3a3b56713daeca7d79026bf/selendroid-server-0.16.0.apk!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.selendroid/selendroid-server/0.16.0/7ce542dcefe66523f9195e1190dbac3b9531aca2/selendroid-server-0.16.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

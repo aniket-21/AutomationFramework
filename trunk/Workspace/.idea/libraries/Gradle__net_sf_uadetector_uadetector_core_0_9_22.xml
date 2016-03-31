@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: net.sf.uadetector:uadetector-core:0.9.22">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.sf.uadetector/uadetector-core/0.9.22/e40e4e391e27fdb798a574a3ee0c26debe36c6cd/uadetector-core-0.9.22.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.sf.uadetector/uadetector-core/0.9.22/399df91d4d67e92267dacedcb9ca265fcf7c9930/uadetector-core-0.9.22-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

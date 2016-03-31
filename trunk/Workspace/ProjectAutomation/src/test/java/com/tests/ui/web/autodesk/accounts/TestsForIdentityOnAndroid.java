@@ -1,10 +1,10 @@
 package com.tests.ui.web.autodesk.accounts;
 
-import com.ui.pages.web.autodesk.accounts.LaunchApplication;
-import com.ui.pages.web.autodesk.accounts.LoginPage;
-import com.ui.pages.web.autodesk.accounts.ProfilePage;
-import com.framework.components.base.BaseAppiumAndroidTest;
-import com.framework.components.handlers.BMPHandler;
+import com.ui.pageobjects.web.autodesk.accounts.LaunchApplication;
+import com.ui.pageobjects.web.autodesk.accounts.LoginPage;
+import com.ui.pageobjects.web.autodesk.accounts.ProfilePage;
+import com.framework.base.BaseAppiumAndroidTest;
+import com.framework.handlers.BMPHandler;
 import org.openqa.selenium.Proxy;
 import org.testng.Assert;
 import org.testng.annotations.*;
@@ -30,7 +30,7 @@ public class TestsForIdentityOnAndroid extends BaseAppiumAndroidTest{
         className = strClassNameArray[strClassNameArray.length-1];
         super.beforeClass();
 
-        bmphandler = new BMPHandler(Environment);
+        bmphandler = new BMPHandler(environment);
     }
 
     @BeforeMethod
@@ -60,7 +60,7 @@ public class TestsForIdentityOnAndroid extends BaseAppiumAndroidTest{
     @Test
     public void testValidLogin(){
         bmphandler.createNewHar("LoginPage");
-        LaunchApplication app = new LaunchApplication(driver,Dictionary,Environment,Reporter);
+        LaunchApplication app = new LaunchApplication(driver, dictionary, environment,Reporter);
         LoginPage loginPage = app.launchIdentityApplication();
         loginPage.enterLoginCredentials("aniket@autodesk","Jaguar21");
         bmphandler.createNewHarPage("HomePage");

@@ -1,12 +1,12 @@
 package com.tests.ui.android.cortal.consors;
 
-import com.framework.components.core.Driver;
-import com.framework.components.core.Reporting;
-import com.framework.components.core.Wrappers;
-import com.ui.pages.web.cortal.consors.CheckingAccountDetailsPage;
-import com.ui.pages.web.cortal.consors.CheckingAccountPage;
-import com.ui.pages.web.cortal.consors.HomePage;
-import com.ui.pages.web.cortal.consors.LaunchApplication;
+import com.framework.core.Driver;
+import com.framework.core.Reporting;
+import com.framework.core.Wrappers;
+import com.ui.pageobjects.web.cortal.consors.CheckingAccountDetailsPage;
+import com.ui.pageobjects.web.cortal.consors.CheckingAccountPage;
+import com.ui.pageobjects.web.cortal.consors.HomePage;
+import com.ui.pageobjects.web.cortal.consors.LaunchApplication;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -79,7 +79,7 @@ public class TestsForConsorsChrome {
         //Create folder structure
         Assert.assertTrue(asapDriver.createExecutionFolders());
 
-        //Get Environment Variables
+        //Get environment Variables
         Assert.assertTrue(asapDriver.fetchEnvironmentDetails());
 
         //Desired Caps

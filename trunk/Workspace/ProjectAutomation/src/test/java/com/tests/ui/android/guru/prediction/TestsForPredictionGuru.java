@@ -1,11 +1,11 @@
 package com.tests.ui.android.guru.prediction;
 
-import com.ui.pages.android.guru.prediction.ScreenSlideGuideActivity;
-import com.ui.pages.android.guru.prediction.WizardActivity;
-import com.framework.components.core.Driver;
-import com.framework.components.helpers.Generic;
-import com.framework.components.core.Reporting;
-import com.framework.components.core.Wrappers;
+import com.ui.pageobjects.android.guru.prediction.ScreenSlideGuideActivity;
+import com.ui.pageobjects.android.guru.prediction.WizardActivity;
+import com.framework.core.Driver;
+import com.framework.helpers.Generic;
+import com.framework.core.Reporting;
+import com.framework.core.Wrappers;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
 import org.openqa.selenium.WebDriver;
@@ -67,12 +67,12 @@ public class TestsForPredictionGuru {
 
         //Get Env
         env = System.getProperty("envName");
-        Assert.assertNotNull(env, "No Environment Parameter value received");
+        Assert.assertNotNull(env, "No environment Parameter value received");
 
         //Add env global environments
         Environment.put("ENV_CODE", env);
         Assert.assertTrue(asapDriver.createExecutionFolders(),"Creating Execution Folders");
-        Assert.assertTrue(asapDriver.fetchEnvironmentDetailsFromConfigXML(),"Fetching Environment Details");
+        Assert.assertTrue(asapDriver.fetchEnvironmentDetailsFromConfigXML(),"Fetching environment Details");
 
         //Instantiate reporter
         Reporter = new Reporting(Dictionary, Environment);
@@ -94,7 +94,7 @@ public class TestsForPredictionGuru {
 
         //Initiate WebDriver
         if(driver == null){
-            //String apkPath = Environment.get("STORAGEFOLDERPATH") + "\\apks\\PredictionGuru.apk";
+            //String apkPath = environment.get("STORAGEFOLDERPATH") + "\\apks\\PredictionGuru.apk";
             driver = asapDriver.getAppiumAndroidDriver(appPackage,appActivity,"ASUS Zenfone 5","http://0.0.0.0:4723/wd/hub");
             driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
             Reporter.setDriver(driver);

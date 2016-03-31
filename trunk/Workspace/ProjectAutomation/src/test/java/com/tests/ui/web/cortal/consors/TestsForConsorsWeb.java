@@ -5,13 +5,13 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
-import com.ui.pages.web.cortal.consors.CheckingAccountDetailsPage;
-import com.ui.pages.web.cortal.consors.CheckingAccountPage;
-import com.ui.pages.web.cortal.consors.HomePage;
-import com.ui.pages.web.cortal.consors.LaunchApplication;
-import com.framework.components.core.Driver;
-import com.framework.components.core.Reporting;
-import com.framework.components.core.Wrappers;
+import com.ui.pageobjects.web.cortal.consors.CheckingAccountDetailsPage;
+import com.ui.pageobjects.web.cortal.consors.CheckingAccountPage;
+import com.ui.pageobjects.web.cortal.consors.HomePage;
+import com.ui.pageobjects.web.cortal.consors.LaunchApplication;
+import com.framework.core.Driver;
+import com.framework.core.Reporting;
+import com.framework.core.Wrappers;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
@@ -67,12 +67,12 @@ public class TestsForConsorsWeb {
 
         //Get Env
         env = System.getProperty("envName");
-        Assert.assertNotNull(env, "No Environment Parameter value received");
+        Assert.assertNotNull(env, "No environment Parameter value received");
 
         //Add env global environments
         Environment.put("ENV_CODE", env);
         Assert.assertTrue(asapDriver.createExecutionFolders(),"Creating Execution Folders");
-        Assert.assertTrue(asapDriver.fetchEnvironmentDetailsFromConfigXML(),"Fetching Environment Details");
+        Assert.assertTrue(asapDriver.fetchEnvironmentDetailsFromConfigXML(),"Fetching environment Details");
 
         //Initiate WebDriver
         driver = asapDriver.getWebDriver(browser);

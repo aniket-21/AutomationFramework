@@ -1,10 +1,10 @@
 package com.tests.ui.web.autodesk.accounts;
 
-import com.ui.pages.web.autodesk.accounts.LaunchApplication;
-import com.ui.pages.web.autodesk.accounts.LoginPage;
-import com.ui.pages.web.autodesk.accounts.ProfilePage;
-import com.framework.components.Global;
-import com.framework.components.base.BaseSeleniumWebTest;
+import com.ui.pageobjects.web.autodesk.accounts.LaunchApplication;
+import com.ui.pageobjects.web.autodesk.accounts.LoginPage;
+import com.ui.pageobjects.web.autodesk.accounts.ProfilePage;
+import com.framework.Global;
+import com.framework.base.BaseSeleniumWebTest;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
@@ -51,25 +51,25 @@ public class TestsForAccountLogin extends BaseSeleniumWebTest{
 
     @Test
     public void testValidLogin(){
-        LaunchApplication app = new LaunchApplication(driver,Dictionary,Environment,Reporter);
+        LaunchApplication app = new LaunchApplication(driver, dictionary, environment,Reporter);
         LoginPage loginPage = app.launchIdentityApplication();
-        loginPage.enterLoginCredentials(Dictionary.get("USERNAME"),Dictionary.get("PASSWORD"));
+        loginPage.enterLoginCredentials(dictionary.get("USERNAME"), dictionary.get("PASSWORD"));
         ProfilePage profilePage = loginPage.clickSignIn();
         Assert.assertTrue(profilePage.shouldHaveMyProfileTab(),"Assert Profile page has Profile Tab");
     }
 
     @Test
     public void testInvalidLoginError(){
-        LaunchApplication app = new LaunchApplication(driver,Dictionary,Environment,Reporter);
+        LaunchApplication app = new LaunchApplication(driver, dictionary, environment,Reporter);
         LoginPage loginPage = app.launchIdentityApplication();
-        loginPage.enterLoginCredentials(Dictionary.get("USERNAME"),Dictionary.get("PASSWORD"))
+        loginPage.enterLoginCredentials(dictionary.get("USERNAME"), dictionary.get("PASSWORD"))
                 .clickSignIn();
         Assert.assertTrue(loginPage.shouldDisplayError("Email address / username and password do not match."));
     }
 
     @Test
     public void testBlankCredentialsError(){
-        LaunchApplication app = new LaunchApplication(driver,Dictionary,Environment,Reporter);
+        LaunchApplication app = new LaunchApplication(driver, dictionary, environment,Reporter);
         LoginPage loginPage = app.launchIdentityApplication();
         loginPage.enterLoginCredentials("","")
                 .clickSignIn();

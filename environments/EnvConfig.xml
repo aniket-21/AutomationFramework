@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<environments>
+	<environment name="dev">
+		<consors_url>https://www.cortalconsors.de/home</consors_url>
+        <oxygen_url>http://accounts-dev.autodesk.com</oxygen_url>
+	</environment>
+	<environment name="stage">
+		<consors_url>https://www.cortalconsors.de/home</consors_url>
+        <oxygen_url>https://accounts-staging.autodesk.com</oxygen_url>
+	</environment>
+	<environment name="prod">
+		<consors_url>https://www.cortalconsors.de/home</consors_url>
+        <oxygen_url>https://accounts.autodesk.com</oxygen_url>
+	</environment>
+</environments>

@@ -43,7 +43,7 @@ public class AddCurrencyActivity {
         Assert.assertEquals(txtCurrencies.size(), 1);
         doAction.click(txtCurrencies.get(0));
 
-        Assert.assertTrue(doAction.isWebElementDisplayed("uiautomator:=new UiSelector().text(\"" + currencyCode.toUpperCase() + " added successfully\")"));
+        Assert.assertTrue(doAction.isElementDisplayed("uiautomator:=new UiSelector().text(\"" + currencyCode.toUpperCase() + " added successfully\")"));
         return this;
     }
 

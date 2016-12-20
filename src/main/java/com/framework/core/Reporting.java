@@ -18,11 +18,11 @@ import org.openqa.selenium.WebDriver;
 
 public class Reporting {
 	
-	String testCaseReport;
-    String snapshotFolderName;
-    String snapshotRelativePath;
-	String summaryReportPath;
-    String scriptName;
+	private String testCaseReport;
+    private String snapshotFolderName;
+    private String snapshotRelativePath;
+	private String summaryReportPath;
+    private String scriptName;
 
     //Counters and Integers
     private int snapshotCount;
@@ -34,23 +34,19 @@ public class Reporting {
 
     private Date startTime;
     private Date endTime;
-    private Date summaryStartTime;
-    private Date summaryEndTime;
-    
-	WebDriver driver;
-	HashMap <String, String> dictionary = new HashMap<String, String>();
-	HashMap <String, String> environment = new HashMap<String, String>();
+
+    private WebDriver driver;
+	private HashMap <String, String> dictionary = new HashMap<String, String>();
+	private HashMap <String, String> environment = new HashMap<String, String>();
 	
 	private FileOutputStream foutStrm = null;
 	
-	public Reporting(WebDriver GDriver, HashMap <String, String> GDictionary, 	HashMap <String, String> GEnvironment)
-	{
+	public Reporting(WebDriver GDriver, HashMap <String, String> GDictionary, 	HashMap <String, String> GEnvironment) {
 		this(GDictionary, GEnvironment);
         driver = GDriver;
 	}
 
-    public Reporting(HashMap <String, String> dictionary, 	HashMap <String, String> environment)
-    {
+    public Reporting(HashMap <String, String> dictionary, 	HashMap <String, String> environment) {
         this.dictionary = dictionary;
         this.environment = environment;
         this.summaryReportPath = environment.get("HTMLREPORTSPATH")+ "/SummaryReport.html";
@@ -59,20 +55,14 @@ public class Reporting {
     public void setDriver(WebDriver webDriver){
         driver = webDriver;
     }
-	
-	
-	//*****************************************************************************************
-    //*    Name        : createSummaryReport
-    //*****************************************************************************************
-    public void createSummaryReport()
-    {
+
+    public void createSummaryReport() {
         //Setting counter value
         tcsPassed = 0;
         testCaseNo = 0;
-        summaryStartTime = new Date();
+        //Date summaryStartTime = new Date();
         
-		try 
-		{
+		try {
 	        //Open the test case report for writing                   
 	        foutStrm = new FileOutputStream(summaryReportPath, true);
 	           
@@ -85,17 +75,13 @@ public class Reporting {
 	        //Close the object
 	        foutStrm.close();
 	        
-		} catch (IOException io) 
-		{
+		} catch (IOException io) {
 			io.printStackTrace();
 		} 
 		
 		foutStrm = null;
     }	
-    
-    //*****************************************************************************************
-    //*    Name            : createTestLevelReport
-    //*****************************************************************************************
+
 	public void createTestLevelReport(String strTestName) {
 
         operationCount = 0;
@@ -110,7 +96,8 @@ public class Reporting {
         snapshotRelativePath = "Snapshots/" + scriptName;
 
 		File file = new File(snapshotFolderName);
-		if (file.exists())file.delete();
+		if (file.exists())
+			file.delete();
 
 		//Make a new snapshot folder
 		file.mkdir();
@@ -123,8 +110,7 @@ public class Reporting {
 		}
 
 		//Close the html file
-		try 
-		{		
+		try {
 			new PrintStream(foutStrm).println("<HTML><BODY><TABLE BORDER=0 CELLPADDING=3 CELLSPACING=1 WIDTH=100% BGCOLOR=ORANGE>");
 			new PrintStream(foutStrm).println("<TR><TD WIDTH=90% ALIGN=CENTER BGCOLOR=WHITE><FONT FACE=VERDANA COLOR=ORANGE SIZE=3><B>AUTODESK</B></FONT></TD></TR><TR><TD ALIGN=CENTER BGCOLOR=ORANGE><FONT FACE=VERDANA COLOR=WHITE SIZE=3><B>Selenium Framework Reporting</B></FONT></TD></TR></TABLE><TABLE CELLPADDING=3 WIDTH=100%><TR height=30><TD WIDTH=100% ALIGN=CENTER BGCOLOR=WHITE><FONT FACE=VERDANA COLOR=//0073C5 SIZE=2><B>&nbsp; Automation Result : " + new Date() + " on Machine " + InetAddress.getLocalHost().getHostName() + " by user " + System.getProperty("user.name") + "</B></FONT></TD></TR><TR HEIGHT=5></TR></TABLE>");
 			new PrintStream(foutStrm).println("<TABLE BORDER=0 BORDERCOLOR=WHITE CELLPADDING=3 CELLSPACING=1 WIDTH=100%>");
@@ -133,8 +119,7 @@ public class Reporting {
 			new PrintStream(foutStrm).println("<TR WIDTH=100%><TH BGCOLOR=ORANGE WIDTH=5%><FONT FACE=VERDANA SIZE=2>Step No.</FONT></TH><TH BGCOLOR=ORANGE WIDTH=28%><FONT FACE=VERDANA SIZE=2>Step Description</FONT></TH><TH BGCOLOR=ORANGE WIDTH=25%><FONT FACE=VERDANA SIZE=2>Expected Value</FONT></TH><TH BGCOLOR=ORANGE WIDTH=25%><FONT FACE=VERDANA SIZE=2>Obtained Value</FONT></TH><TH BGCOLOR=ORANGE WIDTH=7%><FONT FACE=VERDANA SIZE=2>Result</FONT></TH></TR>");
 		
 			foutStrm.close();
-		} catch (IOException io) 
-		{
+		} catch (IOException io) {
 			io.printStackTrace();
 		}
 		//Deference the file pointer
@@ -143,11 +128,7 @@ public class Reporting {
 		//Get the start time of the execution
 		startTime = new Date();
 	}
-	
-	
-	//*****************************************************************************************
-    //*    Name        : closeTestLevelReport
-    //*****************************************************************************************
+
 	public void closeTestLevelReport(String strTestName) {
 
 		String strTestCaseResult = null;
@@ -181,17 +162,11 @@ public class Reporting {
 
         writeToTestSummary("Report_" + strTestName, strTestCaseResult);
 	}
-	
-	
-	//*****************************************************************************************
-    //*    Name        : writeToTestSummary
-    //*****************************************************************************************
-    public void writeToTestSummary(String strTestCaseName, String strResult)
-    {
+
+    public void writeToTestSummary(String strTestCaseName, String strResult) {
         String sColor,sRowColor;
 
-        try
-        {        
+        try {
 	        //Open the test case report for writing                   
 	        foutStrm = new FileOutputStream(summaryReportPath, true);
 	        
@@ -200,33 +175,29 @@ public class Reporting {
 	            sColor = "GREEN";
 	            tcsPassed++;
 	        }
-	        else if (strResult.toUpperCase().equals("FAILED") || strResult.toUpperCase().equals("FAIL")) sColor = "RED";
-	        else sColor = "ORANGE";
+	        else if (strResult.toUpperCase().equals("FAILED") || strResult.toUpperCase().equals("FAIL"))
+	        	sColor = "RED";
+	        else
+	        	sColor = "ORANGE";
 	
 	        testCaseNo++;
 	
-	        if (testCaseNo % 2 == 0) sRowColor = "#EEEEEE";
-	        else sRowColor = "#D3D3D3";
+	        if (testCaseNo % 2 == 0)
+	        	sRowColor = "#EEEEEE";
+	        else
+	        	sRowColor = "#D3D3D3";
 
 	        new PrintStream(foutStrm).println ("<TR COLS=3 BGCOLOR=" + sRowColor + "><TD  WIDTH=10%><FONT FACE=VERDANA SIZE=2>" + testCaseNo + "</FONT></TD><TD  WIDTH=70%><FONT FACE=VERDANA SIZE=2>" + strTestCaseName + "</FONT></TD><TD  WIDTH=20%><A HREF='" + strTestCaseName + ".html'><FONT FACE=VERDANA SIZE=2 COLOR=" + sColor + "><B>" + strResult + "</B></FONT></A></TD></TR>");
-      
         	foutStrm.close();
         }
-        catch (IOException io) 
-		{
+        catch (IOException io) {
 			io.printStackTrace();
 		}
        foutStrm = null;
-
     }
-    
-    
-  	//*****************************************************************************************
-    //*    Name        : closeTestSummaryReport
-    //*****************************************************************************************
-    public void closeTestSummaryReport()
-    {
-        summaryEndTime = new Date();
+
+    public void closeTestSummaryReport() {
+        //Date summaryEndTime = new Date();
         
         //Open the Test Summary Report File
 		try {         
@@ -246,13 +217,8 @@ public class Reporting {
 		//Deference the file pointer
 		foutStrm = null;
     }
-    
-    
-  	//*****************************************************************************************
-    //*    Name            : writeToTestLevelReport
-    //*****************************************************************************************
-    public void writeToTestLevelReport(String strDescription, String strExpectedValue, String strObtainedValue, String strResult)
-    {
+
+    public void writeToTestLevelReport(String strDescription, String strExpectedValue, String strObtainedValue, String strResult) {
         String snapshotFilePath,sRowColor,snapshotFile;
 
 		try {
@@ -265,8 +231,10 @@ public class Reporting {
         operationCount = operationCount + 1;
         
         //Row Color
-        if (operationCount % 2 == 0) sRowColor = "#EEEEEE";
-        else sRowColor = "#D3D3D3";
+        if (operationCount % 2 == 0)
+        	sRowColor = "#EEEEEE";
+        else
+        	sRowColor = "#D3D3D3";
         
         //Check if the result is Pass or Fail
         if (strResult.toUpperCase().equals("PASS")){
@@ -301,10 +269,7 @@ public class Reporting {
 			io.printStackTrace();
 		}
     }
- 
-    //*****************************************************************************************
-    //*    Name        : takeScreenshot
-    //*****************************************************************************************
+
 	public void takeScreenshot(String SSPath){
     	try {
     	    File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
@@ -318,25 +283,21 @@ public class Reporting {
 		}
     }
 
-	//*****************************************************************************************
-    //*    Name        : createJenkinsReport
-    //*    Author      :  Aniket Gadre
-    //*****************************************************************************************
-    public void createJenkinsReport()
-    {
+    public void createJenkinsReport() {
     	String jenkinsFilePath = environment.get("EXECUTIONFOLDERPATH") + "/" + environment.get("ENV_CODE");
     	String jenkinsHTMLRep = jenkinsFilePath + "/Jenkins_html_report.html";
     	String relativeClassSummary = environment.get("CLASSNAME") + "/" + environment.get("BROWSER").toUpperCase() + "_HTML_Reports" + "/SummaryReport.html";
     	String sRowColor = "";    	
 
-    	try 
-		{ 
+    	try {
     		File htmlReport = new File(jenkinsHTMLRep);
     		
     		//If jenkins flag is false 
     		if(Global.flgJenkinsHtml == false) {
     	        Global.flgJenkinsHtml = true;
-    			if(htmlReport.exists()) htmlReport.delete();
+
+    			if(htmlReport.exists())
+    				htmlReport.delete();
 
     	        foutStrm = new FileOutputStream(jenkinsHTMLRep, true);
 
@@ -352,11 +313,12 @@ public class Reporting {
 
 	        Global.g_iTestSuiteNo++;
 	
-	        if (Global.g_iTestSuiteNo % 2 == 0)  sRowColor = "#EEEEEE";
-	        else sRowColor = "#D3D3D3";
+	        if (Global.g_iTestSuiteNo % 2 == 0)
+	        	sRowColor = "#EEEEEE";
+	        else
+	        	sRowColor = "#D3D3D3";
 
 	        new PrintStream(foutStrm).println ("<TR COLS=3 BGCOLOR=" + sRowColor + "><TD  WIDTH=10%><FONT FACE=VERDANA SIZE=2>" + Global.g_iTestSuiteNo + "</FONT></TD><TD  WIDTH=90%><A HREF='" + relativeClassSummary + "'><FONT FACE=VERDANA SIZE=2 COLOR=BLUE><FONT FACE=VERDANA SIZE=2><B>" + environment.get("CLASSNAME") + "_" + environment.get("BROWSER").toLowerCase() + "</B></FONT></A></TD></TR>");
-
 	        foutStrm.close();
 
 		} catch (IOException io) {

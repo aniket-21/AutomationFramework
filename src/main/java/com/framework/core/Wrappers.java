@@ -14,8 +14,8 @@ import org.openqa.selenium.NoSuchElementException;
 
 public class Wrappers {
 
-    Reporting reporter;
-	WebDriver driver;
+    private Reporting reporter;
+	private WebDriver driver;
 	
 	//Constructor
 	public Wrappers(WebDriver driver, Reporting reporter)
@@ -24,12 +24,7 @@ public class Wrappers {
 		this.driver = driver;
 	}
 
-    //*****************************************************************************************
-    //*	Name		    : getElement
-    //*	Author		    : Aniket Gadre
-    //*****************************************************************************************
-    public WebElement getElement(String objDesc)
-    {
+    public WebElement getElement(String objDesc) {
         //Delimiters
         String[] delimiters = new String[] {":="};
         String[] arrFindByValues = objDesc.split(delimiters[0]);
@@ -43,68 +38,50 @@ public class Wrappers {
 
         try{
             if (strElement.equalsIgnoreCase("id"))
-            {
                 return driver.findElement(By.id(val));
-            }
+
             else if (strElement.equalsIgnoreCase("name"))
-            {
                 return driver.findElement(By.name(val));
-            }
+
             else if (strElement.equalsIgnoreCase("linktext"))
-            {
                 return driver.findElement(By.linkText(val));
-            }
+
             else if (strElement.equalsIgnoreCase("classname"))
-            {
                 return driver.findElement(By.className(val));
-            }
+
             else if (strElement.equalsIgnoreCase("cssselector"))
-            {
                 return driver.findElement(By.cssSelector(val));
-            }
+
             else if (strElement.equalsIgnoreCase("xpath"))
-            {
                 return driver.findElement(By.xpath(val));
-            }
+
             else if (strElement.equalsIgnoreCase("accessibility_id"))
-            {
                 return ((AppiumDriver)driver).findElement(MobileBy.AccessibilityId(val));
-            }
+
             else if (strElement.equalsIgnoreCase("appclassname"))
-            {
                 return ((AppiumDriver)driver).findElement(By.className(val));
-            }
+
             else if (strElement.equalsIgnoreCase("uiautomator"))
-            {
                 return ((AppiumDriver)driver).findElement(MobileBy.AndroidUIAutomator(val));
-            }
+
             else if (strElement.equalsIgnoreCase("partiallinktext"))
-            {
                 return driver.findElement(By.partialLinkText(val));
-            }
+
             else if (strElement.equalsIgnoreCase("tagname"))
-            {
                 return driver.findElement(By.tagName(val));
-            }
-            else
-            {
+
+            else {
                 reporter.writeToTestLevelReport("Get element matching description " + objDesc, "Element should be found and returned", "Property " + FindBy + " specified for element is invalid", "Fail");
                 throw(new InvalidSelectorException("Wrapper method getElement() : Property "  + FindBy + " specified for element is invalid"));
             }
         }
-        catch(NoSuchElementException ex){
+        catch(NoSuchElementException ex) {
             reporter.writeToTestLevelReport("Get element matching description " + objDesc, "Element should be found and returned", "Element not found", "Fail");
             throw(ex);
         }
-
     }
 
-    //*****************************************************************************************
-    //*	Name		    : getElements
-    //*	Author		    : Aniket Gadre
-    //*****************************************************************************************
-    public List<WebElement> getElements(String objDesc)
-    {
+    public List<WebElement> getElements(String objDesc) {
         //Delimiters
         String[] delimiters = new String[] {":="};
         String[] arrFindByValues = objDesc.split(delimiters[0]);
@@ -117,37 +94,37 @@ public class Wrappers {
 
         //Handle all FindBy cases
         String strElement = FindBy.toLowerCase();
-        if (strElement.equalsIgnoreCase("linktext")){
+        if (strElement.equalsIgnoreCase("linktext"))
             elements = driver.findElements(By.linkText(val));
-        }
-        else if (strElement.equalsIgnoreCase("partiallinktext")){
+
+        else if (strElement.equalsIgnoreCase("partiallinktext"))
             elements = driver.findElements(By.partialLinkText(val));
-        }
-        else if (strElement.equalsIgnoreCase("xpath")){
+
+        else if (strElement.equalsIgnoreCase("xpath"))
             elements = driver.findElements(By.xpath(val));
-        }
-        else if (strElement.equalsIgnoreCase("name")){
+
+        else if (strElement.equalsIgnoreCase("name"))
             elements = driver.findElements(By.name(val));
-        }
-        else if (strElement.equalsIgnoreCase("id")){
+
+        else if (strElement.equalsIgnoreCase("id"))
             elements = driver.findElements(By.id(val));
-        }
-        else if (strElement.equalsIgnoreCase("classname")){
+
+        else if (strElement.equalsIgnoreCase("classname"))
             elements = driver.findElements(By.className(val));
-        }
-        else if (strElement.equalsIgnoreCase("cssselector")){
+
+        else if (strElement.equalsIgnoreCase("cssselector"))
             elements = driver.findElements(By.cssSelector(val));
-        }
-        else if (strElement.equalsIgnoreCase("tagname")){
+
+        else if (strElement.equalsIgnoreCase("tagname"))
             elements = driver.findElements(By.tagName(val));
-        }
-        else if (strElement.equalsIgnoreCase("accessibility_id")){
+
+        else if (strElement.equalsIgnoreCase("accessibility_id"))
             elements = ((AppiumDriver)driver).findElements(MobileBy.AccessibilityId(val));
-        }
-        else if (strElement.equalsIgnoreCase("appclassname")){
+
+        else if (strElement.equalsIgnoreCase("appclassname"))
             elements = ((AppiumDriver)driver).findElements(By.className(val));
-        }
-        else{
+
+        else {
             reporter.writeToTestLevelReport("Get elements matching description " + objDesc, "Element List should be returned", "Property " + FindBy + " specified for elements is invalid", "Fail");
             throw(new InvalidSelectorException("Wrapper method getElements() : Property "  + FindBy + " specified for element is invalid"));
         }
@@ -155,12 +132,7 @@ public class Wrappers {
         return elements;
     }
 
-    //*****************************************************************************************
-    //*	Name		    : getChildElement
-    //*	Author		    : Aniket Gadre
-    //*****************************************************************************************
-    public WebElement getChildElement(WebElement parentElem, String objDesc)
-    {
+    public WebElement getChildElement(WebElement parentElem, String objDesc) {
         //Delimiters
         String[] delimiters = new String[] {":="};
         String[] arrFindByValues = objDesc.split(delimiters[0]);
@@ -171,51 +143,46 @@ public class Wrappers {
 
         //Handle all FindBy cases
         String strElement = FindBy.toLowerCase();
-        if (strElement.equalsIgnoreCase("id")) {
+        if (strElement.equalsIgnoreCase("id"))
             return parentElem.findElement(By.id(val));
-        }
-        else if (strElement.equalsIgnoreCase("name")) {
+
+        else if (strElement.equalsIgnoreCase("name"))
             return parentElem.findElement(By.name(val));
-        }
-        else if (strElement.equalsIgnoreCase("linktext")){
+
+        else if (strElement.equalsIgnoreCase("linktext"))
             return parentElem.findElement(By.linkText(val));
-        }
-        else if (strElement.equalsIgnoreCase("classname")){
+
+        else if (strElement.equalsIgnoreCase("classname"))
             return parentElem.findElement(By.className(val));
-        }
-        else if (strElement.equalsIgnoreCase("cssselector")){
+
+        else if (strElement.equalsIgnoreCase("cssselector"))
             return parentElem.findElement(By.cssSelector(val));
-        }
-        else if (strElement.equalsIgnoreCase("xpath")){
+
+        else if (strElement.equalsIgnoreCase("xpath"))
             return parentElem.findElement(By.xpath(val));
-        }
-        else if (strElement.equalsIgnoreCase("accessibility_id")){
+
+        else if (strElement.equalsIgnoreCase("accessibility_id"))
             return parentElem.findElement(MobileBy.AccessibilityId(val));
-        }
-        else if (strElement.equalsIgnoreCase("appclassname")){
+
+        else if (strElement.equalsIgnoreCase("appclassname"))
             return parentElem.findElement(By.className(val));
-        }
-        else if (strElement.equalsIgnoreCase("uiautomator")){
+
+        else if (strElement.equalsIgnoreCase("uiautomator"))
             return parentElem.findElement(MobileBy.AndroidUIAutomator(val));
-        }
-        else if (strElement.equalsIgnoreCase("partiallinktext")){
+
+        else if (strElement.equalsIgnoreCase("partiallinktext"))
             return parentElem.findElement(By.partialLinkText(val));
-        }
-        else if (strElement.equalsIgnoreCase("tagname")){
+
+        else if (strElement.equalsIgnoreCase("tagname"))
             return parentElem.findElement(By.tagName(val));
-        }
-        else{
+
+        else {
             reporter.writeToTestLevelReport("Get child object matching description " + objDesc, "Object should be found and returned", "Property " + FindBy + " specified for object is invalid", "Fail");
             throw(new InvalidSelectorException("Wrapper method getChildElement() : Property "  + FindBy + " specified for element is invalid"));
         }
     }
 
-    //*****************************************************************************************
-    //*	Name		    : getChildElements
-    //*	Author		    : Aniket Gadre
-    //*****************************************************************************************
-    public List<WebElement> getChildElements(WebElement parentElem, String objDesc)
-    {
+    public List<WebElement> getChildElements(WebElement parentElem, String objDesc) {
         //Delimiters
         String[] delimiters = new String[] {":="};
         String[] arrFindByValues = objDesc.split(delimiters[0]);
@@ -229,39 +196,39 @@ public class Wrappers {
 
         //Handle all FindBy cases
         String strElement = FindBy.toLowerCase();
-        if (strElement.equalsIgnoreCase("id")){
+        if (strElement.equalsIgnoreCase("id"))
             elements = parentElem.findElements(By.id(val));
-        }
-        else if (strElement.equalsIgnoreCase("name")){
+
+        else if (strElement.equalsIgnoreCase("name"))
             elements = parentElem.findElements(By.name(val));
-        }
-        else if (strElement.equalsIgnoreCase("linktext")){
+
+        else if (strElement.equalsIgnoreCase("linktext"))
             elements = parentElem.findElements(By.linkText(val));
-        }
-        else if (strElement.equalsIgnoreCase("classname")){
+
+        else if (strElement.equalsIgnoreCase("classname"))
             elements = parentElem.findElements(By.className(val));
-        }
-        else if (strElement.equalsIgnoreCase("cssselector")){
+
+        else if (strElement.equalsIgnoreCase("cssselector"))
             elements = parentElem.findElements(By.cssSelector(val));
-        }
-        else if (strElement.equalsIgnoreCase("xpath")){
+
+        else if (strElement.equalsIgnoreCase("xpath"))
             elements = parentElem.findElements(By.xpath(val));
-        }
-        else if (strElement.equalsIgnoreCase("accessibility_id")){
+
+        else if (strElement.equalsIgnoreCase("accessibility_id"))
             elements = parentElem.findElements(MobileBy.AccessibilityId(val));
-        }
-        else if (strElement.equalsIgnoreCase("appclassname")){
+
+        else if (strElement.equalsIgnoreCase("appclassname"))
             elements = parentElem.findElements(By.className(val));
-        }
-        else if (strElement.equalsIgnoreCase("uiautomator")){
+
+        else if (strElement.equalsIgnoreCase("uiautomator"))
             elements = parentElem.findElements(MobileBy.AndroidUIAutomator(val));
-        }
-        else if (strElement.equalsIgnoreCase("partiallinktext")){
+
+        else if (strElement.equalsIgnoreCase("partiallinktext"))
             elements = parentElem.findElements(By.partialLinkText(val));
-        }
-        else if (strElement.equalsIgnoreCase("tagname")){
+
+        else if (strElement.equalsIgnoreCase("tagname"))
             elements = parentElem.findElements(By.tagName(val));
-        }
+
         else{
             reporter.writeToTestLevelReport("Get child elements matching description " + objDesc, "Child Elements should be found and returned", "Property " + FindBy + " specified for element is invalid", "Fail");
             throw(new InvalidSelectorException("Wrapper method getChildElements() : Property "  + FindBy + " specified for element is invalid"));
@@ -270,44 +237,26 @@ public class Wrappers {
         return elements;
     }
 
-
-    //*****************************************************************************************
-    //*	Name		    : isWebElementPresent
-    //*	Author		    : Aniket Gadre
-    //*****************************************************************************************
-	public boolean isWebElementPresent(String strDesc){
+	public boolean isElementPresent(String strDesc){
         List<WebElement> lst = getElements(strDesc);
         boolean isPresent = (lst == null || lst.size() == 0) ? false : true;
         reporter.writeToTestLevelReport("Element existence with description " + strDesc, "", "Element presence state is " + isPresent, "Done");
         return isPresent;
     }
 
-
-    //*****************************************************************************************
-    //*	Name		    : isChildWebElementPresent
-    //*	Author		    : Aniket Gadre
-    //*****************************************************************************************
-	public boolean isChildWebElementPresent(WebElement objParent, String strDesc){
+	public boolean isChildElementPresent(WebElement objParent, String strDesc) {
         List<WebElement> lst = getChildElements(objParent,strDesc);
         boolean isPresent = (lst == null || lst.size() == 0) ? false : true;
         reporter.writeToTestLevelReport("Child Element existence with description " + strDesc, "", "Child Element presence state is " + isPresent, "Done");
         return isPresent;
     }
-	
-	//*****************************************************************************************
-    //*	Name		    : isWebElementDisplayed
-    //*	Author		    : Aniket Gadre
-    //*****************************************************************************************
-	public boolean isWebElementDisplayed(String strDesc) throws InterruptedException {
+
+	public boolean isElementDisplayed(String strDesc) throws InterruptedException {
         WebElement webElement = getElement(strDesc);
-        return isWebElementDisplayed(webElement);
+        return isElementDisplayed(webElement);
     }
-	
-	//*****************************************************************************************
-    //*	Name		    : isWebElementDisplayed
-    //*	Author		    : Aniket Gadre
-    //*****************************************************************************************
-	public boolean isWebElementDisplayed(WebElement webElement) throws InterruptedException {
+
+	public boolean isElementDisplayed(WebElement webElement) throws InterruptedException {
         boolean bIsDisplayed = webElement.isDisplayed();
         String state = bIsDisplayed ? "displayed" : "not displayed";
         String strDesc = webElement.toString();
@@ -316,21 +265,13 @@ public class Wrappers {
         return  bIsDisplayed;
     }
 
-	//*****************************************************************************************
-    //*	Name		    : isWebElementEnabled
-    //*	Author		    : Aniket Gadre
-    //*****************************************************************************************
-    public boolean isWebElementEnabled(String strDesc) throws InterruptedException {
+    public boolean isElementEnabled(String strDesc) throws InterruptedException {
         //Get WebElement
         WebElement webElement = getElement(strDesc);
-        return isWebElementEnabled(webElement);
+        return isElementEnabled(webElement);
     }	
-    
-  //*****************************************************************************************
-    //*	Name		    : isWebElementEnabled
-    //*	Author		    : Aniket Gadre
-    //*****************************************************************************************
-    public boolean isWebElementEnabled(WebElement webElement) throws InterruptedException {
+
+    public boolean isElementEnabled(WebElement webElement) throws InterruptedException {
     	//Check if the WebElement is Enabled
         boolean bIsEnabled = webElement.isEnabled();
         String state = bIsEnabled ? "enabled" : "disabled";
@@ -339,23 +280,14 @@ public class Wrappers {
 
         return  bIsEnabled;
     }	
-    
 
-    //*****************************************************************************************
-    //*	Name		    : isWebElementSelected
-    //*	Author		    : Aniket Gadre
-    //*****************************************************************************************
-    public boolean isWebElementSelected(String strDesc) {
+    public boolean isElementSelected(String strDesc) {
         //Get WebElement
         WebElement webElement = getElement(strDesc);
-        return isWebElementSelected(webElement);
+        return isElementSelected(webElement);
     }
 
-    //*****************************************************************************************
-    //*	Name		    : isWebElementSelected
-    //*	Author		    : Aniket Gadre
-    //*****************************************************************************************
-    public boolean isWebElementSelected(WebElement webElement){
+    public boolean isElementSelected(WebElement webElement){
         boolean bIsSelected = webElement.isSelected();
         String state = bIsSelected ? "selected" : "unselected";
         String strDesc = webElement.toString();
@@ -364,23 +296,13 @@ public class Wrappers {
         return  bIsSelected;
     }
 
-    //*****************************************************************************************
-    //*	Name		    : click
-    //*	Author		    : Aniket Gadre
-    //*****************************************************************************************
-    public Wrappers click(String strDesc)
-    {
+    public Wrappers click(String strDesc) {
         //Initialize
         WebElement webElement = getElement(strDesc);
         return click(webElement);
     }
-    
-  //*****************************************************************************************
-    //*	Name		    : click
-    //*	Author		    : Aniket Gadre
-    //*****************************************************************************************
-    public Wrappers click(WebElement objClick)
-    {
+
+    public Wrappers click(WebElement objClick) {
         String strDesc = objClick.toString();
 
         //Check if the object is enabled, if yes click the same
@@ -398,22 +320,12 @@ public class Wrappers {
         return this;
     }	
 
-	//*****************************************************************************************
-    //*	Name		    : enterText
-    //*	Author		    : Aniket Gadre
-    //*****************************************************************************************
-    public Wrappers enterText(String strDesc, String strText)
-    {
+    public Wrappers enterText(String strDesc, String strText) {
         WebElement webElement = getElement(strDesc);
         return enterText(webElement,strText);
     }	
-    
-    //*****************************************************************************************
-    //*	Name		    : enterText
-    //*	Author		    : Aniket Gadre
-    //*****************************************************************************************
-    public Wrappers enterText(WebElement objEdit, String strText)
-    {
+
+    public Wrappers enterText(WebElement objEdit, String strText) {
     	String strDesc = objEdit.toString();
 
         //Check if the object is enabled, if yes click the same
@@ -432,23 +344,12 @@ public class Wrappers {
         return this;
     }	
 
-
-    //*****************************************************************************************
-    //*	Name		    : selectOptionFromList
-    //*	Author		    : Aniket Gadre
-    //*****************************************************************************************
-    public Wrappers selectOptionFromList(String strDesc, String strText)
-    {
+    public Wrappers selectOptionFromList(String strDesc, String strText) {
         WebElement webElement = getElement(strDesc);
         return selectOptionFromList(webElement,strText);
     }
-    
-    //*****************************************************************************************
-    //*	Name		    : selectOptionFromList
-    //*	Author		    : Aniket Gadre
-    //*****************************************************************************************
-    public Wrappers selectOptionFromList(WebElement objSelect, String strText)
-    {
+
+    public Wrappers selectOptionFromList(WebElement objSelect, String strText) {
     	String strDesc = objSelect.toString();
 
         //Check if the object is enabled, if yes click the same
@@ -472,26 +373,14 @@ public class Wrappers {
         reporter.writeToTestLevelReport("Select value from dropdown", "Select value " + strText, "Value " + strText + " selected", "Done");
         return this;
     }
-    
 
-    
-    //*****************************************************************************************
-    //*	Name		    : checkCheckBox
-    //*	Author		    : Aniket Gadre
-    //*****************************************************************************************
-    public Wrappers checkCheckBox(String strDesc)
-    {
+    public Wrappers checkCheckBox(String strDesc) {
         //Initialize
         WebElement webElement = getElement(strDesc);
         return checkCheckBox(webElement);
     }
-    
-  //*****************************************************************************************
-    //*	Name		    : checkCheckBox
-    //*	Author		    : Aniket Gadre
-    //*****************************************************************************************
-    public Wrappers checkCheckBox(WebElement objChkBox)
-    {
+
+    public Wrappers checkCheckBox(WebElement objChkBox) {
     	String strDesc = objChkBox.toString();
 
         //Check if the object is enabled, if yes click the same
@@ -500,9 +389,10 @@ public class Wrappers {
             boolean isChecked = objChkBox.isSelected();
 
             //Check if Not Checked
-            if(isChecked == false) objChkBox.click();
+            if(isChecked == false)
+                objChkBox.click();
         }
-        else{
+        else {
             reporter.writeToTestLevelReport("Check CheckBox element with description " + strDesc, "Checkbox should be checked", "Element is either not displayed or not enabled", "Fail");
             throw(new ElementNotVisibleException("Wrapper method checkCheckBox() : Element with description " + strDesc + " is either not visible or is not enabled"));
             //return false;
@@ -511,24 +401,14 @@ public class Wrappers {
         reporter.writeToTestLevelReport("Check CheckBox element with description " + strDesc, "Check operation should be successful", "Successfully checked the checkbox", "Done");
         return this;
     }
-    
-    //*****************************************************************************************
-    //*	Name		    : uncheckCheckBox
-    //*	Author		    : Aniket Gadre
-    //*****************************************************************************************
-    public Wrappers uncheckCheckBox(String strDesc)
-    {
+
+    public Wrappers uncheckCheckBox(String strDesc) {
         //Initialize
         WebElement webElement = getElement(strDesc);
         return uncheckCheckBox(webElement);
-    }	
-    
-    //*****************************************************************************************
-    //*	Name		    : uncheckCheckBox
-    //*	Author		    : Aniket Gadre
-    //*****************************************************************************************
-    public Wrappers uncheckCheckBox(WebElement objChkBox)
-    {
+    }
+
+    public Wrappers uncheckCheckBox(WebElement objChkBox) {
     	String strDesc = objChkBox.toString();
 
         //Check if the object is enabled, if yes click the same
@@ -537,9 +417,10 @@ public class Wrappers {
             boolean isChecked = objChkBox.isSelected();
 
             //Check if Checked
-            if(isChecked == true) objChkBox.click();
+            if(isChecked == true)
+                objChkBox.click();
         }
-        else{
+        else {
             reporter.writeToTestLevelReport("Check CheckBox element with description " + strDesc, "Checkbox should be unchecked", "Element is either not displayed or not enabled", "Fail");
             throw(new ElementNotVisibleException("Wrapper method checkCheckBox() : Element with description " + strDesc + " is either not visible or is not enabled"));
             //return false;
@@ -548,35 +429,24 @@ public class Wrappers {
         reporter.writeToTestLevelReport("Uncheck CheckBox element with description " + strDesc, "Un-check operation should be successful", "Successfully unchecked the checkbox", "Done");
         return this;
     }
-	
-	//*****************************************************************************************
-    //*	Name		    : getCurrentBrowser
-    //*	Author		    : Aniket Gadre
-    //*****************************************************************************************
-	public String getCurrentBrowser()
-	{
-		try
-		{
+
+	public String getCurrentBrowser() {
+		try {
 			Capabilities DC = ((RemoteWebDriver)driver).getCapabilities();
 			return DC.getBrowserName();
 		}
-		catch(WebDriverException e)
-		{
+		catch(WebDriverException e) {
 			reporter.writeToTestLevelReport("Get browser name", "Should return Browser Name", "Fetching Browser Name Failed. Exception " + e, "Fail");
 			throw(e);
 		}
 	}
 
-    //*****************************************************************************************
-    //*	Name		    : rotateDeviceScreen
-    //*	Author		    : Aniket Gadre
-    //*****************************************************************************************
     public Wrappers rotateDeviceScreen(String Orientation) throws InterruptedException {
 
         String strOrientation = "";
         ScreenOrientation iOrientation;
 
-        try{
+        try {
             if (Orientation.equalsIgnoreCase("L")){
                 ((AppiumDriver)driver).rotate(ScreenOrientation.LANDSCAPE);
                 iOrientation = ScreenOrientation.LANDSCAPE;
@@ -601,10 +471,6 @@ public class Wrappers {
         return this;
     }
 
-    //*****************************************************************************************
-    //*	Name		    : setGeoLocation
-    //*	Author		    : Aniket Gadre
-    //*****************************************************************************************
     public Wrappers setGeoLocation(String lat, String lon){
         //js
         String Script = "window.navigator.geolocation.getCurrentPosition =  function(success){var position = {'coords' : {'latitude': '" + lat + "', 'longitude': '" + lon + "'}}; success(position);}";
@@ -617,29 +483,16 @@ public class Wrappers {
         return this;
     }
 
-    //*****************************************************************************************
-    //*	Name		    : getPageTitle
-    //*	Author		    : Aniket Gadre
-    //*****************************************************************************************
     public String getTitle(){
         return driver.getTitle();
     }
 
-    //*****************************************************************************************
-    //*	Name		    : getCurrentAndroidActivity
-    //*	Author		    : Aniket Gadre
-    //*****************************************************************************************
     public String getCurrentAndroidActivity(){
         return ((AndroidDriver)driver).currentActivity();
     }
 
-    //*****************************************************************************************
-    //*	Name		    : maximizeWindow
-    //*	Author		    : Aniket Gadre
-    //*****************************************************************************************
-    public Wrappers maximizeWindow()
-    {
-        try{
+    public Wrappers maximizeWindow() {
+        try {
             driver.manage().window().maximize();
         }
         catch(WebDriverException e){
@@ -652,21 +505,15 @@ public class Wrappers {
         return this;
     }
 
-    //*****************************************************************************************
-    //*	Name		    : switchToWindowWithName
-    //*	Author		    : Aniket Gadre
-    //*****************************************************************************************
 	public Wrappers switchToWindowWithName() throws Exception {
-		try
-		{
+		try {
 			//driver.switchTo().window(strWindowName);
 			//Switch to new window opened
 			for(String winHandle : driver.getWindowHandles()){
 			    driver.switchTo().window(winHandle);
 			}
 		}
-		catch(Exception e)
-		{
+		catch(Exception e) {
 			reporter.writeToTestLevelReport("Switch Window", "Switch to new Window ", "Exception occured : " + e, "Fail");
 			throw(e);
 		}
@@ -674,18 +521,12 @@ public class Wrappers {
 		return this;
 	}
 
-    //*****************************************************************************************
-    //*	Name		    : waitForAndroidActivity
-    //*	Author		    : Aniket Gadre
-    //*****************************************************************************************
-    public Wrappers waitForAndroidActivity(String expectedActivity,int sec)
-    {
+    public Wrappers waitForAndroidActivity(String expectedActivity,int sec) {
     	int i = 0;
     	String actualActivity="";
     	
     	//Loop for activity
-    	while(i<sec)
-    	{
+    	while(i<sec) {
 
     		actualActivity = ((AndroidDriver)driver).currentActivity();
     		if(actualActivity.equals(expectedActivity)){

@@ -23,25 +23,18 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.w3c.dom.*;
 
 public class Driver {
-		
-	//Variables
-	String rootPath;
-	String executionPath;
-	String storagePath;
-	String envConfigPath;
-	String curExecutionFolder;
-	String htmlReportsPath;
-	String snapShotsPath;
-	String dataPath;
-	String User;	
-	
-	HashMap <String, String> orgDictionary = new HashMap<String, String>();
-	HashMap <String, String> dictionary = new HashMap<String, String>();
-	HashMap <String, String> environment = new HashMap<String, String>();
+
+	private String executionPath;
+	private String storagePath;
+	private String envConfigPath;
+	private String dataPath;
+	private String User;
+
+	private HashMap <String, String> dictionary = new HashMap<String, String>();
+	private HashMap <String, String> environment = new HashMap<String, String>();
 
 	//Constructor
-	public Driver(HashMap <String, String> dictionary, HashMap <String, String> environment)
-	{
+	public Driver(HashMap <String, String> dictionary, HashMap <String, String> environment) {
 		
 		this.dictionary = dictionary;
 		this.environment = environment;
@@ -49,7 +42,7 @@ public class Driver {
 		//Get Root Path
 		User = System.getProperty("user.name");
 		String workingPath = System.getProperty("user.dir");
-		rootPath = workingPath;
+		String rootPath = workingPath;
 		
 		//Set paths
 		executionPath = rootPath + "/execution";
@@ -61,15 +54,14 @@ public class Driver {
 		this.environment.put("ROOTPATH", rootPath);
 		this.environment.put("EXECUTIONFOLDERPATH", executionPath);
 		this.environment.put("STORAGEFOLDERPATH", storagePath);
-		
 	}
 	
 	//Function to Create Execution Folders
 	public boolean createExecutionFolders() throws IOException {
 		//Set execution paths
-		curExecutionFolder = executionPath + "/" + environment.get("ENV_CODE") + "/" + environment.get("CLASSNAME");
-		htmlReportsPath = curExecutionFolder + "/" + environment.get("BROWSER").toUpperCase() + "_HTML_Reports";
-		snapShotsPath = htmlReportsPath + "/Snapshots";
+		String curExecutionFolder = executionPath + "/" + environment.get("ENV_CODE") + "/" + environment.get("CLASSNAME");
+		String htmlReportsPath = curExecutionFolder + "/" + environment.get("BROWSER").toUpperCase() + "_HTML_Reports";
+		String snapShotsPath = htmlReportsPath + "/Snapshots";
 		String harFilePath = htmlReportsPath + "/Hars";
 		
 		//Put in Environments

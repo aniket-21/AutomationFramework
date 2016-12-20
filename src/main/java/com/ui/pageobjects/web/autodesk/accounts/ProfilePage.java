@@ -32,7 +32,7 @@ public class ProfilePage extends BasePage{
     }
 
     public boolean shouldHaveMyProfileTab(){
-        boolean isProfileTabPresent = objWrapper.isWebElementPresent(tbProfile);
+        boolean isProfileTabPresent = objWrapper.isElementPresent(tbProfile);
         if(isProfileTabPresent){
             Reporter.writeToTestLevelReport("Check for Profile Tab", "Profile tab should be present", "Profile tab is present", "Pass");
             return true;

@@ -19,7 +19,7 @@ public class LaunchApplication {
 	}	
 	
 	public LoginPage launchIdentityApplication(){
-		driver.get(environment.get("OXYGEN_URL"));
+		driver.get(environment.get("OXYGEN_URL") + "?uitype=oldui");
 		reporter.writeToTestLevelReport("Navigate to specified URL", "URL: " + environment.get("OXYGEN_URL"), "Navigated to URL: " + environment.get("OXYGEN_URL"), "Done");
 		return new LoginPage(driver, dictionary, environment, reporter);
 	}

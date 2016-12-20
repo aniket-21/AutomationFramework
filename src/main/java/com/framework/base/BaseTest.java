@@ -55,14 +55,12 @@ public class BaseTest {
     public void beforeMethod(Method method){
         String testName = method.getName();
         System.out.println("Before Method for test " + testName);
-        asapDriver.getDataForTest(testName);
         Reporter.createTestLevelReport(testName);
     }
 
     public void afterMethod(Method method) {
         String testName = method.getName();
         System.out.println("After Method" + testName);
-        asapDriver.setReferenceData();
         Reporter.closeTestLevelReport(testName);
     }
 

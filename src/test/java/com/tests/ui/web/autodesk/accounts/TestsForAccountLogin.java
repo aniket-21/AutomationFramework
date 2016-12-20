@@ -30,7 +30,6 @@ public class TestsForAccountLogin extends BaseSeleniumWebTest{
         this.browser = browser;
     }
 
-
     @BeforeClass
     public void beforeClass() throws IOException {
         String[] strClassNameArray = this.getClass().getName().split("\\.");
@@ -51,28 +50,31 @@ public class TestsForAccountLogin extends BaseSeleniumWebTest{
 
     @Test
     public void testValidLogin(){
-        LaunchApplication app = new LaunchApplication(driver, dictionary, environment,Reporter);
-        LoginPage loginPage = app.launchIdentityApplication();
-        loginPage.enterLoginCredentials(dictionary.get("USERNAME"), dictionary.get("PASSWORD"));
-        ProfilePage profilePage = loginPage.clickSignIn();
+        ProfilePage profilePage = new LaunchApplication(driver, dictionary, environment,Reporter)
+                .launchIdentityApplication()
+                .enterLoginCredentials("aniket@autodesk","Jaguar21")
+                .clickSignIn(ProfilePage.class);
+
         Assert.assertTrue(profilePage.shouldHaveMyProfileTab(),"Assert Profile page has Profile Tab");
     }
 
     @Test
     public void testInvalidLoginError(){
-        LaunchApplication app = new LaunchApplication(driver, dictionary, environment,Reporter);
-        LoginPage loginPage = app.launchIdentityApplication();
-        loginPage.enterLoginCredentials(dictionary.get("USERNAME"), dictionary.get("PASSWORD"))
-                .clickSignIn();
+        LoginPage loginPage = new LaunchApplication(driver, dictionary, environment,Reporter)
+                .launchIdentityApplication()
+                .enterLoginCredentials("aniket@autodesk","Jaguar22")
+                .clickSignIn(LoginPage.class);
+
         Assert.assertTrue(loginPage.shouldDisplayError("Email address / username and password do not match."));
     }
 
     @Test
     public void testBlankCredentialsError(){
-        LaunchApplication app = new LaunchApplication(driver, dictionary, environment,Reporter);
-        LoginPage loginPage = app.launchIdentityApplication();
-        loginPage.enterLoginCredentials("","")
-                .clickSignIn();
+        LoginPage loginPage =  new LaunchApplication(driver, dictionary, environment,Reporter)
+                .launchIdentityApplication()
+                .enterLoginCredentials("","")
+                .clickSignIn(LoginPage.class);
+
         Assert.assertTrue(loginPage.shouldDisplayError("Please enter an email address or username."));
         Assert.assertTrue(loginPage.shouldDisplayError("Please enter your password."));
     }

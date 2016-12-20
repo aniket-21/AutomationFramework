@@ -1,5 +1,6 @@
 package com.ui.pageobjects.web.autodesk.accounts;
 
+import com.framework.base.BasePage;
 import com.framework.core.Reporting;
 import com.framework.core.Wrappers;
 import org.openqa.selenium.WebDriver;
@@ -9,7 +10,7 @@ import java.util.HashMap;
 /**
  * Created by gadrea on 5/5/2015.
  */
-public class ProfilePage {
+public class ProfilePage extends BasePage{
 
     private Reporting Reporter;
     private WebDriver driver;

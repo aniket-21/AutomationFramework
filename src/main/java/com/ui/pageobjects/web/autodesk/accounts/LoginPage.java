@@ -1,18 +1,21 @@
 package com.ui.pageobjects.web.autodesk.accounts;
 
+import com.framework.base.BasePage;
 import com.framework.core.Reporting;
 import com.framework.core.Wrappers;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.function.Function;
 
 /**
  * Created by gadrea on 4/2/2015.
  */
-public class LoginPage {
+public class LoginPage extends BasePage{
 
     private Reporting Reporter;
     private WebDriver driver;
@@ -38,11 +41,6 @@ public class LoginPage {
         objWrapper = new Wrappers(driver, Reporter);
     }
 
-
-    //*****************************************************************************************
-    //*    Name        	: enterLoginCredentials
-    //*    Author       : Aniket Gadre
-    //*****************************************************************************************
     public LoginPage enterLoginCredentials(String username, String password)
     {
         objWrapper.enterText(edtUserName, username);
@@ -51,21 +49,12 @@ public class LoginPage {
         return this;
     }
 
-    //*****************************************************************************************
-    //*    Name        	: clickSignIn
-    //*    Author       : Aniket Gadre
-    //*****************************************************************************************
-    public ProfilePage clickSignIn()
-    {
+    public <T extends BasePage> T clickSignIn(Class<T> clazz) {
         objWrapper.click(btnSubmit);
         Reporter.writeToTestLevelReport("Enter Login Credentials", "Login details should be Entered", "Login Details entered Successfully", "Pass");
-        return new ProfilePage(driver,Dictionary,Environment,Reporter);
+        return getNewInstanceOfClass(clazz, driver, Dictionary, Environment, Reporter);
     }
 
-    //*****************************************************************************************
-    //*    Name        	: getErrorMessages
-    //*    Author       : Aniket Gadre
-    //*****************************************************************************************
     private List<String> getErrorMessages()
     {
         List<String> lstErrors = new ArrayList<String>();
@@ -77,10 +66,6 @@ public class LoginPage {
         return lstErrors;
     }
 
-    //*****************************************************************************************
-    //*    Name        	: shouldDisplayError
-    //*    Author       : Aniket Gadre
-    //*****************************************************************************************
     public boolean shouldDisplayError(String errorMessage)
     {
         List<String> lstErrorMessages = getErrorMessages();

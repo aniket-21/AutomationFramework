@@ -59,12 +59,16 @@ public class TestsForIdentityOnAndroid extends BaseAppiumAndroidTest{
 
     @Test
     public void testValidLogin(){
+
         bmphandler.createNewHar("LoginPage");
-        LaunchApplication app = new LaunchApplication(driver, dictionary, environment,Reporter);
-        LoginPage loginPage = app.launchIdentityApplication();
-        loginPage.enterLoginCredentials("aniket@autodesk","Jaguar21");
+
+        LoginPage loginPage = new LaunchApplication(driver, dictionary, environment,Reporter)
+                .launchIdentityApplication()
+                .enterLoginCredentials("aniket@autodesk","Jaguar21");
+
         bmphandler.createNewHarPage("HomePage");
-        ProfilePage profilePage = loginPage.clickSignIn();
+
+        ProfilePage profilePage = loginPage.clickSignIn(ProfilePage.class);
         Assert.assertTrue(profilePage.shouldHaveMyProfileTab(), "Assert Profile page has Profile Tab");
     }
 

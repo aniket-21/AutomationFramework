@@ -14,17 +14,4 @@
         </classes>
     </test>
 
-    <!--
-
-    <test name="ConsorPOCAndroid">
-        <classes>
-            <class name="TestsForConsorsAndroid">
-                <methods>
-                    <include name="testConsorsAndroidPOC"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    -->
-
 </suite> <!-- Suite -->

@@ -14,8 +14,8 @@ import java.net.MalformedURLException;
  */
 public class TestsForXEAndroid extends BaseAppiumAndroidTest {
 
-    String appPackage = "com.xe.currency";
-    String appActivity = ".activity.XECurrency";
+    private String appPackage = "com.xe.currency";
+    private String appActivity = ".activity.XECurrency";
 
     @BeforeClass
     public void beforeClass() throws IOException {

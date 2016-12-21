@@ -127,6 +127,7 @@ public class Driver {
 
         if (webDriverType.equalsIgnoreCase("firefox") || webDriverType.isEmpty()){
 
+			System.setProperty("webdriver.gecko.driver", storagePath + "/drivers/geckodriver.exe");
 			return new FirefoxDriver();
         }
         else if (webDriverType.equalsIgnoreCase("chrome")){

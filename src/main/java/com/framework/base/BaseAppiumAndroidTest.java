@@ -23,7 +23,7 @@ public class BaseAppiumAndroidTest extends BaseTest {
         super.afterClass();
     }
 
-    public void setAppiumAndroidDriver(String appPackage, String appActivity, String deviceName, String serverURL) throws MalformedURLException {
+    protected void setAppiumAndroidDriver(String appPackage, String appActivity, String deviceName, String serverURL) throws MalformedURLException {
         if(driver == null){
             driver = asapDriver.getAppiumAndroidDriver(appPackage,appActivity,deviceName,serverURL);
             driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -34,8 +34,8 @@ public class BaseAppiumAndroidTest extends BaseTest {
         }
     }
 
-    public void setAppiumChromeDriver(String deviceName, String serverURL, Proxy proxy) throws MalformedURLException, UnknownHostException {
-        if(driver==null){
+    protected void setAppiumChromeDriver(String deviceName, String serverURL, Proxy proxy) throws MalformedURLException, UnknownHostException {
+        if(driver == null){
             driver = asapDriver.getAndroidChromeDriver(deviceName,serverURL,proxy);
             driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
             Reporter.setDriver(driver);

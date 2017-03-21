@@ -54,6 +54,7 @@ public class Driver {
 		this.environment.put("ROOTPATH", rootPath);
 		this.environment.put("EXECUTIONFOLDERPATH", executionPath);
 		this.environment.put("STORAGEFOLDERPATH", storagePath);
+		this.environment.put("DATAPATH", dataPath);
 	}
 	
 	//Function to Create Execution Folders
@@ -88,17 +89,20 @@ public class Driver {
                 File fileDelete = new File(file, temp);
                 deleteFile(fileDelete);
             }
-            if(file.list().length == 0) file.delete();
+            if(file.list().length == 0)
+            	file.delete();
         }
 
-        else file.delete();
+        else
+        	file.delete();
     }
 
 	public boolean fetchEnvironmentDetailsFromConfigXML() {
 
 		try{
 			Document doc = XMLHandler.getXMLDocument(envConfigPath);
-			if(doc == null) return false;
+			if(doc == null)
+				return false;
 
 			Element elemEnvironment = XMLHandler.getElementByName(doc, environment.get("ENV_CODE").toLowerCase());
 			if(elemEnvironment == null){
@@ -109,7 +113,7 @@ public class Driver {
 			List<Element> Parameters = XMLHandler.getChildElements(elemEnvironment);
 
 			for(Element Parameter : Parameters)
-					environment.put(Parameter.getTagName().trim().toUpperCase(), Parameter.getTextContent().trim());
+				environment.put(Parameter.getTagName().trim().toUpperCase(), Parameter.getTextContent().trim());
 
 			return true;
 
@@ -175,7 +179,8 @@ public class Driver {
 		DC.setCapability("browserName", "Chrome");
 		DC.setCapability("deviceName", deviceName);
 
-		if(proxy != null) DC.setCapability(CapabilityType.PROXY,proxy);
+		if(proxy != null)
+			DC.setCapability(CapabilityType.PROXY,proxy);
 
 		//Initiate WebDriver
 		return new AndroidDriver(new URL(appiumServerURL), DC);
@@ -194,14 +199,22 @@ public class Driver {
 		return new AndroidDriver(new URL(appiumServerURL), DC);
 	}
 
-	public Platform getPlatform(String platformName){
+	public Platform getPlatform(String platformName) {
 		String osName = platformName.toUpperCase();
-		if(osName.equals("WIN8.1")) return Platform.WIN8_1;
-		else if (osName.equals("WIN8")) return Platform.WIN8;
-		else if (osName.equals("ANDROID")) return Platform.ANDROID;
-		else if (osName.equals("LINUX")) return Platform.LINUX;
-		else if (osName.equals("MAC")) return Platform.MAC;
-		else if (osName.equals("WIN")) return Platform.WINDOWS;
-		else return Platform.ANY;
+
+		if(osName.equals("WIN8.1"))
+			return Platform.WIN8_1;
+		else if (osName.equals("WIN8"))
+			return Platform.WIN8;
+		else if (osName.equals("ANDROID"))
+			return Platform.ANDROID;
+		else if (osName.equals("LINUX"))
+			return Platform.LINUX;
+		else if (osName.equals("MAC"))
+			return Platform.MAC;
+		else if (osName.equals("WIN"))
+			return Platform.WINDOWS;
+		else
+			return Platform.ANY;
 	}
 }

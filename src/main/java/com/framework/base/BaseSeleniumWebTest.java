@@ -24,7 +24,7 @@ public class BaseSeleniumWebTest extends BaseTest {
         }
     }
 
-    public void setWebDriver() throws MalformedURLException {
+    protected void setWebDriver() throws MalformedURLException {
         if(driver==null){
             driver = asapDriver.getWebDriver(browser);
             driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
@@ -33,7 +33,7 @@ public class BaseSeleniumWebTest extends BaseTest {
         }
     }
 
-    public void setRemoteWebDriver(String hubURL, DesiredCapabilities dc) throws MalformedURLException {
+    protected void setRemoteWebDriver(String hubURL, DesiredCapabilities dc) throws MalformedURLException {
         if(driver==null){
             driver = asapDriver.getRemoteWebDriver("http://localhost:4444/wd/hub",dc);
             driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);

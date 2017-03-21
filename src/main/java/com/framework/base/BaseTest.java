@@ -16,15 +16,17 @@ import java.util.HashMap;
 public class BaseTest {
 
     //Variables
-    public String className;
-    public String env;
-    public String browser;
-    public String browserVersion;
-    public String OS;
-    public Driver asapDriver;
+    private  String env;
+
+    protected String className;
+    protected String browser;
+    protected String browserVersion;
+    protected String OS;
+    protected Driver asapDriver;
+    protected Wrappers doAction;
+
     public WebDriver driver = null;
     public Reporting Reporter;
-    public Wrappers doAction;
     public HashMap<String, String> environment = new HashMap<String, String>();
     public HashMap<String, String> dictionary = new HashMap<String, String>();
 

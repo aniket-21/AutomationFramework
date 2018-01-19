@@ -1,0 +1,15 @@
+{
+  "appdata": {
+    "env": {
+      "dev": {
+
+      }
+      },
+      "integration": {
+      },
+      "staging": {
+      },
+      "production": {
+      }
+    }
+}

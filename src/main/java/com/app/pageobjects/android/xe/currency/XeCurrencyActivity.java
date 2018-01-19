@@ -16,8 +16,6 @@ public class XeCurrencyActivity {
 
     private Reporting Reporter;
     private io.appium.java_client.AppiumDriver driver;
-    private HashMap<String, String> Dictionary;
-    private HashMap<String, String> Environment;
     private Wrappers doAction;
 
     //UIObjects
@@ -26,12 +24,10 @@ public class XeCurrencyActivity {
     private String imgEqualsButton = "id:=com.xe.currency:id/equal";
 
     //Constructor
-    public XeCurrencyActivity(WebDriver GDriver,HashMap<String, String> GDictionary, HashMap<String, String> GEnvironment,Reporting GReporter)
+    public XeCurrencyActivity(WebDriver GDriver, Reporting GReporter)
     {
         Reporter = GReporter;
         driver = (AppiumDriver) GDriver;
-        Dictionary = GDictionary;
-        Environment = GEnvironment;
         doAction = new Wrappers(driver, Reporter);
     }
 
@@ -43,7 +39,7 @@ public class XeCurrencyActivity {
 
     public AddCurrencyActivity clickAddNewCurrency() {
         doAction.click(txtAddNewCurrencies);
-        return new AddCurrencyActivity(driver,Dictionary,Environment,Reporter);
+        return new AddCurrencyActivity(driver, Reporter);
     }
 
     public void navigateToXeChart(String curCode){

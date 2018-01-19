@@ -19,8 +19,6 @@ public class LoginPage extends BasePage{
 
     private Reporting Reporter;
     private WebDriver driver;
-    private HashMap<String, String> Dictionary;
-    private HashMap<String, String> Environment;
     private Wrappers objWrapper;
 
     public static final String pageTitle = "Autodesk - Sign In";
@@ -32,12 +30,10 @@ public class LoginPage extends BasePage{
     public final String txtErrors = "xpath:=//span[contains(@class,'field-validation-error')]/span";
 
     //Define the constructor
-    public LoginPage(WebDriver GDriver, HashMap<String, String> GDictionary, HashMap<String, String> GEnvironment, Reporting GReporter)
+    public LoginPage(WebDriver GDriver, Reporting GReporter)
     {
         Reporter = GReporter;
         driver = GDriver;
-        Dictionary = GDictionary;
-        Environment = GEnvironment;
         objWrapper = new Wrappers(driver, Reporter);
     }
 
@@ -52,7 +48,7 @@ public class LoginPage extends BasePage{
     public <T extends BasePage> T clickSignIn(Class<T> clazz) {
         objWrapper.click(btnSubmit);
         Reporter.writeToTestLevelReport("Enter Login Credentials", "Login details should be Entered", "Login Details entered Successfully", "Pass");
-        return getNewInstanceOfClass(clazz, driver, Dictionary, Environment, Reporter);
+        return getNewInstanceOfClass(clazz, driver, Reporter);
     }
 
     private List<String> getErrorMessages()

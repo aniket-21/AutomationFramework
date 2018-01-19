@@ -17,8 +17,6 @@ public class AddCurrencyActivity {
 
     private Reporting Reporter;
     private io.appium.java_client.AppiumDriver driver;
-    private HashMap<String, String> Dictionary;
-    private HashMap<String, String> Environment;
     private Wrappers doAction;
 
     //UIObjects
@@ -27,12 +25,10 @@ public class AddCurrencyActivity {
     private String imgBack = "accessibility_id:=Navigate up";
 
     //Constructor
-    public AddCurrencyActivity(WebDriver GDriver, HashMap<String, String> GDictionary, HashMap<String, String> GEnvironment, Reporting GReporter)
+    public AddCurrencyActivity(WebDriver GDriver, Reporting GReporter)
     {
         Reporter = GReporter;
         driver = (AppiumDriver) GDriver;
-        Dictionary = GDictionary;
-        Environment = GEnvironment;
         doAction = new Wrappers(driver, Reporter);
     }
 
@@ -49,6 +45,6 @@ public class AddCurrencyActivity {
 
     public XeCurrencyActivity backToMainActivity(){
         doAction.click(imgBack);
-        return new XeCurrencyActivity(driver,Dictionary,Environment,Reporter);
+        return new XeCurrencyActivity(driver, Reporter);
     }
 }

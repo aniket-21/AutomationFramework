@@ -17,11 +17,21 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
 public class Reporting {
-	
-	private String testCaseReport;
-    private String snapshotFolderName;
-    private String snapshotRelativePath;
+
+	private String env;
+	private String className;
+	private String browserName;
+
+	//paths
+	private String executionPath;
+	private String curExecutionFolder;
+	private String htmlReportsPath;
+	private String snapShotsPath;
+	private String harFilePath;
+	private String snapshotFolderName;
+	private String snapshotRelativePath;
 	private String summaryReportPath;
+	private String testCaseReport;
     private String scriptName;
 
     //Counters and Integers
@@ -36,27 +46,65 @@ public class Reporting {
     private Date endTime;
 
     private WebDriver driver;
-	private HashMap <String, String> dictionary = new HashMap<String, String>();
-	private HashMap <String, String> environment = new HashMap<String, String>();
 	
 	private FileOutputStream foutStrm = null;
-	
-	public Reporting(WebDriver GDriver, HashMap <String, String> GDictionary, 	HashMap <String, String> GEnvironment) {
-		this(GDictionary, GEnvironment);
-        driver = GDriver;
-	}
 
-    public Reporting(HashMap <String, String> dictionary, 	HashMap <String, String> environment) {
-        this.dictionary = dictionary;
-        this.environment = environment;
-        this.summaryReportPath = environment.get("HTMLREPORTSPATH")+ "/SummaryReport.html";
+    public Reporting(String env, String className, String browserName) {
+
+		this.env = env;
+		this.className = className;
+		this.browserName = browserName;
+
+		//Get Root Path
+		String workingPath = System.getProperty("user.dir");
+		String rootPath = workingPath;
+
+		//Set paths
+		this.executionPath = rootPath + "/execution";
+		this.curExecutionFolder = executionPath + "/" + env + "/" + className;
+		this.htmlReportsPath = curExecutionFolder + "/" + browserName.toUpperCase() + "_HTML_Reports";
+		this.snapShotsPath = htmlReportsPath + "/Snapshots";
+		this.harFilePath = htmlReportsPath + "/Hars";
+        this.summaryReportPath = htmlReportsPath + "/SummaryReport.html";
     }
 
     public void setDriver(WebDriver webDriver){
         driver = webDriver;
     }
 
-    public void createSummaryReport() {
+	//Function to Create Execution Folders
+	public boolean createExecutionFolders() throws IOException {
+
+		//Delete if folder already exists
+		if (new File(htmlReportsPath).exists())
+			deleteFile(new File(htmlReportsPath));
+		if ((new File(snapShotsPath)).mkdirs() && (new File(harFilePath)).mkdirs())
+			return true;
+		else
+			return false;
+	}
+
+	public static void deleteFile(File file) throws IOException {
+
+		if(file.isDirectory()){
+			String files[] = file.list();
+
+			for (String temp : files) {
+				File fileDelete = new File(file, temp);
+				deleteFile(fileDelete);
+			}
+			if(file.list().length == 0)
+				file.delete();
+		}
+
+		else
+			file.delete();
+	}
+
+    public void createSummaryReport() throws IOException {
+
+    	createExecutionFolders();
+
         //Setting counter value
         tcsPassed = 0;
         testCaseNo = 0;
@@ -90,9 +138,9 @@ public class Reporting {
         snapshotCount = 0;
         scriptName = strTestName;
 
-        testCaseReport = environment.get("HTMLREPORTSPATH") + "/Report_" + scriptName + ".html";
+        testCaseReport = htmlReportsPath + "/Report_" + scriptName + ".html";
 
-        snapshotFolderName = environment.get("SNAPSHOTSFOLDER") + "/" + scriptName;
+        snapshotFolderName = snapShotsPath + "/" + scriptName;
         snapshotRelativePath = "Snapshots/" + scriptName;
 
 		File file = new File(snapshotFolderName);
@@ -284,9 +332,9 @@ public class Reporting {
     }
 
     public void createJenkinsReport() {
-    	String jenkinsFilePath = environment.get("EXECUTIONFOLDERPATH") + "/" + environment.get("ENV_CODE");
+    	String jenkinsFilePath = executionPath + "/" + env;
     	String jenkinsHTMLRep = jenkinsFilePath + "/Jenkins_html_report.html";
-    	String relativeClassSummary = environment.get("CLASSNAME") + "/" + environment.get("BROWSER").toUpperCase() + "_HTML_Reports" + "/SummaryReport.html";
+    	String relativeClassSummary = className + "/" + browserName.toUpperCase() + "_HTML_Reports" + "/SummaryReport.html";
     	String sRowColor = "";    	
 
     	try {
@@ -318,7 +366,7 @@ public class Reporting {
 	        else
 	        	sRowColor = "#D3D3D3";
 
-	        new PrintStream(foutStrm).println ("<TR COLS=3 BGCOLOR=" + sRowColor + "><TD  WIDTH=10%><FONT FACE=VERDANA SIZE=2>" + Global.g_iTestSuiteNo + "</FONT></TD><TD  WIDTH=90%><A HREF='" + relativeClassSummary + "'><FONT FACE=VERDANA SIZE=2 COLOR=BLUE><FONT FACE=VERDANA SIZE=2><B>" + environment.get("CLASSNAME") + "_" + environment.get("BROWSER").toLowerCase() + "</B></FONT></A></TD></TR>");
+	        new PrintStream(foutStrm).println ("<TR COLS=3 BGCOLOR=" + sRowColor + "><TD  WIDTH=10%><FONT FACE=VERDANA SIZE=2>" + Global.g_iTestSuiteNo + "</FONT></TD><TD  WIDTH=90%><A HREF='" + relativeClassSummary + "'><FONT FACE=VERDANA SIZE=2 COLOR=BLUE><FONT FACE=VERDANA SIZE=2><B>" + className + "_" + browserName.toLowerCase() + "</B></FONT></A></TD></TR>");
 	        foutStrm.close();
 
 		} catch (IOException io) {

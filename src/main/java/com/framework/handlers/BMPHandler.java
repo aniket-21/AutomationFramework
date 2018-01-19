@@ -20,10 +20,12 @@ import java.util.concurrent.TimeUnit;
 public class BMPHandler {
 
     BrowserMobProxy proxy;
-    HashMap<String, String> environment = new HashMap<String, String>();
 
-    public BMPHandler(HashMap<String, String> environment){
-        this.environment = environment;
+    String harFolder;
+
+    public BMPHandler(String env, String classname, String browser) {
+        String rootPath = System.getProperty("user.dir");
+        this.harFolder = rootPath + "/execution/" + env + "/" + classname + "/" + browser.toUpperCase() + "_HTML_Reports/Hars";
     }
 
     public Proxy startBrowserMobProxy() throws UnknownHostException {
@@ -53,7 +55,7 @@ public class BMPHandler {
         try {
             proxy.waitForQuiescence(2,10, TimeUnit.SECONDS);
             Har har = proxy.endHar();
-            FileOutputStream fos = new FileOutputStream(environment.get("HARFOLDER") + "/" + strTestName + ".har");
+            FileOutputStream fos = new FileOutputStream(harFolder + "/" + strTestName + ".har");
             har.writeTo(fos);
         }
         catch(Exception e){

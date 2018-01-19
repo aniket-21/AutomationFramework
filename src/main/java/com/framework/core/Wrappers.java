@@ -5,7 +5,9 @@ import io.appium.java_client.AppiumDriver;
 
 import java.util.List;
 
+import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.AndroidElement;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -548,4 +550,5 @@ public class Wrappers {
         reporter.writeToTestLevelReport("Wait for activity " + expectedActivity, "Activity " + expectedActivity + " should open", "Activity " + expectedActivity + " didnt open. Current Activity is " + actualActivity, "Done");
     	throw(new TimeoutException("Timeout occured while waiting for Android Activity " + expectedActivity + " Current Activity is " + actualActivity));
     }
+
 }

@@ -28,19 +28,20 @@ public class Driver {
 	private String storagePath;
 	private String envConfigPath;
 	private String dataPath;
-	private String User;
 
-	private HashMap <String, String> dictionary = new HashMap<String, String>();
-	private HashMap <String, String> environment = new HashMap<String, String>();
+	private String env;
+	private String className;
+	private String browserName;
+
 
 	//Constructor
-	public Driver(HashMap <String, String> dictionary, HashMap <String, String> environment) {
-		
-		this.dictionary = dictionary;
-		this.environment = environment;
+	public Driver(String env, String className, String browserName) {
+
+		this.env = env;
+		this.className = className;
+		this.browserName = browserName;
 		
 		//Get Root Path
-		User = System.getProperty("user.name");
 		String workingPath = System.getProperty("user.dir");
 		String rootPath = workingPath;
 		
@@ -49,78 +50,6 @@ public class Driver {
 		storagePath = rootPath;
 		dataPath = storagePath + "/data";
 		envConfigPath = storagePath + "/config/envConfig.xml";
-
-		//Add to Env Variables
-		this.environment.put("ROOTPATH", rootPath);
-		this.environment.put("EXECUTIONFOLDERPATH", executionPath);
-		this.environment.put("STORAGEFOLDERPATH", storagePath);
-		this.environment.put("DATAPATH", dataPath);
-	}
-	
-	//Function to Create Execution Folders
-	public boolean createExecutionFolders() throws IOException {
-		//Set execution paths
-		String curExecutionFolder = executionPath + "/" + environment.get("ENV_CODE") + "/" + environment.get("CLASSNAME");
-		String htmlReportsPath = curExecutionFolder + "/" + environment.get("BROWSER").toUpperCase() + "_HTML_Reports";
-		String snapShotsPath = htmlReportsPath + "/Snapshots";
-		String harFilePath = htmlReportsPath + "/Hars";
-		
-		//Put in Environments
-		environment.put("CURRENTEXECUTIONFOLDER", curExecutionFolder);
-		environment.put("HTMLREPORTSPATH", htmlReportsPath);
-		environment.put("SNAPSHOTSFOLDER", snapShotsPath);
-		environment.put("HARFOLDER", harFilePath);
-
-		//Delete if folder already exists
-		if (new File(htmlReportsPath).exists())
-			deleteFile(new File(htmlReportsPath));
-		if ((new File(snapShotsPath)).mkdirs() && (new File(harFilePath)).mkdirs())
-			return true;
-		else
-			return false;
-	}
-
-    public static void deleteFile(File file) throws IOException {
-    	  
-        if(file.isDirectory()){
-            String files[] = file.list();
-
-            for (String temp : files) {
-                File fileDelete = new File(file, temp);
-                deleteFile(fileDelete);
-            }
-            if(file.list().length == 0)
-            	file.delete();
-        }
-
-        else
-        	file.delete();
-    }
-
-	public boolean fetchEnvironmentDetailsFromConfigXML() {
-
-		try{
-			Document doc = XMLHandler.getXMLDocument(envConfigPath);
-			if(doc == null)
-				return false;
-
-			Element elemEnvironment = XMLHandler.getElementByName(doc, environment.get("ENV_CODE").toLowerCase());
-			if(elemEnvironment == null){
-				System.out.println("Unable to find Env node with ID " + environment.get("ENV_CODE"));
-				return false;
-			}
-
-			List<Element> Parameters = XMLHandler.getChildElements(elemEnvironment);
-
-			for(Element Parameter : Parameters)
-				environment.put(Parameter.getTagName().trim().toUpperCase(), Parameter.getTextContent().trim());
-
-			return true;
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
 	}
 
 	public WebDriver getWebDriver(String browser) throws MalformedURLException {
@@ -161,7 +90,7 @@ public class Driver {
 	public AndroidDriver getAppiumAndroidDriver(String appPackage, String appActivity, String deviceName, String appiumServerURL) throws MalformedURLException {
 		//Desired Caps
 		DesiredCapabilities DC = new DesiredCapabilities();
-		DC.setCapability("automationName", "Appium");
+		DC.setCapability("automationName", "uiautomator2");
 		DC.setCapability("platformName", "Android");
 		DC.setCapability("appPackage", appPackage);
 		DC.setCapability("appActivity", appActivity);

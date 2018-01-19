@@ -8,6 +8,7 @@ import org.testng.Assert;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.net.MalformedURLException;
 import java.util.HashMap;
 
 /**
@@ -16,19 +17,18 @@ import java.util.HashMap;
 public class BaseTest {
 
     //Variables
-    private  String env;
+    protected  String env;
 
     protected String className;
     protected String browser;
     protected String browserVersion;
     protected String OS;
-    protected Driver asapDriver;
+    protected Driver execDriver;
     protected Wrappers doAction;
 
     public WebDriver driver = null;
     public Reporting Reporter;
-    public HashMap<String, String> environment = new HashMap<String, String>();
-    public HashMap<String, String> dictionary = new HashMap<String, String>();
+    //public HashMap<String, String> environment = new HashMap<String, String>();
 
     public void beforeClass() throws IOException {
         //Print class name to console
@@ -38,23 +38,16 @@ public class BaseTest {
         env = System.getProperty("envName");
         Assert.assertNotNull(env, "No environment Parameter value received");
 
-        //Add to envs
-        environment.put("CLASSNAME", className);
-        environment.put("BROWSER", browser);
-        environment.put("ENV_CODE", env);
-
-        //Initiating asapDriver
-        asapDriver = new Driver(dictionary, environment);
-        asapDriver.createExecutionFolders();
-        asapDriver.fetchEnvironmentDetailsFromConfigXML();
+        //Initiating execDriver
+        execDriver = new Driver(env, className, browser);
 
         //Instantiate reporter
-        Reporter = new Reporting(dictionary, environment);
+        Reporter = new Reporting(env, className, browser);
         Reporter.createSummaryReport();
         Reporter.createJenkinsReport();
     }
 
-    public void beforeMethod(Method method){
+    public void beforeMethod(Method method) throws MalformedURLException {
         String testName = method.getName();
         System.out.println("Before Method for test " + testName);
         Reporter.createTestLevelReport(testName);
@@ -71,6 +64,11 @@ public class BaseTest {
         Reporter.closeTestSummaryReport();
         if(driver != null)
             driver.quit();
+    }
+
+    protected void setClassName(Object object) {
+        String[] strClassNameArray = object.getClass().getName().split("\\.");
+        className = strClassNameArray[strClassNameArray.length - 1];
     }
 
 }

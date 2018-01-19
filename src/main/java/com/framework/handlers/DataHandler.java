@@ -14,11 +14,15 @@ import java.io.*;
 public class DataHandler {
 
     String env;
+    String configFile;
+    String dataFile;
     JsonParser parser = new JsonParser();
 
-    public DataHandler() {
+    public DataHandler(String configFileName, String dataFileName) {
         //Set env
         this.env = getEnv();
+        configFile = configFileName;
+        dataFile = dataFileName;
     }
 
     private String getEnv() {
@@ -37,7 +41,7 @@ public class DataHandler {
 
     private JsonObject getAppConfigJson()  {
 
-        String app_config_path = "config/mlpconfig.json";
+        String app_config_path = "config/" + configFile;
         try {
             File file = new File(System.getProperty("user.dir") + "/" + app_config_path);
             JsonObject jsonObject = (JsonObject) parser.parse(new FileReader(file));
@@ -55,7 +59,7 @@ public class DataHandler {
     }
 
     private JsonObject getAppDataJson()  {
-        String appdata_file_path = "data/staticdata.json";
+        String appdata_file_path = "data/" + dataFile;
         try {
             File file = new File(System.getProperty("user.dir") + "/" + appdata_file_path);
             JsonObject jsonObject = (JsonObject) parser.parse(new FileReader(file));
@@ -72,7 +76,7 @@ public class DataHandler {
         return null;
     }
 
-    public JsonElement getAppConfig(XeConfigKeys configKey) {
+    public <T> JsonElement getAppConfig(T configKey) {
         try {
             JsonObject appConfig = getAppConfigJson();
             JsonObject envConfig = appConfig.getAsJsonObject("env").getAsJsonObject(env);
@@ -84,7 +88,7 @@ public class DataHandler {
         }
     }
 
-    public JsonElement getAppData(XeDataKeys dataKey) {
+    public <T> JsonElement getAppData(T dataKey) {
         try {
             JsonObject appData = getAppDataJson();
             JsonObject envData = appData.getAsJsonObject("env").getAsJsonObject(env);

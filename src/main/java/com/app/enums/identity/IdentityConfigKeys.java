@@ -5,10 +5,7 @@ package com.app.enums.identity;
  */
 public enum IdentityConfigKeys {
 
-    MLP_MODEL_BASE_URL ("mlp_model_base_url"),
-    MLP_TRAINING_BASE_URL ("mlp_training_base_url"),
-    MLP_UAA_BASE_URL ("mlp_uaa_base_url"),
-    MLP_SERVICE_BROKER_BASE_URL("mlp_service_broker_base_url");
+    URL("url");
 
     private final String desc;
     IdentityConfigKeys(String s) {

@@ -5,10 +5,8 @@ package com.app.enums.xe;
  */
 public enum XeConfigKeys {
 
-    MLP_MODEL_BASE_URL ("mlp_model_base_url"),
-    MLP_TRAINING_BASE_URL ("mlp_training_base_url"),
-    MLP_UAA_BASE_URL ("mlp_uaa_base_url"),
-    MLP_SERVICE_BROKER_BASE_URL("mlp_service_broker_base_url");
+    PACKAGE_NAME ("packageName"),
+    LAUNCHER_ACTIVITY ("launcherActivity");
 
     private final String desc;
     XeConfigKeys(String s) {

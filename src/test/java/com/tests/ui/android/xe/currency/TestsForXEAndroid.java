@@ -1,11 +1,14 @@
 package com.tests.ui.android.xe.currency;
 
+import com.app.enums.xe.XeConfigKeys;
+import com.app.enums.xe.XeDataKeys;
 import com.app.pageobjects.android.xe.currency.AddCurrencyActivity;
 import com.app.pageobjects.android.xe.currency.WelcomeActivity;
 import com.app.pageobjects.android.xe.currency.XeCurrencyActivity;
 import com.framework.base.BaseAppiumAndroidTest;
 
 
+import com.framework.handlers.DataHandler;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
@@ -22,14 +25,24 @@ import java.util.Set;
  */
 public class TestsForXEAndroid extends BaseAppiumAndroidTest {
 
-    private String appPackage = "com.xe.currency";
-    private String appActivity = ".activity.XECurrency";
+    private final String configFile = "xeconfig.json";
+    private final String dataFile = "/xe/staticdata.json";
+
+    private String appPackage;
+    private String appActivity;
+    DataHandler dHandler;
+
 
 
     @BeforeClass
     public void beforeClass() throws IOException {
         setClassName(this);
         super.beforeClass();
+
+        dHandler = new DataHandler(configFile, dataFile);
+        appPackage = dHandler.getAppConfig(XeConfigKeys.PACKAGE_NAME).getAsString();
+        appActivity = dHandler.getAppConfig(XeConfigKeys.LAUNCHER_ACTIVITY).getAsString();
+
     }
 
     @BeforeMethod
@@ -54,7 +67,7 @@ public class TestsForXEAndroid extends BaseAppiumAndroidTest {
                 .clickAddNewCurrency();
 
 
-        objAddCurr.searchAndAddCurrency("ZAR")
+        objAddCurr.searchAndAddCurrency(dHandler.getAppData(XeDataKeys.CURRENCY_TO_ADD).getAsString())
                 .backToMainActivity();
     }
 

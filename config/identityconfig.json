@@ -1,0 +1,25 @@
+{
+  "appconfig": {
+    "env" : {
+      "dev" : {
+        "url": "https://accounts.autodesk.com",
+        "launcherActivity": ".activity.XECurrency"
+      },
+
+      "integration" : {
+        "url": "https://accounts.autodesk.com",
+        "launcherActivity": ".activity.XECurrency"
+      },
+
+      "staging" : {
+        "url": "https://accounts.autodesk.com",
+        "launcherActivity": ".activity.XECurrency"
+      },
+
+      "production" : {
+        "url": "https://accounts.autodesk.com",
+        "launcherActivity": ".activity.XECurrency"
+      }
+    }
+  }
+}

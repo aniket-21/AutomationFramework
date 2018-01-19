@@ -1,0 +1,25 @@
+{
+  "appconfig": {
+    "env" : {
+      "dev" : {
+        "packageName": "com.xe.currency",
+        "launcherActivity": ".activity.XECurrency"
+      },
+
+      "integration" : {
+        "packageName": "com.xe.currency",
+        "launcherActivity": ".activity.XECurrency"
+      },
+
+      "staging" : {
+        "packageName": "com.xe.currency",
+        "launcherActivity": ".activity.XECurrency"
+      },
+
+      "production" : {
+        "packageName": "com.xe.currency",
+        "launcherActivity": ".activity.XECurrency"
+      }
+    }
+  }
+}

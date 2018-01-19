@@ -1,8 +1,8 @@
 package com.tests.ui.web.autodesk.accounts;
 
-import com.ui.pageobjects.web.autodesk.accounts.LaunchApplication;
-import com.ui.pageobjects.web.autodesk.accounts.LoginPage;
-import com.ui.pageobjects.web.autodesk.accounts.ProfilePage;
+import com.app.pageobjects.web.autodesk.accounts.LaunchApplication;
+import com.app.pageobjects.web.autodesk.accounts.LoginPage;
+import com.app.pageobjects.web.autodesk.accounts.ProfilePage;
 import com.framework.Global;
 import com.framework.base.BaseSeleniumWebTest;
 import org.testng.Assert;
@@ -16,41 +16,35 @@ import java.net.MalformedURLException;
 /**
  * Created by gadrea on 5/5/2015.
  */
-public class TestsForAccountLogin extends BaseSeleniumWebTest{
+public class TestsForAccountLogin extends BaseSeleniumWebTest {
 
-    //DataProvider
+    //DataHandler
     @DataProvider(name = "getBrowsers", parallel = true)
     public static Object[][] getBrowsers() {
         return Global.getBrowsers();
     }
 
     @Factory(dataProvider = "getBrowsers")
-    //Created with values from @DataProvider in @Factory
+    //Created with values from @DataHandler in @Factory
     public TestsForAccountLogin(String browser) {
         this.browser = browser;
     }
 
     @BeforeClass
     public void beforeClass() throws IOException {
-        String[] strClassNameArray = this.getClass().getName().split("\\.");
-        className = strClassNameArray[strClassNameArray.length-1];
+        setClassName(this);
         super.beforeClass();
     }
 
     @BeforeMethod
-    public void beforeMethod(Method method){
+    public void beforeMethod(Method method) throws MalformedURLException {
         super.beforeMethod(method);
-        try{
-            setWebDriver();
-        }
-        catch(MalformedURLException e){
-            System.out.println("Exception " + e);
-        }
+        setWebDriver();
     }
 
     @Test
-    public void testValidLogin(){
-        ProfilePage profilePage = new LaunchApplication(driver, dictionary, environment,Reporter)
+    public void testValidLogin() {
+        ProfilePage profilePage = new LaunchApplication(driver, Reporter)
                 .launchIdentityApplication()
                 .enterLoginCredentials("aniket@autodesk","Jaguar21")
                 .clickSignIn(ProfilePage.class);
@@ -59,8 +53,8 @@ public class TestsForAccountLogin extends BaseSeleniumWebTest{
     }
 
     @Test
-    public void testInvalidLoginError(){
-        LoginPage loginPage = new LaunchApplication(driver, dictionary, environment,Reporter)
+    public void testInvalidLoginError() {
+        LoginPage loginPage = new LaunchApplication(driver, Reporter)
                 .launchIdentityApplication()
                 .enterLoginCredentials("aniket@autodesk","Jaguar22")
                 .clickSignIn(LoginPage.class);
@@ -69,8 +63,8 @@ public class TestsForAccountLogin extends BaseSeleniumWebTest{
     }
 
     @Test
-    public void testBlankCredentialsError(){
-        LoginPage loginPage =  new LaunchApplication(driver, dictionary, environment,Reporter)
+    public void testBlankCredentialsError() {
+        LoginPage loginPage =  new LaunchApplication(driver, Reporter)
                 .launchIdentityApplication()
                 .enterLoginCredentials("","")
                 .clickSignIn(LoginPage.class);

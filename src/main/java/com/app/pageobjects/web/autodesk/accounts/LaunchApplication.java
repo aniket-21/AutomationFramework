@@ -1,8 +1,7 @@
-package com.ui.pageobjects.web.autodesk.accounts;
+package com.app.pageobjects.web.autodesk.accounts;
 
 import com.framework.core.Reporting;
 import org.openqa.selenium.WebDriver;
-import java.util.HashMap;
 
 public class LaunchApplication {
 	
@@ -15,8 +14,8 @@ public class LaunchApplication {
 	}	
 	
 	public LoginPage launchIdentityApplication(){
-		driver.get(environment.get("OXYGEN_URL") + "?uitype=oldui");
-		reporter.writeToTestLevelReport("Navigate to specified URL", "URL: " + environment.get("OXYGEN_URL"), "Navigated to URL: " + environment.get("OXYGEN_URL"), "Done");
+		driver.get("http://accounts.autodesk.com?uitype=oldui");
+		reporter.writeToTestLevelReport("Navigate to specified URL", "URL: " , "Navigated to URL: " , "Done");
 		return new LoginPage(driver, reporter);
 	}
 }

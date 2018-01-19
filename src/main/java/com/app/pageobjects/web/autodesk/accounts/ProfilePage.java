@@ -1,4 +1,4 @@
-package com.ui.pageobjects.web.autodesk.accounts;
+package com.app.pageobjects.web.autodesk.accounts;
 
 import com.framework.base.BasePage;
 import com.framework.core.Reporting;
@@ -14,20 +14,16 @@ public class ProfilePage extends BasePage{
 
     private Reporting Reporter;
     private WebDriver driver;
-    private HashMap<String, String> Dictionary;
-    private HashMap<String, String> Environment;
     private Wrappers objWrapper;
 
     public static final String pageTitle = "Autodesk - User Profile";
     String tbProfile = "classname:=profile";
 
     //Define the constructor
-    public ProfilePage(WebDriver GDriver, HashMap<String, String> GDictionary, HashMap<String, String> GEnvironment, Reporting GReporter)
+    public ProfilePage(WebDriver GDriver, Reporting GReporter)
     {
         Reporter = GReporter;
         driver = GDriver;
-        Dictionary = GDictionary;
-        Environment = GEnvironment;
         objWrapper = new Wrappers(driver, Reporter);
     }
 

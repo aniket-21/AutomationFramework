@@ -1,4 +1,4 @@
-package com.ui.pageobjects.web.autodesk.accounts;
+package com.app.pageobjects.web.autodesk.accounts;
 
 import com.framework.base.BasePage;
 import com.framework.core.Reporting;
@@ -6,11 +6,8 @@ import com.framework.core.Wrappers;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.function.Function;
 
 /**
  * Created by gadrea on 4/2/2015.

@@ -1,8 +1,8 @@
 package com.tests.ui.web.autodesk.accounts;
 
-import com.ui.pageobjects.web.autodesk.accounts.LaunchApplication;
-import com.ui.pageobjects.web.autodesk.accounts.LoginPage;
-import com.ui.pageobjects.web.autodesk.accounts.ProfilePage;
+import com.app.pageobjects.web.autodesk.accounts.LaunchApplication;
+import com.app.pageobjects.web.autodesk.accounts.LoginPage;
+import com.app.pageobjects.web.autodesk.accounts.ProfilePage;
 import com.framework.Global;
 import com.framework.base.BaseSeleniumWebTest;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -24,7 +24,7 @@ public class TestsForGridAccountsLogin extends BaseSeleniumWebTest{
     }
 
     @Factory(dataProvider = "browsers")
-    //Created with values from @DataProvider in @Factory
+    //Created with values from @DataHandler in @Factory
     public TestsForGridAccountsLogin(String browser, String browserVersion, String OS) {
         this.browser = browser;
         this.browserVersion = browserVersion;
@@ -33,31 +33,24 @@ public class TestsForGridAccountsLogin extends BaseSeleniumWebTest{
 
     @BeforeClass
     public void beforeClass() throws IOException {
-        String[] strClassNameArray = this.getClass().getName().split("\\.");
-        className = strClassNameArray[strClassNameArray.length-1];
+        setClassName(this);
         super.beforeClass();
     }
 
     @BeforeMethod
-    public void beforeMethod(Method method) {
+    public void beforeMethod(Method method) throws MalformedURLException {
         DesiredCapabilities dc = new DesiredCapabilities();
         dc.setBrowserName(browser);
         dc.setVersion(browserVersion);
-        dc.setPlatform(asapDriver.getPlatform(OS));
+        dc.setPlatform(execDriver.getPlatform(OS));
 
         super.beforeMethod(method);
-
-        try{
-            setRemoteWebDriver("http://localhost:4444/wd/hub",dc);
-        }
-        catch(MalformedURLException e){
-            System.out.println("Exception " + e);
-        }
+        setRemoteWebDriver("http://localhost:4444/wd/hub",dc);
     }
 
     @Test
     public void testValidLogin(){
-        ProfilePage profilePage = new LaunchApplication(driver, dictionary, environment,Reporter)
+        ProfilePage profilePage = new LaunchApplication(driver, Reporter)
                 .launchIdentityApplication()
                 .enterLoginCredentials("aniket@autodesk","Jaguar21")
                 .clickSignIn(ProfilePage.class);
@@ -67,7 +60,7 @@ public class TestsForGridAccountsLogin extends BaseSeleniumWebTest{
 
     @Test
     public void testInvalidLoginError(){
-        LoginPage loginPage = new LaunchApplication(driver, dictionary, environment,Reporter)
+        LoginPage loginPage = new LaunchApplication(driver, Reporter)
                 .launchIdentityApplication()
                 .enterLoginCredentials("aniket@autodesk","Jaguar22")
                 .clickSignIn(LoginPage.class);
@@ -77,7 +70,7 @@ public class TestsForGridAccountsLogin extends BaseSeleniumWebTest{
 
     @Test
     public void testBlankCredentialsError(){
-        LoginPage loginPage =  new LaunchApplication(driver, dictionary, environment,Reporter)
+        LoginPage loginPage =  new LaunchApplication(driver, Reporter)
                 .launchIdentityApplication()
                 .enterLoginCredentials("","")
                 .clickSignIn(LoginPage.class);

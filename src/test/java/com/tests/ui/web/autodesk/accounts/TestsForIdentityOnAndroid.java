@@ -1,8 +1,8 @@
 package com.tests.ui.web.autodesk.accounts;
 
-import com.ui.pageobjects.web.autodesk.accounts.LaunchApplication;
-import com.ui.pageobjects.web.autodesk.accounts.LoginPage;
-import com.ui.pageobjects.web.autodesk.accounts.ProfilePage;
+import com.app.pageobjects.web.autodesk.accounts.LaunchApplication;
+import com.app.pageobjects.web.autodesk.accounts.LoginPage;
+import com.app.pageobjects.web.autodesk.accounts.ProfilePage;
 import com.framework.base.BaseAppiumAndroidTest;
 import com.framework.handlers.BMPHandler;
 import org.openqa.selenium.Proxy;
@@ -26,15 +26,14 @@ public class TestsForIdentityOnAndroid extends BaseAppiumAndroidTest{
 
     @BeforeClass
     public void beforeClass() throws IOException {
-        String[] strClassNameArray = this.getClass().getName().split("\\.");
-        className = strClassNameArray[strClassNameArray.length-1];
+        setClassName(this);
         super.beforeClass();
 
-        bmphandler = new BMPHandler(environment);
+        bmphandler = new BMPHandler(env, className, browser);
     }
 
     @BeforeMethod
-    public void beforeMethod(Method method) {
+    public void beforeMethod(Method method) throws MalformedURLException {
         super.beforeMethod(method);
         //Initiate WebDriver
         if(driver==null){
@@ -51,9 +50,7 @@ public class TestsForIdentityOnAndroid extends BaseAppiumAndroidTest{
             catch(UnknownHostException e){
                 System.out.print("Exception " + e);
             }
-            catch(MalformedURLException e){
-                System.out.print("Exception " + e);
-            }
+
         }
     }
 
@@ -62,7 +59,7 @@ public class TestsForIdentityOnAndroid extends BaseAppiumAndroidTest{
 
         bmphandler.createNewHar("LoginPage");
 
-        LoginPage loginPage = new LaunchApplication(driver, dictionary, environment,Reporter)
+        LoginPage loginPage = new LaunchApplication(driver, Reporter)
                 .launchIdentityApplication()
                 .enterLoginCredentials("aniket@autodesk","Jaguar21");
 

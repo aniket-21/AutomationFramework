@@ -1,4 +1,4 @@
-package com.ui.pageobjects.android.xe.currency;
+package com.app.pageobjects.android.xe.currency;
 
 import com.framework.core.Reporting;
 import com.framework.core.Wrappers;
@@ -7,7 +7,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -20,7 +19,8 @@ public class AddCurrencyActivity {
     private Wrappers doAction;
 
     //UIObjects
-    private String edtSearchCurrencies = "classname:=android.widget.EditText";
+    private String btnSearch = "id:=com.xe.currency:id/search_button";
+    private String edtSearchCurrencies = "id:=com.xe.currency:id/search_src_text";
     private String txtCurrency = "id:=com.xe.currency:id/codeAndName";
     private String imgBack = "accessibility_id:=Navigate up";
 
@@ -33,6 +33,7 @@ public class AddCurrencyActivity {
     }
 
     public AddCurrencyActivity searchAndAddCurrency(String currencyCode) throws InterruptedException {
+        doAction.click(btnSearch);
         doAction.enterText(edtSearchCurrencies, currencyCode);
         driver.hideKeyboard();
         List<WebElement> txtCurrencies = doAction.getElements(txtCurrency);
@@ -45,6 +46,7 @@ public class AddCurrencyActivity {
 
     public XeCurrencyActivity backToMainActivity(){
         doAction.click(imgBack);
+        doAction.waitForAndroidActivity(".activity.XECurrency", 20);
         return new XeCurrencyActivity(driver, Reporter);
     }
 }

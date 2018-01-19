@@ -1,13 +1,21 @@
 package com.tests.ui.android.xe.currency;
 
-import com.ui.pageobjects.android.xe.currency.AddCurrencyActivity;
-import com.ui.pageobjects.android.xe.currency.XeCurrencyActivity;
+import com.app.pageobjects.android.xe.currency.AddCurrencyActivity;
+import com.app.pageobjects.android.xe.currency.WelcomeActivity;
+import com.app.pageobjects.android.xe.currency.XeCurrencyActivity;
 import com.framework.base.BaseAppiumAndroidTest;
+
+
+import io.appium.java_client.MobileElement;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.AndroidElement;
+import org.openqa.selenium.By;
 import org.testng.annotations.*;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
+import java.util.Set;
 
 /**
  * Created by gadrea on 9/6/2015.
@@ -17,43 +25,44 @@ public class TestsForXEAndroid extends BaseAppiumAndroidTest {
     private String appPackage = "com.xe.currency";
     private String appActivity = ".activity.XECurrency";
 
+
     @BeforeClass
     public void beforeClass() throws IOException {
-        String[] strClassNameArray = this.getClass().getName().split("\\.");
-        className = strClassNameArray[strClassNameArray.length - 1];
+        setClassName(this);
         super.beforeClass();
     }
 
     @BeforeMethod
-    public void beforeMethod(Method method){
+    public void beforeMethod(Method method) throws MalformedURLException {
         super.beforeMethod(method);
-        try{
-            setAppiumAndroidDriver(appPackage, appActivity, "ASUS Zenfone 5", "http://0.0.0.0:4723/wd/hub");
-        }
-        catch(MalformedURLException e){
-            System.out.println("Exception " + e);
-        }
+        setAppiumAndroidDriver(appPackage, appActivity, "ASUS Zenfone 5", "http://0.0.0.0:4723/wd/hub");
     }
 
     @Test
     public void testAddNewCurrency() throws InterruptedException {
 
-        doAction.waitForAndroidActivity(appActivity, 20);
-        XeCurrencyActivity objXE = new XeCurrencyActivity(driver, dictionary, environment,Reporter);
-        AddCurrencyActivity objAddCurr = objXE.scrollToAddNewCurrency()
-                                                .clickAddNewCurrency();
+        Set<String> handles = ((AndroidDriver<AndroidElement>)driver).getContextHandles();
+        for(String handle : handles) {
+            System.out.println(handle);
+        }
 
-        doAction.waitForAndroidActivity(".activity.AddCurrency", 20);
+        WelcomeActivity objWelcomeActivity = new WelcomeActivity(driver ,Reporter);
+        AddCurrencyActivity objAddCurr = objWelcomeActivity.clickNoThanks()
+                .getStarted()
+                .denyTour()
+                .scrollToAddNewCurrency()
+                .clickAddNewCurrency();
+
+
         objAddCurr.searchAndAddCurrency("ZAR")
                 .backToMainActivity();
-        doAction.waitForAndroidActivity(appActivity, 20);
     }
 
-    @Test
+/*    @Test
     public void testRemoveCurrency() throws InterruptedException {
         //Wait for activity
         doAction.waitForAndroidActivity(appActivity, 20);
-        XeCurrencyActivity objXE = new XeCurrencyActivity(driver, dictionary, environment,Reporter);
+        XeCurrencyActivity objXE = new XeCurrencyActivity(driver, Reporter);
         String currencyToRemove = "ZAR - South African Rand";
         objXE.removeCurrency(currencyToRemove);
     }
@@ -61,13 +70,15 @@ public class TestsForXEAndroid extends BaseAppiumAndroidTest {
     @Test
     public void testSelectCurrency() throws InterruptedException {
         doAction.waitForAndroidActivity(appActivity, 20);
-        XeCurrencyActivity objXE = new XeCurrencyActivity(driver, dictionary, environment,Reporter);
+        XeCurrencyActivity objXE = new XeCurrencyActivity(driver, Reporter);
         String currency = "AUD";
         objXE.selectCurrency(currency)
             .openCurrencyCalculator()
             .tapCurrencyCalcButton("1.0")
             .tapEqualsButton();
     }
+
+    */
 
     @AfterMethod
     public void afterMethod(Method method) {

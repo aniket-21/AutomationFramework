@@ -1,4 +1,4 @@
-package com.ui.pageobjects.android.xe.currency;
+package com.app.pageobjects.android.xe.currency;
 
 import com.framework.core.Reporting;
 import com.framework.core.Wrappers;
@@ -6,8 +6,6 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.TouchAction;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
-import java.util.HashMap;
 
 /**
  * Created by gadrea on 9/6/2015.
@@ -19,9 +17,10 @@ public class XeCurrencyActivity {
     private Wrappers doAction;
 
     //UIObjects
-    private String txtAddNewCurrencies = "uiautomator:=new UiSelector().text(\"Add More Currencies\")";
+    private String txtAddNewCurrencies = "id:=com.xe.currency:id/add_cur_row_label";
     private String imgCurrencyCalculator = "id:=com.xe.currency:id/calculatorIcon";
     private String imgEqualsButton = "id:=com.xe.currency:id/equal";
+    private String btnNo = "uiautomator:=new UiSelector().text(\"NO\")";
 
     //Constructor
     public XeCurrencyActivity(WebDriver GDriver, Reporting GReporter)
@@ -34,11 +33,13 @@ public class XeCurrencyActivity {
     public XeCurrencyActivity scrollToAddNewCurrency(){
         //scrollToExact method is deprecated. Need to replace it with swipe
         //driver.scrollToExact("Add More Currencies");
+
         return this;
     }
 
     public AddCurrencyActivity clickAddNewCurrency() {
         doAction.click(txtAddNewCurrencies);
+        doAction.waitForAndroidActivity(".activity.AddCurrency", 20);
         return new AddCurrencyActivity(driver, Reporter);
     }
 
@@ -79,6 +80,11 @@ public class XeCurrencyActivity {
 
     public XeCurrencyActivity tapEqualsButton(){
         doAction.click(imgEqualsButton);
+        return this;
+    }
+
+    public XeCurrencyActivity denyTour() {
+        doAction.click(btnNo);
         return this;
     }
 

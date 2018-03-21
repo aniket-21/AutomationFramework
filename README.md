@@ -15,7 +15,7 @@ Containes environment config.xml. Application URLs and any other app related dat
 These are webdriver executables for different browses and OSes. Update these when a newer version is released
 
 ## Src
-Source code of framework and page objects
+Source code of framework, page objects and tests
 
 ## TestNG xmls
 Different xmls for different type of test suites

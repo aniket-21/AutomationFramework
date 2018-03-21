@@ -1,5 +1,6 @@
 package com.framework.handlers;
 
+import com.app.enums.IConfigKeys;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -76,7 +77,7 @@ public class DataHandler {
         return null;
     }
 
-    public <T> JsonElement getAppConfig(T configKey) {
+    public JsonElement getAppConfig(Enum<? extends IConfigKeys> configKey) {
         try {
             JsonObject appConfig = getAppConfigJson();
             JsonObject envConfig = appConfig.getAsJsonObject("env").getAsJsonObject(env);
@@ -88,7 +89,7 @@ public class DataHandler {
         }
     }
 
-    public <T> JsonElement getAppData(T dataKey) {
+    public JsonElement getAppData(Enum<? extends IConfigKeys> dataKey) {
         try {
             JsonObject appData = getAppDataJson();
             JsonObject envData = appData.getAsJsonObject("env").getAsJsonObject(env);

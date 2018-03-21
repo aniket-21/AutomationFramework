@@ -1,9 +1,11 @@
 package com.app.enums.identity;
 
+import com.app.enums.IConfigKeys;
+
 /**
  * Created by I337111 on 23/2/2017.
  */
-public enum IdentityConfigKeys {
+public enum IdentityConfigKeys implements IConfigKeys {
 
     URL("url");
 
